@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "Agent-Native Enterprise Software",
 };
 
+import { Header } from "@/components/layout/Header";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.variable}>{children}</body>
+      <body className={inter.variable}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
