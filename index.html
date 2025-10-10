@@ -15,6 +15,14 @@
       --cyan: #00e5ff;
       --ring: #1b1b24;
       --maxw: 1200px;
+      --radius: 20px;
+      /* Unified control for chips & buttons */
+      --chip-px: 10px;  /* horizontal */
+      --chip-py: 6px;   /* vertical */
+      --chip-fs: 12px;
+      --btn-px: 18px;
+      --btn-py: 14px;
+      --btn-fs: clamp(14px, 1.8vw, 16px);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -25,11 +33,16 @@
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      /* Footer should appear after scrolling, not fixed */
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
     }
     a { color: inherit; text-decoration: none; }
     .wrap{
       position: relative;
-      min-height: 100dvh;
+      /* allow the content area to take remaining height so footer sits at bottom */
+      flex: 1 0 auto;
       display: grid;
       place-items: center;
       overflow: clip;
@@ -151,13 +164,14 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 18px;
+      padding: var(--btn-py) var(--btn-px);
       border-radius: 12px;
       border: 1px solid var(--ring);
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       color: #fff;
       font-weight: 600;
       letter-spacing: .2px;
+      font-size: var(--btn-fs);
       transition: transform .25s ease, border-color .25s ease, background .25s ease;
     }
     .btn:hover{
@@ -172,18 +186,17 @@
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border: 1px solid rgba(255,255,255,0.12);
     }
-    .chips{
-      margin-top: 22px;
-      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-    }
+    /* CHIPS — unify across cards/demos/open */
+    .chips{ margin-top: 22px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
     .chip{
-      padding: 8px 12px;
+      padding: var(--chip-py) var(--chip-px);
       border-radius: 999px;
-      font-size: 12px;
+      font-size: var(--chip-fs);
       color: #eaeaef;
       background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
       border: 1px solid var(--ring);
     }
+
     .arc{
       position: absolute;
       inset: 0;
@@ -220,125 +233,139 @@
       .ctaRow { gap: 10px; }
       .btn { padding: 12px 14px; border-radius: 10px; }
     }
+
     /* ====== SECTIONS (GENERIC) ====== */
-  .section{position:relative; z-index:1; width:min(92vw, var(--maxw)); margin:0 auto; padding: clamp(64px, 10vw, 120px) 0;} 
-  .section h2{margin:0 0 10px; font-size: clamp(28px, 4.2vw, 44px); letter-spacing:-0.02em; line-height:1.1;}
-  .section .sub{margin:0 0 28px; color:var(--muted); max-width:840px; font-size: clamp(14px, 2.2vw, 18px); line-height:1.6;}
+    .section{position:relative; z-index:1; width:min(92vw, var(--maxw)); margin:0 auto; padding: clamp(64px, 10vw, 120px) 0;}
+    .section h2{margin:0 0 10px; font-size: clamp(28px, 4.2vw, 44px); letter-spacing:-0.02em; line-height:1.1;}
+    .section .sub{margin:0 0 28px; color:var(--muted); max-width:840px; font-size: clamp(14px, 2.2vw, 18px); line-height:1.6;}
 
-  /* ====== PRODUCT OVERVIEW (CORE FEATURE STACK) ====== */
-  .stack{display:grid; gap:32px;} 
-  .stack-grid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:24px; margin-top:18px;}
-  /* If odd number of cards, make the last one span full width for a balanced row */
-  .stack-grid > :last-child:nth-child(odd){ grid-column: 1 / -1; } 
-  .card{ position:relative; border-radius:16px; padding:26px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; overflow:hidden; }
-  .card:hover{ transform: translateY(-2px); border-color: rgba(155,92,255,.55); box-shadow: 0 6px 28px rgba(0,0,0,.3), inset 0 0 0 1px rgba(155,92,255,.18); }
-  .card h3{margin:10px 0 10px; font-size: clamp(18px, 2.6vw, 22px); letter-spacing:-0.01em;} 
-  .card p{margin:0; color:#d7d7df; font-size:15px; line-height:1.7; letter-spacing:.1px;} 
-  .card .chipline{margin-top:14px; display:flex; gap:8px; flex-wrap:wrap} 
-  .card .chip{background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); border:1px solid var(--ring); color:#eaeaef; font-size:12px; padding:6px 10px; border-radius:999px}
-  .underln{height:2px; background: linear-gradient(90deg, rgba(155,92,255,.0), rgba(155,92,255,.8), rgba(0,229,255,.8), rgba(0,229,255,0)); border-radius:2px; opacity:.7}
+    /* ====== PRODUCT OVERVIEW (CORE FEATURE STACK) ====== */
+    .stack{display:grid; gap:32px;}
+    .stack-grid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:24px; margin-top:18px;}
+    .stack-grid > :last-child:nth-child(odd){ grid-column: 1 / -1; }
+    .card{ position:relative; border-radius:var(--radius); padding:24px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; overflow:hidden; }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(155,92,255,.55); box-shadow: 0 6px 28px rgba(0,0,0,.3), inset 0 0 0 1px rgba(155,92,255,.18); }
+    .card h3{margin:10px 0 10px; font-size: clamp(18px, 2.5vw, 22px); letter-spacing:-0.01em;}
+    .card p{margin:0; color:#d7d7df; font-size:15px; line-height:1.7; letter-spacing:.1px;}
+    .card .chipline{margin-top:14px; display:flex; gap:8px; flex-wrap:wrap}
+    .underln{height:2px; background: linear-gradient(90deg, rgba(155,92,255,.0), rgba(155,92,255,.8), rgba(0,229,255,.8), rgba(0,229,255,0)); border-radius:2px; opacity:.7}
 
-  /* subtle sweeping underline animation */
-  .card::after{content:""; position:absolute; top:-1px; left:0; right:0; height:6px; background:linear-gradient(90deg, rgba(155,92,255,.8), rgba(0,229,255,.8)); opacity:.85; background-size:200% 100%; animation:gradientMove 6s ease-in-out infinite alternate;}
-  .card:hover::after{ transform: translateX(0); opacity:1; }
+    /* top bar sweep */
+    .card::after{content:""; position:absolute; top:-1px; left:0; right:0; height:6px; background:linear-gradient(90deg, rgba(155,92,255,.8), rgba(0,229,255,.8)); opacity:.85; background-size:200% 100%; animation:gradientMove 6s ease-in-out infinite alternate;}
 
-  /* ICONS */
-  .icon{ width:32px; height:32px; display:inline-block; color:#d7d9ff; opacity:.95; } 
-  .icon svg{ width:100%; height:100%; }
-  .card:hover .icon{ color:#e9ecff; }
+    /* ICONS */
+    .icon{ width:32px; height:32px; display:inline-block; color:#d7d9ff; opacity:.95; }
+    .icon svg{ width:100%; height:100%; }
+    .card:hover .icon{ color:#e9ecff; }
 
-  /* responsive */
-  @media (max-width: 1100px){ .stack-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-  @media (max-width: 560px){ .stack-grid{ grid-template-columns: 1fr; } .card{ padding:16px; } }
-  /* ====== HOW IT WORKS (PIPELINE) ====== */
-  .timeline{position:relative;}
-  .steps{position:relative; display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:36px; counter-reset: step;} 
-  .step{position:relative; border-radius:16px; padding:28px 18px; background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); transition: transform .3s ease;} 
-.step:hover{transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.25), inset 0 0 0 1px rgba(155,92,255,.15);}  
-  .step .icon{width:30px; height:30px; color:#e3e6ff; margin-bottom:8px}
-  .step h3{margin:6px 0 8px; font-size: clamp(16px, 2.4vw, 20px); letter-spacing:-0.01em; display:flex; align-items:center; gap:10px;} 
-.step h3::before{counter-increment: step; content: counter(step, decimal-leading-zero); display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.5px; background:linear-gradient(180deg, rgba(155,92,255,.9), rgba(0,229,255,.9)); color:#0b0b0d; box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 2px 10px rgba(0,0,0,.25);} 
-  .step p{margin:0; color:#d5d7e2; font-size:14.5px; line-height:1.6}
-  .timeline::before{content:""; display:none;}   
-  /* animated sweep on load */
-  .timeline::after{content:""; display:none;}  
-  @keyframes sweep{to{width:100%}}
-  /* connectors (circles) */
-  .step::before{content:""; display:none;} 
-  /* layout tweaks */
-  @media (max-width: 1100px){ .steps{ grid-template-columns: repeat(2, minmax(0,1fr)); } .timeline::before, .timeline::after{ top:34px; } }
-  @media (max-width: 560px){ .steps{ grid-template-columns: 1fr; } .timeline::before, .timeline::after{ display:none; } .step::before{ left:16px; } .step{ padding:18px 16px; } }
-  @media (prefers-reduced-motion: reduce){ .timeline::after{ animation:none; width:100%; } }
-  /* ====== CORE VALUES STYLES ====== */
-  .values-grid{position:relative; display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:44px; margin-top:56px; align-items:stretch;}
-  .values-grid::before{content:""; position:absolute; inset:-8% -6% auto; height:60%; background:
-    radial-gradient(50% 60% at 25% 40%, rgba(155,92,255,.12), transparent 60%),
-    radial-gradient(50% 60% at 75% 20%, rgba(0,229,255,.10), transparent 60%);
-  filter: blur(30px); pointer-events:none;}
+    @media (max-width: 1100px){ .stack-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 560px){ .stack-grid{ grid-template-columns: 1fr; } .card{ padding:16px; } }
 
-  .value{position:relative; border-radius:22px; padding:44px 34px; background:
-    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02)),
-    radial-gradient(120% 100% at 0% 0%, rgba(155,92,255,0.06), transparent 60%) border-box;
-  border:1px solid var(--ring);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 6px 24px rgba(0,0,0,.25);
-  backdrop-filter: saturate(115%) blur(4px);
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; display:flex; flex-direction:column; justify-content:flex-start; align-items:flex-start; overflow:hidden;}
-  .value::before{content:none;}
-  .value::after{content:""; position:absolute; left:50%; transform:translateX(-50%) scaleX(0); bottom:0; height:3px; width:86%; background:linear-gradient(90deg, rgba(155,92,255,0), rgba(155,92,255,.9), rgba(0,229,255,.9), rgba(0,229,255,0)); opacity:.75; border-radius:3px; transition:transform .6s ease;}
-  .value:hover{transform:translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,.4), inset 0 0 0 1px rgba(155,92,255,.2); border-color: rgba(155,92,255,.35);} 
-  .value:hover::after{transform:translateX(-50%) scaleX(1);} 
+    /* ====== HOW IT WORKS (PIPELINE) ====== */
+    .timeline{position:relative;}
+    .steps{position:relative; display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:36px; counter-reset: step;}
+    .step{position:relative; border-radius:16px; padding:28px 18px; background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); transition: transform .3s ease;}
+    .step:hover{transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.25), inset 0 0 0 1px rgba(155,92,255,.15);}  
+    .step .icon{width:30px; height:30px; color:#e3e6ff; margin-bottom:8px}
+    .step h3{margin:6px 0 8px; font-size: clamp(16px, 2.4vw, 20px); letter-spacing:-0.01em; display:flex; align-items:center; gap:10px;}
+    .step h3::before{counter-increment: step; content: counter(step, decimal-leading-zero); display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.5px; background:linear-gradient(180deg, rgba(155,92,255,.9), rgba(0,229,255,.9)); color:#0b0b0d; box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 2px 10px rgba(0,0,0,.25);} 
+    .step p{margin:0; color:#d5d7e2; font-size:14.5px; line-height:1.6}
+    .timeline::before{content:""; display:none;}   
+    .timeline::after{content:""; display:none;}  
+    @keyframes sweep{to{width:100%}}
+    .step::before{content:""; display:none;} 
+    @media (max-width: 1100px){ .steps{ grid-template-columns: repeat(2, minmax(0,1fr)); } .timeline::before, .timeline::after{ top:34px; } }
+    @media (max-width: 560px){ .steps{ grid-template-columns: 1fr; } .timeline::before, .timeline::after{ display:none; } .step::before{ left:16px; } .step{ padding:18px 16px; } }
+    @media (prefers-reduced-motion: reduce){ .timeline::after{ animation:none; width:100%; } }
 
-  .value .icon{position:relative; width:54px; height:54px; display:inline-block; color:#d7d9ff; opacity:.98; margin-bottom:16px;} 
-  .value .icon::before{content:""; position:absolute; inset:-12px; border-radius:999px; background:
-    radial-gradient(60% 60% at 40% 40%, rgba(155,92,255,.25), transparent 60%),
-    radial-gradient(60% 60% at 60% 60%, rgba(0,229,255,.22), transparent 60%);
-  filter: blur(14px); opacity:.9; pointer-events:none;}
-  .value:hover .icon{color:#ffffff; transform: translateY(-1px);} 
+    /* ====== CORE VALUES STYLES ====== */
+    .values-grid{position:relative; display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:44px; margin-top:56px; align-items:stretch;}
+    .values-grid::before{content:""; position:absolute; inset:-8% -6% auto; height:60%; background:
+      radial-gradient(50% 60% at 25% 40%, rgba(155,92,255,.12), transparent 60%),
+      radial-gradient(50% 60% at 75% 20%, rgba(0,229,255,.10), transparent 60%);
+      filter: blur(30px); pointer-events:none;}
 
-  .value h3{margin:12px 0 14px; font-size:clamp(22px,3vw,30px); letter-spacing:-0.01em; display:flex; align-items:center; gap:12px;}
-  .value p{margin-top:6px; color:#d5d7e2; font-size:16px; line-height:1.8; max-width:560px;}
-
-  @media (max-width: 560px){ .values-grid{grid-template-columns: 1fr; gap:26px; margin-top:36px;} .value{padding:28px 22px; border-radius:18px;} .value .icon{width:44px; height:44px;} }
-  /* ====== DEMOS / USE CASES ====== */
-  .demos{position:relative;}
-  .demo-grid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:22px; margin-top:24px;}
-  .demo{display:flex; flex-direction:column; justify-content:space-between;position:relative; border-radius:16px; padding:22px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); overflow:hidden; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;}
-  .demo:hover{transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(155,92,255,.18); border-color: rgba(155,92,255,.35);} 
-  .demo .icon{width:34px; height:34px; color:#e3e6ff; margin-bottom:10px;}
-  .demo h3{margin:6px 0 8px; font-size: clamp(16px, 2.4vw, 20px); letter-spacing:-0.01em;}
-  .demo p{margin:0 0 24px; color:#d5d7e2; font-size:14.5px; line-height:1.65;}
-  .demo .meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
-  .demo .chip{padding:6px 10px; border-radius:999px; border:1px solid var(--ring); font-size:12px; color:#eaeaef; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));}
-  .demo .cta{display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:10px 12px; border-radius:10px; border:1px solid var(--ring); font-weight:600; font-size:13px; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));}
-  .demo .cta:hover{border-color: rgba(0,229,255,.6); background:linear-gradient(180deg, rgba(155,92,255,0.14), rgba(0,229,255,0.12));}
-  /* subtle corner sweep */
-  .demo::after{content:""; position:absolute; inset:auto 0 0 0; height:2px; background:linear-gradient(90deg, rgba(155,92,255,0), rgba(155,92,255,.9), rgba(0,229,255,.9), rgba(0,229,255,0)); transform: scaleX(0); transform-origin:left; transition: transform .5s ease; opacity:.75;}
-  .demo:hover::after{transform: scaleX(1);} 
-  @media (max-width: 1100px){ .demo-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-  @media (max-width: 560px){ .demo-grid{ grid-template-columns: 1fr; gap:16px;} .demo{ padding:18px; } }
-  /* ====== CTA PANEL (GLOBAL) ====== */
-  .cta-panel{position:relative; margin-top:56px; padding:36px 28px; border:1px solid var(--ring); border-radius:20px; text-align:center; 
-    background:
+    .value{position:relative; border-radius:var(--radius); padding:36px 28px; background:
       linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02)),
-      radial-gradient(120% 120% at 20% 0%, rgba(155,92,255,0.10), transparent 60%),
-      radial-gradient(120% 120% at 80% 100%, rgba(0,229,255,0.10), transparent 60%);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 10px 28px rgba(0,0,0,.35);
-    overflow:hidden;}
-  .cta-panel::before{content:none;}
-  .cta-panel h3{margin:0 0 8px; font-size:clamp(20px, 3.2vw, 28px); letter-spacing:-0.01em;}
-  .cta-panel p{margin:0 auto 18px; color:#d7d7df; max-width:720px; font-size:16px; line-height:1.7;}
-  .cta-actions{display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;}
-  .cta-actions .btn{padding:12px 16px; border-radius:12px;}
-  .cta-actions .btn.primary{border-color:rgba(255,255,255,0.14)}
-  @media (max-width: 560px){ .cta-panel{padding:26px 18px; border-radius:16px;} }
-  .footer{position:fixed; bottom:0; left:0; right:0; width:100%; border-top:1px solid rgba(255,255,255,0.08); padding:36px 20px; background:rgba(255,255,255,0.01); text-align:center;}
-  .footer-inner{max-width:var(--maxw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px;}
-  .footer-logo{display:inline-flex; align-items:center; gap:10px; font-weight:700; font-size:18px;}
-  .footer-links{display:none{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; font-size:14px; color:var(--muted);}
-  .footer-links a{color:var(--muted); transition:color .25s ease;}
-  .footer-links a:hover{color:#fff;}
-  .copyright{font-size:13px; color:var(--muted); margin-top:8px;}
-</style>
+      radial-gradient(120% 100% at 0% 0%, rgba(155,92,255,0.06), transparent 60%) border-box;
+      border:1px solid var(--ring);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 6px 24px rgba(0,0,0,.25);
+      backdrop-filter: saturate(115%) blur(4px);
+      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; display:flex; flex-direction:column; justify-content:flex-start; align-items:flex-start; overflow:hidden;}
+    .value::before{content:none;}
+    .value::after{content:""; position:absolute; left:50%; transform:translateX(-50%) scaleX(0); bottom:0; height:3px; width:86%; background:linear-gradient(90deg, rgba(155,92,255,0), rgba(155,92,255,.9), rgba(0,229,255,.9), rgba(0,229,255,0)); opacity:.75; border-radius:3px; transition:transform .6s ease;}
+    .value:hover{transform:translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,.4), inset 0 0 0 1px rgba(155,92,255,.2); border-color: rgba(155,92,255,.35);} 
+    .value:hover::after{transform:translateX(-50%) scaleX(1);} 
+
+    .value .icon{position:relative; width:54px; height:54px; display:inline-block; color:#d7d9ff; opacity:.98; margin-bottom:16px;}
+    .value .icon::before{content:""; position:absolute; inset:-12px; border-radius:999px; background:
+      radial-gradient(60% 60% at 40% 40%, rgba(155,92,255,.25), transparent 60%),
+      radial-gradient(60% 60% at 60% 60%, rgba(0,229,255,.22), transparent 60%);
+      filter: blur(14px); opacity:.9; pointer-events:none;}
+    .value:hover .icon{color:#ffffff; transform: translateY(-1px);} 
+
+    .value h3{margin:12px 0 14px; font-size:clamp(22px,3vw,30px); letter-spacing:-0.01em; display:flex; align-items:center; gap:12px;}
+    .value p{margin-top:6px; color:#d5d7e2; font-size:16px; line-height:1.8; max-width:560px;}
+
+    @media (max-width: 560px){ .values-grid{grid-template-columns: 1fr; gap:26px; margin-top:36px;} .value{padding:28px 22px; border-radius:18px;} .value .icon{width:44px; height:44px;} }
+
+    /* ====== DEMOS / USE CASES ====== */
+    .demos{position:relative;}
+    .demo-grid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:24px; margin-top:24px;}
+    .demo{display:flex; flex-direction:column; justify-content:space-between; position:relative; border-radius:var(--radius); padding:24px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); overflow:hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+    .demo:hover{transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(155,92,255,.18); border-color: rgba(155,92,255,.35);} 
+    .demo .icon{width:32px; height:32px; color:#e3e6ff; margin-bottom:10px;}
+    .demo h3{margin:6px 0 8px; font-size: clamp(18px, 2.5vw, 22px); letter-spacing:-0.01em;} 
+    .demo p{margin:0 0 24px; color:#d5d7e2; font-size:15px; line-height:1.7;} 
+    .demo .meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+    /* Use unified .chip */
+
+    /* CTA in demos should visually match other buttons */
+    .demo .cta{display:inline-flex; align-items:center; gap:8px; margin-top:14px;}
+
+    .demo::after{content:""; position:absolute; top:-1px; left:0; right:0; height:6px; background:linear-gradient(90deg, rgba(155,92,255,.8), rgba(0,229,255,.8)); opacity:.85; background-size:200% 100%; animation:gradientMove 6s ease-in-out infinite alternate;}
+    .demo:hover::after{transform: scaleX(1);} 
+    @media (max-width: 1100px){ .demo-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 560px){ .demo-grid{ grid-template-columns: 1fr; gap:16px;} .demo{ padding:18px; } }
+
+    /* ====== CTA PANEL (GLOBAL) ====== */
+    .cta-panel{position:relative; margin-top:56px; padding:36px 28px; border:1px solid var(--ring); border-radius:var(--radius); text-align:center; 
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02)),
+        radial-gradient(120% 120% at 20% 0%, rgba(155,92,255,0.10), transparent 60%),
+        radial-gradient(120% 120% at 80% 100%, rgba(0,229,255,0.10), transparent 60%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02), 0 10px 28px rgba(0,0,0,.35);
+      overflow:hidden;}
+    .cta-panel::before{content:none;}
+    .cta-panel h3{margin:0 0 8px; font-size:clamp(20px, 3.2vw, 28px); letter-spacing:-0.01em;}
+    .cta-panel p{margin:0 auto 18px; color:#d7d7df; max-width:720px; font-size:16px; line-height:1.7;}
+    .cta-actions{display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;}
+    /* Make CTA buttons visually identical to the primary hero button */
+    .cta-actions .btn{ padding: var(--btn-py) var(--btn-px); font-size: var(--btn-fs); border-radius:12px; }
+    .cta-actions .btn.primary{border-color:rgba(255,255,255,0.14)}
+    @media (max-width: 560px){ .cta-panel{padding:26px 18px; border-radius:16px;} }
+
+    /* ====== OPEN SCIENCE (styles) ====== */
+    .open-grid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:24px; margin-top:24px;}
+    .open-card{position:relative; border-radius:var(--radius); padding:24px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border:1px solid var(--ring); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); overflow:hidden; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;}
+    .open-card:hover{transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.25), inset 0 0 0 1px rgba(155,92,255,.15); border-color: rgba(155,92,255,.5);} 
+    .open-card::after{content:""; position:absolute; top:-1px; left:0; right:0; height:6px; background:linear-gradient(90deg, rgba(155,92,255,.8), rgba(0,229,255,.8)); opacity:.85; background-size:200% 100%; animation:gradientMove 6s ease-in-out infinite alternate;}
+    .open-card .icon{width:32px; height:32px; color:#e3e6ff; margin-bottom:10px;}
+    .open-card h3{margin:6px 0 8px; font-size: clamp(18px, 2.5vw, 22px); letter-spacing:-0.01em;}
+    .open-card p{margin:0; color:#d5d7e2; font-size:15px; line-height:1.7;}
+    .open-card .meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+
+    /* shared gradient keyframes (for top bars) */
+    @keyframes gradientMove{0%{background-position:0% 50%;}100%{background-position:100% 50%;}}
+
+    .footer{width:100%; border-top:1px solid rgba(255,255,255,0.08); padding:36px 20px; background:rgba(255,255,255,0.01); text-align:center; position: static; margin-top: auto;}
+    .footer-inner{max-width:var(--maxw); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px;}
+    .footer-logo{display:inline-flex; align-items:center; gap:10px; font-weight:700; font-size:18px;}
+    .footer-links{display:none;}
+    .footer-links a{color:var(--muted); transition:color .25s ease;}
+    .footer-links a:hover{color:#fff;}
+    .copyright{font-size:13px; color:var(--muted); margin-top:8px;}
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -360,268 +387,329 @@
       <div class="ctaRow" role="group" aria-label="Primary actions">
         <a class="btn primary" href="#product">Get started</a>
       </div>
-      
       <div class="arc" aria-hidden="true"></div>
     </header>
 
-  <!-- ====== SECTION 2: PRODUCT OVERVIEW (CORE FEATURE STACK) ====== -->
-  <section class="section" id="product">
-    <div class="stack">
-      <h2>Production-ready agent stack</h2>
-      <p class="sub">Everything you need to build, deploy, and manage AI agents in production — securely and at scale.</p>
+    <!-- ====== SECTION 2: PRODUCT OVERVIEW (CORE FEATURE STACK) ====== -->
+    <section class="section" id="product">
+      <div class="stack">
+        <h2>Agent Stack</h2>
+        <p class="sub">Everything you need to build, deploy, and manage AI agents in production — securely and at scale.</p>
 
-      <div class="stack-grid" role="list">
-        <!-- Card 1: Agents -->
-        <article class="card" role="listitem">
+        <div class="stack-grid" role="list">
+          <!-- Card 1: Agents -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Network/Bot icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="3"></circle>
+                <path d="M12 11v3"></path>
+                <circle cx="6" cy="16.5" r="2.5"></circle>
+                <circle cx="18" cy="16.5" r="2.5"></circle>
+                <path d="M9 15.5l-1.5-.5M15 15.5l1.5-.5M12 14l-3 .5M12 14l3 .5"></path>
+              </svg>
+            </span>
+            <h3>Agents</h3>
+            <p>Autonomous &amp; tool-using, with controllable autonomy, approval gates, and safe action policies.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Tools &amp; actions</span>
+              <span class="chip">Plans &amp; memory</span>
+              <span class="chip">Guardrails</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Knowledge / RAG -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Book/Context icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14.5H6.5A2.5 2.5 0 0 0 4 21V6.5Z"></path>
+                <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"></path>
+              </svg>
+            </span>
+            <h3>Knowledge / RAG</h3>
+            <p>Context indexing, retrieval, and evaluation built in — bring your vectors or use managed options.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Connectors</span>
+              <span class="chip">Evaluations</span>
+              <span class="chip">Citations</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Workflows -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Flowchart icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3.5" width="7.5" height="5" rx="1.5"></rect>
+                <rect x="13.5" y="3.5" width="7.5" height="5" rx="1.5"></rect>
+                <rect x="8.25" y="15.5" width="7.5" height="5" rx="1.5"></rect>
+                <path d="M6.75 8.5V12h10.5v3.5"></path>
+              </svg>
+            </span>
+            <h3>Workflows</h3>
+            <p>Graph orchestration with steps, retries, timeouts, and SLAs — production-grade reliability by default.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Orchestration</span>
+              <span class="chip">Retries</span>
+              <span class="chip">Policies</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Observability & Guardrails -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Shield/Eye icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z"></path>
+                <path d="M8.5 12s1.8-2.5 3.5-2.5S15.5 12 15.5 12s-1.8 2.5-3.5 2.5S8.5 12 8.5 12Z"></path>
+                <circle cx="12" cy="12" r="1.2"></circle>
+              </svg>
+            </span>
+            <h3>Observability &amp; Guardrails</h3>
+            <p>Traces, metrics, and audits for every action — know what agents did, why, and with what context.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Tracing</span>
+              <span class="chip">Metrics</span>
+              <span class="chip">Audit log</span>
+            </div>
+          </article>
+        </div>
+
+        <style>
+          .cta-banner{text-align:center; margin-top:48px; padding:24px 16px; border-top:1px solid rgba(255,255,255,0.08);} 
+          .cta-banner p{font-size:16px; color:#e9e9f0; margin:0;} 
+          .cta-link{color:#7edcff; font-weight:600; text-decoration:none; border-bottom:1px solid rgba(126,220,255,0.4); transition:color .25s ease, border-color .25s ease;} 
+          .cta-link:hover{color:#fff; border-color:#fff;}
+        </style>
+
+      </div>
+    </section>
+
+    <!-- ====== SECTION 3: DEMOS / USE CASES ====== -->
+    <section class="section" id="demos">
+      <h2>Agents in action</h2>
+      <p class="sub">A few practical ways teams use Forth.AI to automate real work.</p>
+
+      <div class="demos">
+        <div class="demo-grid" role="list">
+          <!-- 1) Enterprise Knowledge Management -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Knowledge/Book icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14.5H6.5A2.5 2.5 0 0 0 4 21V6.5Z"/>
+                <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"/>
+              </svg>
+            </span>
+            <h3>Enterprise Knowledge Management</h3>
+            <p>Capture, curate, and retrieve institutional knowledge with governance and citations across docs, wikis, and apps.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">SharePoint</span><span class="chip">Confluence</span><span class="chip">Docs</span>
+            </div>
+          </article>
+
+          <!-- 2) Customer Support Automation -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Headset/Support icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 12a7.5 7.5 0 0 1 15 0v2.5a2 2 0 0 1-2 2H16"/>
+                <path d="M4.5 12v2.5a2 2 0 0 0 2 2H8"/>
+                <rect x="9" y="16" width="6" height="3" rx="1.5"/>
+              </svg>
+            </span>
+            <h3>Customer Support Automation</h3>
+            <p>Deflect FAQs, auto-triage tickets, and assist agents with context-aware replies to improve resolution speed and quality.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">Zendesk</span><span class="chip">Slack</span><span class="chip">Policies</span>
+            </div>
+          </article>
+
+          <!-- 3) Data Governance -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Shield/Checklist icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z"/>
+                <path d="M9 12.5l1.5 1.5 3-3"/>
+                <path d="M9 16.5l1 1 2-2"/>
+              </svg>
+            </span>
+            <h3>Data Governance</h3>
+            <p>Operationalize data policies—access control, lineage, PII redaction, and audit—so the right people use trusted data, compliantly.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">Data Catalog</span><span class="chip">Security</span><span class="chip">Compliance</span>
+            </div>
+          </article>
+
+          <!-- 4) Customer Analytics and Insight -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Chart/Insight icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5V5.5M20 19.5H4"/>
+                <rect x="6.5" y="12" width="3" height="5.5" rx=".8"/>
+                <rect x="11" y="9.5" width="3" height="8" rx=".8"/>
+                <rect x="15.5" y="7.5" width="3" height="10" rx=".8"/>
+              </svg>
+            </span>
+            <h3>Customer Analytics &amp; Insights</h3>
+            <p>Unify customer data to surface segments, predict churn and CLV, and deliver narrative KPIs stakeholders can act on.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">BigQuery</span><span class="chip">Looker</span><span class="chip">CRM</span>
+            </div>
+          </article>
+
+          <!-- 5) Sales Enablement -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Briefcase/Sales icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="6.5" y="7" width="11" height="10" rx="2"/>
+                <path d="M9.5 7V6a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1"/>
+                <path d="M6.5 11.5h11"/>
+              </svg>
+            </span>
+            <h3>Sales Enablement</h3>
+            <p>Deliver AI-curated briefs, competitive intel, and guided next steps—integrated with your CRM and enablement content.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">HubSpot</span><span class="chip">Docs</span><span class="chip">Citations</span>
+            </div>
+          </article>
+
+          <!-- 6) Social Listening -->
+          <article class="demo" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Hashtag/Speech icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="4" width="17" height="13" rx="2"/>
+                <path d="M7 8h10M9 11h6"/>
+                <path d="M8 21l4-4h6"/>
+              </svg>
+            </span>
+            <h3>Social Listening</h3>
+            <p>Analyze brand, industry, and competitor conversations across social, forums, and reviews—detect sentiment and emerging themes.</p>
+            <div class="meta" aria-hidden="true">
+              <span class="chip">Trends</span><span class="chip">Competition</span><span class="chip">Sentiment</span>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="cta-panel">
+        <h3>Have a unique use case in mind?</h3>
+        <p>Tell us what you’re building — we’ll help you ship it fast.</p>
+        <div class="cta-actions">
+          <a class="btn primary" href="mailto:hello@forth.ai?subject=Forth.AI%20Demo%20Request&body=Hi%20Forth.AI%20Team%2C%0D%0A%0D%0AI%27m%20interested%20in%20learning%20more%20about%20your%20AI%20agent%20platform.%20Please%20get%20in%20touch%20with%20me.%0D%0A%0D%0AThanks!">Contact us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SECTION 4: Open Science Movement ====== -->
+    <section class="section" id="open-science">
+      <h2>Open Science Movement</h2>
+      <p class="sub">We believe progress accelerates when knowledge is shared — open by default, privacy by design.</p>
+      <div class="open-grid" role="list">
+        <!-- Open Research -->
+        <article class="open-card" role="listitem">
           <span class="icon" aria-hidden="true">
-            <!-- Network/Bot icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="8" r="3"></circle>
-              <path d="M12 11v3"></path>
-              <circle cx="6" cy="16.5" r="2.5"></circle>
-              <circle cx="18" cy="16.5" r="2.5"></circle>
-              <path d="M9 15.5l-1.5-.5M15 15.5l1.5-.5M12 14l-3 .5M12 14l3 .5"></path>
+            <!-- Book/Research icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14.5H6.5A2.5 2.5 0 0 0 4 21V6.5Z"/>
+              <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"/>
             </svg>
           </span>
-          <h3>Agents</h3>
-          <p>Autonomous &amp; tool-using, with controllable autonomy, approval gates, and safe action policies.</p>
-          <div class="chipline" aria-hidden="true">
-            <span class="chip">Tools &amp; actions</span>
-            <span class="chip">Plans &amp; memory</span>
-            <span class="chip">Guardrails</span>
+          <h3>Open Research</h3>
+          <p>We publish methods, benchmarks, and ablations to advance safe and reliable agent systems.</p>
+          <div class="meta" aria-hidden="true">
+            <span class="chip">Preprints</span><span class="chip">Benchmarks</span><span class="chip">Evaluations</span>
           </div>
         </article>
 
-        <!-- Card 2: Knowledge / RAG -->
-        <article class="card" role="listitem">
+        <!-- Open Data -->
+        <article class="open-card" role="listitem">
           <span class="icon" aria-hidden="true">
-            <!-- Book/Context icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14.5H6.5A2.5 2.5 0 0 0 4 21V6.5Z"></path>
-              <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"></path>
+            <!-- Database/Data icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="5.5" rx="7.5" ry="3.5"/>
+              <path d="M4.5 5.5v6c0 1.9 3.4 3.5 7.5 3.5s7.5-1.6 7.5-3.5v-6"/>
+              <path d="M4.5 11.5v6c0 1.9 3.4 3.5 7.5 3.5s7.5-1.6 7.5-3.5v-6"/>
             </svg>
           </span>
-          <h3>Knowledge / RAG</h3>
-          <p>Context indexing, retrieval, and evaluation built in — bring your vectors or use managed options.</p>
-          <div class="chipline" aria-hidden="true">
-            <span class="chip">Connectors</span>
-            <span class="chip">Evaluations</span>
-            <span class="chip">Citations</span>
+          <h3>Open Data</h3>
+          <p>Curated datasets for retrieval, evaluation, and safety — released with clear licenses.</p>
+          <div class="meta" aria-hidden="true">
+            <span class="chip">RAG corpora</span><span class="chip">Agent traces</span><span class="chip">Safety sets</span>
           </div>
         </article>
 
-        <!-- Card 3: Workflows -->
-        <article class="card" role="listitem">
+        <!-- Open Code -->
+        <article class="open-card" role="listitem">
           <span class="icon" aria-hidden="true">
-            <!-- Flowchart icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3.5" width="7.5" height="5" rx="1.5"></rect>
-              <rect x="13.5" y="3.5" width="7.5" height="5" rx="1.5"></rect>
-              <rect x="8.25" y="15.5" width="7.5" height="5" rx="1.5"></rect>
-              <path d="M6.75 8.5V12h10.5v3.5"></path>
+            <!-- Code/Brackets icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 7l-4 5 4 5"/>
+              <path d="M15 7l4 5-4 5"/>
             </svg>
           </span>
-          <h3>Workflows</h3>
-          <p>Graph orchestration with steps, retries, timeouts, and SLAs — production-grade reliability by default.</p>
-          <div class="chipline" aria-hidden="true">
-            <span class="chip">Orchestration</span>
-            <span class="chip">Retries</span>
-            <span class="chip">Policies</span>
-          </div>
-        </article>
-
-        <!-- Card 4: Observability & Guardrails -->
-        <article class="card" role="listitem">
-          <span class="icon" aria-hidden="true">
-            <!-- Shield/Eye icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z"></path>
-              <path d="M8.5 12s1.8-2.5 3.5-2.5S15.5 12 15.5 12s-1.8 2.5-3.5 2.5S8.5 12 8.5 12Z"></path>
-              <circle cx="12" cy="12" r="1.2"></circle>
-            </svg>
-          </span>
-          <h3>Observability &amp; Guardrails</h3>
-          <p>Traces, metrics, and audits for every action — know what agents did, why, and with what context.</p>
-          <div class="chipline" aria-hidden="true">
-            <span class="chip">Tracing</span>
-            <span class="chip">Metrics</span>
-            <span class="chip">Audit log</span>
+          <h3>Open Code</h3>
+          <p>Reference implementations, tooling, and examples for agents, orchestration, and guardrails.</p>
+          <div class="meta" aria-hidden="true">
+            <span class="chip">SDK</span><span class="chip">Templates</span><span class="chip">Guardrails</span>
           </div>
         </article>
       </div>
-    
+      <div class="cta-panel">
+        <h3>Explore the latest</h3>
+        <p>Check out our newest research, datasets, and code drops.</p>
+        <div class="cta-actions">
+          <a class="btn primary" href="https://blog.forth.ai" target="_blank" rel="noopener">Latest</a>
+        </div>
+      </div>
+    </section>
 
-<style>
-.cta-banner{text-align:center; margin-top:48px; padding:24px 16px; border-top:1px solid rgba(255,255,255,0.08);}
-.cta-banner p{font-size:16px; color:#e9e9f0; margin:0;}
-.cta-link{color:#7edcff; font-weight:600; text-decoration:none; border-bottom:1px solid rgba(126,220,255,0.4); transition:color .25s ease, border-color .25s ease;}
-.cta-link:hover{color:#fff; border-color:#fff;}
-</style>
+    <!-- ====== SECTION 5: Our Core Values ====== -->
+    <section class="section" id="core-values">
+      <h2>Our Core Values</h2>
+      <p class="sub">We believe great AI products are built on trust and bring joy to those who use them.</p>
+      <div class="values-grid">
+        <article class="value">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z" />
+              <path d="M8.5 12s1.8-2.5 3.5-2.5S15.5 12 15.5 12s-1.8 2.5-3.5 2.5S8.5 12 8.5 12Z" />
+              <circle cx="12" cy="12" r="1.2" />
+            </svg>
+          </span>
+          <h3>Trust</h3>
+          <p>We are committed to protecting customer data and building transparent, secure solutions you can rely on.</p>
+        </article>
 
-<!-- ====== SECTION 3: CORE VALUES ====== -->
-<section class="section" id="core-values">
-  <h2>Our Core Values</h2>
-  <p class="sub">We believe great AI products are built on trust and bring joy to those who use them.</p>
-  <div class="values-grid">
-    <article class="value">
-      <span class="icon" aria-hidden="true">
-        <!-- Shield icon -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z" />
-          <path d="M8.5 12s1.8-2.5 3.5-2.5S15.5 12 15.5 12s-1.8 2.5-3.5 2.5S8.5 12 8.5 12Z" />
-          <circle cx="12" cy="12" r="1.2" />
-        </svg>
-      </span>
-      <h3>Trust</h3>
-      <p>We are committed to protecting customer data and building transparent, secure solutions you can rely on.</p>
-    </article>
-
-    <article class="value">
-      <span class="icon" aria-hidden="true">
-        <!-- Sparkle icon -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" />
-        </svg>
-      </span>
-      <h3>Joy</h3>
-      <p>We build joyful applications that delight users and make complex workflows effortless.</p>
-    </article>
+        <article class="value">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" />
+            </svg>
+          </span>
+          <h3>Joy</h3>
+          <p>We build joyful applications that delight users and make complex workflows effortless.</p>
+        </article>
+      </div>
+      <div class="cta-panel">
+        <h3>Want to collaborate?</h3>
+        <p>We’d love to build the future with you.</p>
+        <div class="cta-actions">
+          <a class="btn primary" href="mailto:hello@forth.ai?subject=Forth.AI%20Collaboration">Contact us</a>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
-
-<!-- ====== SECTION 4: DEMOS / USE CASES ====== -->
-<section class="section" id="demos">
-  <h2>Agents In Action</h2>
-  <p class="sub">A few practical ways teams use Forth.AI to automate real work.</p>
-
-  <div class="demos">
-    <div class="demo-grid" role="list">
-      <!-- 1) Enterprise Knowledge Management -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Knowledge/Book icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14.5H6.5A2.5 2.5 0 0 0 4 21V6.5Z"/>
-            <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"/>
-          </svg>
-        </span>
-        <h3>Enterprise Knowledge Management</h3>
-        <p>Capture, curate, and retrieve institutional knowledge with governance and citations across docs, wikis, and apps.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">SharePoint</span><span class="chip">Confluence</span><span class="chip">Docs</span>
-        </div>
-        
-      </article>
-
-      <!-- 2) Customer Support Automation -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Headset/Support icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4.5 12a7.5 7.5 0 0 1 15 0v2.5a2 2 0 0 1-2 2H16"/>
-            <path d="M4.5 12v2.5a2 2 0 0 0 2 2H8"/>
-            <rect x="9" y="16" width="6" height="3" rx="1.5"/>
-          </svg>
-        </span>
-        <h3>Customer Support Automation</h3>
-        <p>Deflect FAQs, auto-triage tickets, and assist agents with context-aware replies to improve resolution speed and quality.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">Zendesk</span><span class="chip">Slack</span><span class="chip">Policies</span>
-        </div>
-        
-      </article>
-
-      <!-- 3) Data Governance -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Shield/Checklist icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3.5l7 3v5.5c0 4.2-3.1 7.8-7 8.5-3.9-.7-7-4.3-7-8.5V6.5l7-3Z"/>
-            <path d="M9 12.5l1.5 1.5 3-3"/>
-            <path d="M9 16.5l1 1 2-2"/>
-          </svg>
-        </span>
-        <h3>Data Governance</h3>
-        <p>Operationalize data policies—access control, lineage, PII redaction, and audit—so the right people use trusted data, compliantly.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">Data Catalog</span><span class="chip">Security</span><span class="chip">Compliance</span>
-        </div>
-        
-      </article>
-
-      <!-- 4) Customer Analytics and Insight -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Chart/Insight icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5V5.5M20 19.5H4"/>
-            <rect x="6.5" y="12" width="3" height="5.5" rx=".8"/>
-            <rect x="11" y="9.5" width="3" height="8" rx=".8"/>
-            <rect x="15.5" y="7.5" width="3" height="10" rx=".8"/>
-          </svg>
-        </span>
-        <h3>Customer Analytics &amp; Insights</h3>
-        <p>Unify customer data to surface segments, predict churn and CLV, and deliver narrative KPIs stakeholders can act on.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">BigQuery</span><span class="chip">Looker</span><span class="chip">CRM</span>
-        </div>
-        
-      </article>
-
-      <!-- 5) Sales Enablement -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Briefcase/Sales icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="6.5" y="7" width="11" height="10" rx="2"/>
-            <path d="M9.5 7V6a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1"/>
-            <path d="M6.5 11.5h11"/>
-          </svg>
-        </span>
-        <h3>Sales Enablement</h3>
-        <p>Deliver AI-curated briefs, competitive intel, and guided next steps—integrated with your CRM and enablement content.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">HubSpot</span><span class="chip">Docs</span><span class="chip">Citations</span>
-        </div>
-        
-      </article>
-
-      <!-- 6) Social Listening -->
-      <article class="demo" role="listitem">
-        <span class="icon" aria-hidden="true">
-          <!-- Hashtag/Speech icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3.5" y="4" width="17" height="13" rx="2"/>
-            <path d="M7 8h10M9 11h6"/>
-            <path d="M8 21l4-4h6"/>
-          </svg>
-        </span>
-        <h3>Social Listening</h3>
-        <p>Analyze brand, industry, and competitor conversations across social, forums, and reviews—detect sentiment and emerging themes.</p>
-        <div class="meta" aria-hidden="true">
-          <span class="chip">Trends</span><span class="chip">Competition</span><span class="chip">Sentiment</span>
-        </div>
-        
-      </article>
-    </div>
-  </div>
-  <div class="cta-panel">
-  <h3>Have a unique use case in mind?</h3>
-  <p>Tell us what you’re building — we’ll help you ship it fast.</p>
-  <div class="cta-actions">
-    <a class="btn primary" href="mailto:hello@forth.ai?subject=Forth.AI%20Demo%20Request&body=Hi%20Forth.AI%20Team%2C%0D%0A%0D%0AI%27m%20interested%20in%20learning%20more%20about%20your%20AI%20agent%20platform.%20Please%20get%20in%20touch%20with%20me.%0D%0A%0D%0AThanks!">Contact us</a>
-    
-  </div>
-</div>
-</section>
-</div>
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-logo">
         <span class="dot" aria-hidden="true"></span>
         <strong>Forth.AI</strong>
       </div>
-      
       <div class="copyright">© 2025 Forth.AI. All rights reserved.</div>
     </div>
   </footer>
