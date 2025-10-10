@@ -17,7 +17,7 @@
       --maxw: 1200px;
       --radius: 20px;
       /* Unified control for chips & buttons */
-      --chip-px: 10px;  /* horizontal */
+      --chip-px: 10px;  /* horizontal */a
       --chip-py: 6px;   /* vertical */
       --chip-fs: 12px;
       --btn-px: 18px;
@@ -393,32 +393,32 @@
     <!-- ====== SECTION 2: PRODUCT OVERVIEW (CORE FEATURE STACK) ====== -->
     <section class="section" id="product">
       <div class="stack">
-        <h2>Agent Stack</h2>
+        <h2>The Agentic Stack</h2>
         <p class="sub">Everything you need to build, deploy, and manage AI agents in production — securely and at scale.</p>
 
         <div class="stack-grid" role="list">
-          <!-- Card 1: Agents -->
+          <!-- 1: Multimodal Documents Processing (NEW) -->
           <article class="card" role="listitem">
             <span class="icon" aria-hidden="true">
-              <!-- Network/Bot icon -->
+              <!-- File/Image/Audio icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="8" r="3"></circle>
-                <path d="M12 11v3"></path>
-                <circle cx="6" cy="16.5" r="2.5"></circle>
-                <circle cx="18" cy="16.5" r="2.5"></circle>
-                <path d="M9 15.5l-1.5-.5M15 15.5l1.5-.5M12 14l-3 .5M12 14l3 .5"></path>
+                <rect x="3" y="3.5" width="10" height="13" rx="1.5"></rect>
+                <path d="M6 7.5h4M6 10h6"/>
+                <rect x="15" y="6" width="6" height="4.5" rx="1"></rect>
+                <path d="M15.8 14.5c.6-.8 1.6-1.3 2.7-1.3 1.1 0 2.1.5 2.7 1.3M15 17h6"/>
               </svg>
             </span>
-            <h3>Agents</h3>
-            <p>Autonomous &amp; tool-using, with controllable autonomy, approval gates, and safe action policies.</p>
+            <h3>Multimodal Documents Processing</h3>
+            <p>Parse PDFs, slides, spreadsheets, images, and audio with OCR, layout-aware chunking, table/figure extraction, and speech-to-text — all ready for retrieval.</p>
             <div class="chipline" aria-hidden="true">
-              <span class="chip">Tools &amp; actions</span>
-              <span class="chip">Plans &amp; memory</span>
-              <span class="chip">Guardrails</span>
+              <span class="chip">OCR</span>
+              <span class="chip">Layout parsing</span>
+              <span class="chip">Tables &amp; forms</span>
+              <span class="chip">Image &amp; audio</span>
             </div>
           </article>
 
-          <!-- Card 2: Knowledge / RAG -->
+          <!-- 2: Knowledge and Memory (EXISTING) -->
           <article class="card" role="listitem">
             <span class="icon" aria-hidden="true">
               <!-- Book/Context icon -->
@@ -427,16 +427,38 @@
                 <path d="M8.5 7.5H18M8.5 11H16M8.5 14.5H14"></path>
               </svg>
             </span>
-            <h3>Knowledge / RAG</h3>
-            <p>Context indexing, retrieval, and evaluation built in — bring your vectors or use managed options.</p>
+            <h3>Knowledge and Memory</h3>
+            <p>Unified memory layer for agents — context indexing, entity memory, and retrieval with freshness and TTL. Bring your own vector DB or use managed storage with redaction and access control.</p>
             <div class="chipline" aria-hidden="true">
               <span class="chip">Connectors</span>
-              <span class="chip">Evaluations</span>
+              <span class="chip">Entity memory</span>
+              <span class="chip">Summarization</span>
               <span class="chip">Citations</span>
             </div>
           </article>
 
-          <!-- Card 3: Workflows -->
+          <!-- 3: Automatic Reasoning (NEW) -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Reasoning/Graph icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="6" cy="6.5" r="2"></circle>
+                <circle cx="18" cy="6.5" r="2"></circle>
+                <circle cx="12" cy="17.5" r="2"></circle>
+                <path d="M7.8 8l3.4 7M16.2 8l-3.4 7M8 6.5h8"></path>
+              </svg>
+            </span>
+            <h3>Automatic Reasoning</h3>
+            <p>Structured multi-step reasoning and planning with tool selection, hypothesis checks, self-reflection, and safe fallbacks for robust outcomes.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Planner</span>
+              <span class="chip">Tool choice</span>
+              <span class="chip">Verifier</span>
+              <span class="chip">Self‑reflect</span>
+            </div>
+          </article>
+
+          <!-- 4: Retrieval and Generation Workflow (EXISTING) -->
           <article class="card" role="listitem">
             <span class="icon" aria-hidden="true">
               <!-- Flowchart icon -->
@@ -447,16 +469,37 @@
                 <path d="M6.75 8.5V12h10.5v3.5"></path>
               </svg>
             </span>
-            <h3>Workflows</h3>
-            <p>Graph orchestration with steps, retries, timeouts, and SLAs — production-grade reliability by default.</p>
+            <h3>Retrieval and Generation Workflow</h3>
+            <p>Production-grade RAG pipeline: retrieval → reranking → tool-use/function calls → generation, with retries, timeouts, and SLAs.</p>
             <div class="chipline" aria-hidden="true">
+              <span class="chip">Retrieval</span>
+              <span class="chip">Reranking</span>
+              <span class="chip">Generation</span>
               <span class="chip">Orchestration</span>
-              <span class="chip">Retries</span>
-              <span class="chip">Policies</span>
             </div>
           </article>
 
-          <!-- Card 4: Observability & Guardrails -->
+          <!-- 5: Computer-Use (NEW) -->
+          <article class="card" role="listitem">
+            <span class="icon" aria-hidden="true">
+              <!-- Screen/Cursor icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4.5" width="18" height="12" rx="2"></rect>
+                <path d="M10 19.5h4"/>
+                <path d="M9 8l5 5-3 .5.5 3z"/>
+              </svg>
+            </span>
+            <h3>Computer-Use</h3>
+            <p>Operate real UIs — navigate browsers and apps with vision, keyboard, and mouse — with replayable traces, sandboxes, and approval gates.</p>
+            <div class="chipline" aria-hidden="true">
+              <span class="chip">Browser control</span>
+              <span class="chip">RPA</span>
+              <span class="chip">Vision actions</span>
+              <span class="chip">Sandboxed</span>
+            </div>
+          </article>
+
+          <!-- 6: Observability & Guardrails (EXISTING) -->
           <article class="card" role="listitem">
             <span class="icon" aria-hidden="true">
               <!-- Shield/Eye icon -->
@@ -711,7 +754,4 @@
         <strong>Forth.AI</strong>
       </div>
       <div class="copyright">© 2025 Forth.AI. All rights reserved.</div>
-    </div>
-  </footer>
-</body>
-</html>
+ 
