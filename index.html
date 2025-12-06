@@ -77,17 +77,18 @@
       opacity: .5;
     }
 
-    /* Hero graphic container - behind text */
+    /* Hero graphic - simple illustrative style */
     .hero-graphic {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 50%;
+      right: 10%;
+      transform: translateY(-50%);
+      width: min(400px, 30vw);
+      height: min(400px, 30vw);
       pointer-events: none;
       z-index: 0;
       opacity: 0;
-      animation: fadeInGraphic 1.5s ease-out 0.5s forwards;
+      animation: fadeInGraphic 1s ease-out 0.8s forwards;
     }
 
     @keyframes fadeInGraphic {
@@ -96,83 +97,50 @@
       }
     }
 
-    /* SVG-based network visualization for better control */
     .hero-graphic svg {
-      position: absolute;
       width: 100%;
       height: 100%;
-      top: 0;
-      left: 0;
     }
 
-    /* Animated lines between nodes */
-    .hero-graphic .connection-line {
-      stroke: var(--accent);
-      stroke-width: 1;
-      stroke-opacity: 0;
+    /* Simple hand-drawn style paths */
+    .hero-graphic .illustration-stroke {
+      stroke: var(--text-primary);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       fill: none;
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-      animation: drawConnection 3s ease-out forwards;
+      opacity: 0;
+      animation: drawPath 1.5s ease-out forwards;
     }
 
-    .connection-line:nth-child(1) { animation-delay: 0.5s; }
-    .connection-line:nth-child(2) { animation-delay: 0.7s; }
-    .connection-line:nth-child(3) { animation-delay: 0.9s; }
-    .connection-line:nth-child(4) { animation-delay: 1.1s; }
-    .connection-line:nth-child(5) { animation-delay: 1.3s; }
+    .illustration-stroke:nth-child(1) { animation-delay: 1s; }
+    .illustration-stroke:nth-child(2) { animation-delay: 1.1s; }
+    .illustration-stroke:nth-child(3) { animation-delay: 1.2s; }
+    .illustration-stroke:nth-child(4) { animation-delay: 1.3s; }
 
-    @keyframes drawConnection {
+    @keyframes drawPath {
       to {
-        stroke-dashoffset: 0;
-        stroke-opacity: 0.15;
+        opacity: 0.7;
       }
     }
 
-    /* Pulsing nodes */
-    .hero-graphic .node {
+    /* Accent dots */
+    .hero-graphic .accent-dot {
       fill: var(--accent);
       opacity: 0;
-      animation: fadeInNode 0.6s ease-out forwards, pulseNode 3s ease-in-out infinite;
+      animation: fadeInDot 0.4s ease-out forwards;
     }
 
-    .node:nth-child(1) { animation-delay: 0.3s, 0.3s; }
-    .node:nth-child(2) { animation-delay: 0.5s, 0.5s; }
-    .node:nth-child(3) { animation-delay: 0.7s, 0.7s; }
-    .node:nth-child(4) { animation-delay: 0.9s, 0.9s; }
-    .node:nth-child(5) { animation-delay: 1.1s, 1.1s; }
-    .node:nth-child(6) { animation-delay: 1.3s, 1.3s; }
+    .accent-dot:nth-child(5) { animation-delay: 1.4s; }
+    .accent-dot:nth-child(6) { animation-delay: 1.5s; }
+    .accent-dot:nth-child(7) { animation-delay: 1.6s; }
+    .accent-dot:nth-child(8) { animation-delay: 1.7s; }
+    .accent-dot:nth-child(9) { animation-delay: 1.8s; }
+    .accent-dot:nth-child(10) { animation-delay: 1.9s; }
 
-    @keyframes fadeInNode {
+    @keyframes fadeInDot {
       to {
-        opacity: 0.8;
-      }
-    }
-
-    @keyframes pulseNode {
-      0%, 100% {
-        opacity: 0.4;
-        filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));
-      }
-      50% {
-        opacity: 0.8;
-        filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6));
-      }
-    }
-
-    /* Orbiting ring */
-    .hero-graphic .orbit-ring {
-      stroke: var(--accent);
-      stroke-width: 1;
-      stroke-opacity: 0.08;
-      fill: none;
-      animation: rotateRing 25s linear infinite;
-      transform-origin: center;
-    }
-
-    @keyframes rotateRing {
-      to {
-        transform: rotate(360deg);
+        opacity: 1;
       }
     }
 
@@ -481,26 +449,25 @@
 <body>
   <div class="wrap">
     <div class="backdrop" aria-hidden="true">
-      <!-- Hero graphic: Network visualization inspired by Anthropic's design -->
+      <!-- Hero graphic: Simple illustrative style inspired by Anthropic -->
       <div class="hero-graphic">
-        <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
-          <!-- Connection lines (drawn first, behind nodes) -->
-          <path class="connection-line" d="M 576,216 Q 960,324 1152,378" />
-          <path class="connection-line" d="M 1152,378 Q 1200,450 1440,486" />
-          <path class="connection-line" d="M 480,594 Q 700,550 960,540" />
-          <path class="connection-line" d="M 960,540 Q 1100,530 1440,486" />
-          <path class="connection-line" d="M 576,216 Q 480,400 480,594" />
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Stylized abstract shapes representing AI-native transformation -->
+          <!-- Base foundation -->
+          <path class="illustration-stroke" d="M 100,320 L 300,320 M 120,340 L 280,340" />
 
-          <!-- Orbiting ring -->
-          <circle class="orbit-ring" cx="960" cy="450" r="300" />
+          <!-- Rising interconnected elements (hand-drawn style) -->
+          <path class="illustration-stroke" d="M 140,320 Q 140,280 160,260 Q 180,240 200,240" />
+          <path class="illustration-stroke" d="M 200,240 Q 220,240 240,220 Q 260,200 260,160" />
+          <path class="illustration-stroke" d="M 260,160 Q 260,120 240,100 Q 220,80 200,80" />
 
-          <!-- Network nodes (6 pulsing amber dots) -->
-          <circle class="node" cx="576" cy="216" r="12" />
-          <circle class="node" cx="1152" cy="378" r="12" />
-          <circle class="node" cx="480" cy="594" r="12" />
-          <circle class="node" cx="1056" cy="756" r="12" />
-          <circle class="node" cx="1440" cy="486" r="12" />
-          <circle class="node" cx="960" cy="270" r="12" />
+          <!-- Accent dots representing nodes/connections -->
+          <circle class="accent-dot" cx="160" cy="260" r="8" />
+          <circle class="accent-dot" cx="200" cy="240" r="10" />
+          <circle class="accent-dot" cx="240" cy="220" r="8" />
+          <circle class="accent-dot" cx="260" cy="160" r="10" />
+          <circle class="accent-dot" cx="240" cy="100" r="8" />
+          <circle class="accent-dot" cx="200" cy="80" r="12" />
         </svg>
       </div>
     </div>
