@@ -79,11 +79,12 @@
 
     /* Hero graphic - simple illustrative style */
     .hero-graphic {
-      position: fixed;
-      top: clamp(100px, 14vh, 180px);
+      position: absolute;
+      top: 50%;
       right: 8%;
-      width: min(500px, 35vw);
-      height: min(500px, 35vw);
+      transform: translateY(-50%);
+      width: min(450px, 32vw);
+      height: min(450px, 32vw);
       pointer-events: none;
       z-index: 0;
       opacity: 0;
@@ -101,45 +102,82 @@
       height: 100%;
     }
 
-    /* Simple hand-drawn style paths */
-    .hero-graphic .illustration-stroke {
+    /* Foundation strokes (AI as base layer) */
+    .hero-graphic .foundation {
       stroke: var(--accent);
-      stroke-width: 8;
+      stroke-width: 10;
       stroke-linecap: round;
-      stroke-linejoin: round;
       fill: none;
       opacity: 0;
-      animation: drawPath 1.5s ease-out forwards;
+      animation: drawFoundation 1s ease-out 1s forwards;
     }
 
-    .illustration-stroke:nth-child(1) { animation-delay: 1s; }
-    .illustration-stroke:nth-child(2) { animation-delay: 1.1s; }
-    .illustration-stroke:nth-child(3) { animation-delay: 1.2s; }
-    .illustration-stroke:nth-child(4) { animation-delay: 1.3s; }
+    .foundation:nth-child(1) { animation-delay: 1s; }
+    .foundation:nth-child(2) { animation-delay: 1.1s; }
 
-    @keyframes drawPath {
+    @keyframes drawFoundation {
       to {
-        opacity: 0.9;
+        opacity: 0.95;
       }
     }
 
-    /* Accent dots */
+    /* Building blocks (AI-native systems) */
+    .hero-graphic .building-block {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 6;
+      opacity: 0;
+      animation: riseUp 0.8s ease-out forwards;
+    }
+
+    .building-block:nth-child(3) { animation-delay: 1.3s; }
+    .building-block:nth-child(4) { animation-delay: 1.4s; }
+    .building-block:nth-child(5) { animation-delay: 1.5s; }
+
+    @keyframes riseUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 0.85;
+        transform: translateY(0);
+      }
+    }
+
+    /* Interconnection dots */
     .hero-graphic .accent-dot {
       fill: var(--accent);
       opacity: 0;
       animation: fadeInDot 0.4s ease-out forwards;
     }
 
-    .accent-dot:nth-child(5) { animation-delay: 1.4s; }
-    .accent-dot:nth-child(6) { animation-delay: 1.5s; }
-    .accent-dot:nth-child(7) { animation-delay: 1.6s; }
-    .accent-dot:nth-child(8) { animation-delay: 1.7s; }
-    .accent-dot:nth-child(9) { animation-delay: 1.8s; }
-    .accent-dot:nth-child(10) { animation-delay: 1.9s; }
+    .accent-dot:nth-child(6) { animation-delay: 1.6s; }
+    .accent-dot:nth-child(7) { animation-delay: 1.7s; }
+    .accent-dot:nth-child(8) { animation-delay: 1.8s; }
 
     @keyframes fadeInDot {
       to {
         opacity: 1;
+      }
+    }
+
+    /* Connection line */
+    .hero-graphic .connection-line {
+      stroke: var(--accent);
+      stroke-width: 3;
+      stroke-linecap: round;
+      fill: none;
+      opacity: 0;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawConnection 1.2s ease-out 1.9s forwards;
+    }
+
+    @keyframes drawConnection {
+      to {
+        opacity: 0.6;
+        stroke-dashoffset: 0;
       }
     }
 
@@ -447,31 +485,30 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="backdrop" aria-hidden="true">
-      <!-- Hero graphic: Simple illustrative style inspired by Anthropic -->
-      <div class="hero-graphic">
-        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <!-- Stylized abstract shapes representing AI-native transformation -->
-          <!-- Base foundation -->
-          <path class="illustration-stroke" d="M 100,320 L 300,320 M 120,340 L 280,340" />
-
-          <!-- Rising interconnected elements (hand-drawn style) -->
-          <path class="illustration-stroke" d="M 140,320 Q 140,280 160,260 Q 180,240 200,240" />
-          <path class="illustration-stroke" d="M 200,240 Q 220,240 240,220 Q 260,200 260,160" />
-          <path class="illustration-stroke" d="M 260,160 Q 260,120 240,100 Q 220,80 200,80" />
-
-          <!-- Accent dots representing nodes/connections -->
-          <circle class="accent-dot" cx="160" cy="260" r="14" />
-          <circle class="accent-dot" cx="200" cy="240" r="16" />
-          <circle class="accent-dot" cx="240" cy="220" r="14" />
-          <circle class="accent-dot" cx="260" cy="160" r="18" />
-          <circle class="accent-dot" cx="240" cy="100" r="14" />
-          <circle class="accent-dot" cx="200" cy="80" r="20" />
-        </svg>
-      </div>
-    </div>
+    <div class="backdrop" aria-hidden="true"></div>
 
     <header class="hero" role="banner">
+      <!-- Hero graphic: AI as foundation, not tool -->
+      <div class="hero-graphic" aria-hidden="true">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Strong foundation layer (AI as base) -->
+          <path class="illustration-stroke foundation" d="M 80,340 L 320,340" />
+          <path class="illustration-stroke foundation" d="M 90,320 L 310,320" />
+
+          <!-- Building blocks emerging from foundation (AI-native systems) -->
+          <rect class="building-block" x="100" y="260" width="60" height="60" rx="8" />
+          <rect class="building-block" x="170" y="220" width="60" height="100" rx="8" />
+          <rect class="building-block" x="240" y="180" width="60" height="140" rx="8" />
+
+          <!-- Interconnection nodes showing emergence -->
+          <circle class="accent-dot" cx="130" cy="260" r="12" />
+          <circle class="accent-dot" cx="200" cy="220" r="14" />
+          <circle class="accent-dot" cx="270" cy="180" r="16" />
+
+          <!-- Connection lines showing integration -->
+          <path class="connection-line" d="M 130,260 L 200,220 L 270,180" />
+        </svg>
+      </div>
       <div class="brand reveal-text">
         <span class="dot" aria-hidden="true"></span>
         FORTH AI
