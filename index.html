@@ -77,66 +77,161 @@
       opacity: .5;
     }
 
-    /* Animated artifacts */
-    .artifacts {
+    /* Hero graphic container */
+    .hero-graphic {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(800px, 90vw);
+      height: min(600px, 70vh);
+      pointer-events: none;
+      opacity: 0;
+      animation: fadeInGraphic 1.5s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInGraphic {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Central network visualization */
+    .network-viz {
       position: absolute;
       inset: 0;
-      pointer-events: none;
-      overflow: hidden;
     }
 
-    .artifact {
+    .network-node {
       position: absolute;
-      opacity: 0;
-      animation: float-in 20s ease-in-out infinite;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+      animation: pulse 3s ease-in-out infinite;
     }
 
-    .artifact-1 {
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
+    .network-node:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
+    .network-node:nth-child(2) { top: 35%; left: 60%; animation-delay: 0.3s; }
+    .network-node:nth-child(3) { top: 55%; left: 25%; animation-delay: 0.6s; }
+    .network-node:nth-child(4) { top: 70%; left: 55%; animation-delay: 0.9s; }
+    .network-node:nth-child(5) { top: 45%; left: 75%; animation-delay: 1.2s; }
+    .network-node:nth-child(6) { top: 25%; left: 50%; animation-delay: 1.5s; }
 
-    .artifact-2 {
-      top: 60%;
-      right: 15%;
-      animation-delay: 3s;
-    }
-
-    .artifact-3 {
-      top: 40%;
-      left: 70%;
-      animation-delay: 6s;
-    }
-
-    @keyframes float-in {
+    @keyframes pulse {
       0%, 100% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      10%, 90% {
-        opacity: 0.3;
-        transform: translateY(0);
+        transform: scale(1);
+        opacity: 0.6;
       }
       50% {
-        opacity: 0.15;
-        transform: translateY(-10px);
+        transform: scale(1.3);
+        opacity: 1;
       }
     }
 
-    .artifact svg {
-      width: 120px;
-      height: 120px;
-      filter: blur(1px);
+    .network-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: 0;
+      animation: drawLine 2s ease-out forwards;
+      transform-origin: left center;
     }
 
-    .artifact path,
-    .artifact rect,
-    .artifact circle {
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 1;
-      opacity: 0.4;
+    @keyframes drawLine {
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        width: 100%;
+        opacity: 0.2;
+      }
+    }
+
+    /* Orbiting elements */
+    .orbit-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      margin: -200px 0 0 -200px;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(245, 158, 11, 0.1);
+      border-radius: 50%;
+      animation: rotateRing 20s linear infinite;
+    }
+
+    .orbit-ring:nth-child(2) {
+      inset: 40px;
+      animation-duration: 15s;
+      animation-direction: reverse;
+    }
+
+    @keyframes rotateRing {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .orbit-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: -2px;
+      left: 50%;
+      margin-left: -2px;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+    }
+
+    /* Text reveal animations */
+    .reveal-text {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.8s ease-out forwards;
+    }
+
+    .reveal-text.delay-1 { animation-delay: 0.2s; }
+    .reveal-text.delay-2 { animation-delay: 0.4s; }
+    .reveal-text.delay-3 { animation-delay: 0.6s; }
+    .reveal-text.delay-4 { animation-delay: 0.8s; }
+
+    @keyframes revealUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Reduce motion support */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-graphic,
+      .network-node,
+      .network-line,
+      .orbit-ring,
+      .reveal-text {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* Hide graphic on mobile for performance */
+    @media (max-width: 768px) {
+      .hero-graphic {
+        display: none;
+      }
     }
 
     .hero{
@@ -405,64 +500,47 @@
 <body>
   <div class="wrap">
     <div class="backdrop" aria-hidden="true">
-      <div class="artifacts">
-        <!-- Animated artifact 1: Neural network nodes -->
-        <div class="artifact artifact-1">
-          <svg viewBox="0 0 120 120">
-            <circle cx="30" cy="30" r="4" />
-            <circle cx="60" cy="30" r="4" />
-            <circle cx="90" cy="30" r="4" />
-            <circle cx="45" cy="60" r="4" />
-            <circle cx="75" cy="60" r="4" />
-            <circle cx="60" cy="90" r="4" />
-            <path d="M30,30 L45,60 M60,30 L45,60 M90,30 L75,60 M45,60 L60,90 M75,60 L60,90" />
-          </svg>
+      <!-- Hero graphic: Network visualization inspired by Anthropic's design -->
+      <div class="hero-graphic">
+        <!-- Network nodes with pulsing animation -->
+        <div class="network-viz">
+          <div class="network-node"></div>
+          <div class="network-node"></div>
+          <div class="network-node"></div>
+          <div class="network-node"></div>
+          <div class="network-node"></div>
+          <div class="network-node"></div>
         </div>
 
-        <!-- Animated artifact 2: Data flow -->
-        <div class="artifact artifact-2">
-          <svg viewBox="0 0 120 120">
-            <rect x="20" y="20" width="30" height="20" rx="4" />
-            <rect x="70" y="20" width="30" height="20" rx="4" />
-            <rect x="20" y="60" width="30" height="20" rx="4" />
-            <rect x="70" y="60" width="30" height="20" rx="4" />
-            <path d="M50,30 L70,30 M50,70 L70,70 M35,40 L35,60 M85,40 L85,60" />
-            <path d="M70,25 L65,30 L70,35" fill="none" />
-            <path d="M70,65 L65,70 L70,75" fill="none" />
-          </svg>
-        </div>
-
-        <!-- Animated artifact 3: Workflow -->
-        <div class="artifact artifact-3">
-          <svg viewBox="0 0 120 120">
-            <circle cx="30" cy="60" r="15" />
-            <rect x="55" y="45" width="30" height="30" rx="4" />
-            <circle cx="105" cy="60" r="15" />
-            <path d="M45,60 L55,60 M85,60 L90,60" />
-            <path d="M52,60 L48,58 L48,62 Z" fill="var(--accent)" opacity="0.4" />
-            <path d="M87,60 L83,58 L83,62 Z" fill="var(--accent)" opacity="0.4" />
-          </svg>
+        <!-- Orbiting rings -->
+        <div class="orbit-container">
+          <div class="orbit-ring">
+            <div class="orbit-particle"></div>
+          </div>
+          <div class="orbit-ring">
+            <div class="orbit-particle"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <header class="hero" role="banner">
-      <div class="brand">
+      <div class="brand reveal-text">
         <span class="dot" aria-hidden="true"></span>
         FORTH AI
       </div>
 
-      <h1>The future of work is&nbsp;AI-native</h1>
+      <h1 class="reveal-text delay-1">The future of work is&nbsp;AI-native</h1>
 
-      <p class="lead">
+      <p class="lead reveal-text delay-2">
         We research workforce transformation, AI safety in production, and build systems that demonstrate what's possible when AI is not a tool but the foundation.
       </p>
 
-      <p class="nuance">
+      <p class="nuance reveal-text delay-3">
         While no one can predict every outcome of AI-native transformation, we do know that building reliable enterprise systems requires both bold experimentation and deliberate safeguards.
       </p>
 
-      <a class="cta" href="#research">View research</a>
+      <a class="cta reveal-text delay-4" href="#research">View research</a>
     </header>
 
     <section class="section" id="focus">
