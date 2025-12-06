@@ -77,6 +77,68 @@
       opacity: .5;
     }
 
+    /* Animated artifacts */
+    .artifacts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .artifact {
+      position: absolute;
+      opacity: 0;
+      animation: float-in 20s ease-in-out infinite;
+    }
+
+    .artifact-1 {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .artifact-2 {
+      top: 60%;
+      right: 15%;
+      animation-delay: 3s;
+    }
+
+    .artifact-3 {
+      top: 40%;
+      left: 70%;
+      animation-delay: 6s;
+    }
+
+    @keyframes float-in {
+      0%, 100% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      10%, 90% {
+        opacity: 0.3;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 0.15;
+        transform: translateY(-10px);
+      }
+    }
+
+    .artifact svg {
+      width: 120px;
+      height: 120px;
+      filter: blur(1px);
+    }
+
+    .artifact path,
+    .artifact rect,
+    .artifact circle {
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1;
+      opacity: 0.4;
+    }
+
     .hero{
       position: relative;
       z-index: 1;
@@ -105,6 +167,12 @@
       border-radius: 50%;
       background: var(--accent);
       opacity: 0.8;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.4; }
     }
 
     h1{
@@ -119,12 +187,22 @@
     }
 
     .lead{
-      margin: 0 auto 48px;
-      max-width: 600px;
+      margin: 0 auto 24px;
+      max-width: 680px;
       color: var(--text-secondary);
       font-size: clamp(17px, 2.2vw, 20px);
       line-height: 1.6;
       font-weight: 400;
+    }
+
+    .nuance{
+      margin: 0 auto 48px;
+      max-width: 720px;
+      color: var(--text-muted);
+      font-size: clamp(15px, 2vw, 17px);
+      line-height: 1.65;
+      font-weight: 400;
+      font-style: italic;
     }
 
     .cta{
@@ -157,23 +235,42 @@
     }
 
     .section-title{
-      margin: 0 0 48px;
+      margin: 0 0 16px;
       font-weight: 600;
       font-size: clamp(24px, 3.5vw, 32px);
       letter-spacing: -0.02em;
       color: var(--text-primary);
     }
 
+    .section-subtitle{
+      margin: 0 0 48px;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: clamp(15px, 2vw, 17px);
+      line-height: 1.65;
+    }
+
     .areas{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
     }
 
     .area{
       display: flex;
       flex-direction: column;
       gap: 12px;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .area:hover{
+      background: rgba(255, 255, 255, 0.02);
+      border-color: var(--border-default);
+      transform: translateY(-2px);
     }
 
     .area h3{
@@ -193,17 +290,22 @@
 
     .research-list{
       display: grid;
-      gap: 16px;
+      gap: 24px;
       margin-top: 32px;
     }
 
     .paper{
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border-subtle);
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
     }
 
-    .paper:last-child{
-      border-bottom: none;
+    .paper:hover{
+      background: rgba(255, 255, 255, 0.02);
+      border-color: var(--border-default);
+      transform: translateY(-2px);
     }
 
     .paper-title{
@@ -280,12 +382,55 @@
       .areas{
         grid-template-columns: 1fr;
       }
+      .artifact {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true">
+      <div class="artifacts">
+        <!-- Animated artifact 1: Neural network nodes -->
+        <div class="artifact artifact-1">
+          <svg viewBox="0 0 120 120">
+            <circle cx="30" cy="30" r="4" />
+            <circle cx="60" cy="30" r="4" />
+            <circle cx="90" cy="30" r="4" />
+            <circle cx="45" cy="60" r="4" />
+            <circle cx="75" cy="60" r="4" />
+            <circle cx="60" cy="90" r="4" />
+            <path d="M30,30 L45,60 M60,30 L45,60 M90,30 L75,60 M45,60 L60,90 M75,60 L60,90" />
+          </svg>
+        </div>
+
+        <!-- Animated artifact 2: Data flow -->
+        <div class="artifact artifact-2">
+          <svg viewBox="0 0 120 120">
+            <rect x="20" y="20" width="30" height="20" rx="4" />
+            <rect x="70" y="20" width="30" height="20" rx="4" />
+            <rect x="20" y="60" width="30" height="20" rx="4" />
+            <rect x="70" y="60" width="30" height="20" rx="4" />
+            <path d="M50,30 L70,30 M50,70 L70,70 M35,40 L35,60 M85,40 L85,60" />
+            <path d="M70,25 L65,30 L70,35" fill="none" />
+            <path d="M70,65 L65,70 L70,75" fill="none" />
+          </svg>
+        </div>
+
+        <!-- Animated artifact 3: Workflow -->
+        <div class="artifact artifact-3">
+          <svg viewBox="0 0 120 120">
+            <circle cx="30" cy="60" r="15" />
+            <rect x="55" y="45" width="30" height="30" rx="4" />
+            <circle cx="105" cy="60" r="15" />
+            <path d="M45,60 L55,60 M85,60 L90,60" />
+            <path d="M52,60 L48,58 L48,62 Z" fill="var(--accent)" opacity="0.4" />
+            <path d="M87,60 L83,58 L83,62 Z" fill="var(--accent)" opacity="0.4" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
     <header class="hero" role="banner">
       <div class="brand">
@@ -299,32 +444,42 @@
         We research workforce transformation, AI safety in production, and build systems that demonstrate what's possible when AI is not a tool but the foundation.
       </p>
 
+      <p class="nuance">
+        While no one can predict every outcome of AI-native transformation, we do know that building reliable enterprise systems requires both bold experimentation and deliberate safeguards.
+      </p>
+
       <a class="cta" href="#research">View research</a>
     </header>
 
     <section class="section" id="focus">
-      <h2 class="section-title">Focus areas</h2>
+      <h2 class="section-title">Research areas</h2>
+      <p class="section-subtitle">
+        Three complementary directions — from how people adapt, to how systems behave, to what becomes possible.
+      </p>
 
       <div class="areas">
         <div class="area">
           <h3>Workforce reskilling</h3>
-          <p>How organizations adapt when AI becomes the default. Research-driven training on redesigning work, not just adopting tools.</p>
+          <p>How organizations adapt when AI becomes the default. Not just training on tools, but redesigning work around new capabilities.</p>
         </div>
 
         <div class="area">
           <h3>AI safety in production</h3>
-          <p>Building reliable, accountable systems for enterprise deployment. Methods for safety in real-world contexts.</p>
+          <p>Methods for building accountable systems that operate reliably at scale. Safety isn't theoretical—it's how we build.</p>
         </div>
 
         <div class="area">
           <h3>AI-native enterprise</h3>
-          <p>Production-ready agentic systems and software that demonstrate what's possible. Bridging the gap between demos and deployment at scale.</p>
+          <p>Production systems that demonstrate research in practice. Closing the gap between what's possible in demos and what works in deployment.</p>
         </div>
       </div>
     </section>
 
     <section class="section" id="research">
-      <h2 class="section-title">Research</h2>
+      <h2 class="section-title">Publications</h2>
+      <p class="section-subtitle">
+        Recent work on multi-turn dialogue systems, fairness in decision-making, and production-ready AI deployment.
+      </p>
 
       <div class="research-list">
         <article class="paper">
