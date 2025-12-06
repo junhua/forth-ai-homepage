@@ -79,10 +79,9 @@
 
     /* Hero graphic - simple illustrative style */
     .hero-graphic {
-      position: absolute;
-      top: 50%;
+      position: fixed;
+      top: clamp(120px, 16vh, 220px);
       right: 10%;
-      transform: translateY(-50%);
       width: min(400px, 30vw);
       height: min(400px, 30vw);
       pointer-events: none;
