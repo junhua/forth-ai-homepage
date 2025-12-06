@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "type": "prompt",
+        "prompt": "STRATEGIC ALIGNMENT CHECK\n\nCurrent OKRs (in priority order):\n1. FIND PRODUCT-MARKET FIT (TOP PRIORITY) - customer discovery, demo delivery, LOI\n2. VALUE VALIDATION - prove agent-native approach is better than traditional UI\n3. TECHNICAL VALIDATION - prove mechanism works, benchmark accuracy, patent\n4. RESEARCH (DEPRIORITIZED) - papers can wait\n\nFor this request:\n- If CLEARLY serves OKR 1-3: Proceed, note which OKR\n- If UNCLEAR alignment: Ask 'Which OKR does this serve?'\n- If serves RESEARCH: Warn 'Research is deprioritized. Proceed or refocus on PMF?'\n- If OFF-STRATEGY: Ask 'This doesn't connect to OKRs. Update OKRs or reconsider task?'\n\nAlso apply: Is this requirement dumb? Can anything be deleted? Simplest approach?"
+      }
+    ],
+    "Stop": [
+      {
+        "type": "prompt",
+        "prompt": "Before ending, check if deployment is needed:\n\n1. Were code changes made in Tech/ or Research/?\n2. If yes, check git status for uncommitted changes\n3. If there are changes, commit with author 'junhua <junhua.viva@gmail.com>'\n4. Push to GitHub\n5. If changes are in Tech/demos/ or Tech/forth-ai-homepage/, deploy to Vercel using CLI: 'vercel --prod'\n\nOnly deploy if the task was successfully completed. Do not deploy broken work."
+      }
+    ]
+  }
+}

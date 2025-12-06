@@ -1,0 +1,22 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool_name": "Bash",
+        "output_contains": ["git commit", "[main", "[master", "create mode", "files changed"]
+      },
+      "action": {
+        "type": "prompt",
+        "prompt": "A commit was made. Check if TASKS.md exists in the project and update it: move completed work to Done, update In Progress status, or add new tasks if this commit represents new work not yet tracked."
+      }
+    },
+    {
+      "event": "Stop",
+      "action": {
+        "type": "prompt",
+        "prompt": "Before ending, check TASKS.md in the current project. Ensure it reflects the current state: update In Progress items, move completed work to Done, and capture any blockers. Update the 'Last Updated' timestamp."
+      }
+    }
+  ]
+}
