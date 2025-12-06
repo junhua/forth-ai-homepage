@@ -4,8 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
-  <title>Forth AI</title>
-  <meta name="description" content="Research and build AI-native enterprise systems." />
+  <title>Forth AI — Independent Research Lab</title>
+  <meta name="description" content="Independent research lab for AI-native enterprise. Workforce reskilling, AI safety, and production-ready agentic systems." />
+
+  <!-- Brand Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/geist-mono" rel="stylesheet">
   <style>
     :root{
       --bg-primary: #0a0a0c;
@@ -19,10 +24,15 @@
       --text-muted: #71717a;
       --accent: #f59e0b;
       --accent-soft: rgba(245, 158, 11, 0.15);
+      --glass: rgba(255, 255, 255, 0.03);
       --maxw: 1100px;
       --radius: 12px;
       --radius-lg: 16px;
       --radius-xl: 20px;
+      /* Fonts */
+      --font-display: 'Clash Display', sans-serif;
+      --font-body: 'General Sans', -apple-system, sans-serif;
+      --font-mono: 'Geist Mono', monospace;
     }
 
     * { box-sizing: border-box; }
@@ -30,7 +40,7 @@
 
     body{
       margin: 0;
-      font-family: -apple-system, ui-sans-serif, system-ui, sans-serif;
+      font-family: var(--font-body);
       color: var(--text-primary);
       background: var(--bg-primary);
       -webkit-font-smoothing: antialiased;
@@ -258,6 +268,7 @@
 
     h1{
       margin: 0 0 28px;
+      font-family: var(--font-display);
       font-weight: 600;
       line-height: 1.12;
       letter-spacing: -0.03em;
@@ -265,6 +276,13 @@
       color: var(--text-primary);
       max-width: 800px;
       margin-inline: auto;
+    }
+
+    h1 .accent-word {
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .lead{
@@ -286,6 +304,39 @@
       font-style: italic;
     }
 
+    .focus-pills{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .pill{
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .pill-divider{
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px){
+      .pill-divider{
+        display: none;
+      }
+      .focus-pills{
+        gap: 8px;
+      }
+    }
+
     .cta{
       display: inline-flex;
       align-items: center;
@@ -297,13 +348,26 @@
       color: var(--text-primary);
       font-weight: 500;
       font-size: 15px;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
 
     .cta:hover{
       background: var(--bg-tertiary);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-primary{
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+
+    .cta-primary:hover{
+      background: #d97706;
+      border-color: #d97706;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
     }
 
     .section{
@@ -317,6 +381,7 @@
 
     .section-title{
       margin: 0 0 16px;
+      font-family: var(--font-display);
       font-weight: 600;
       font-size: clamp(24px, 3.5vw, 32px);
       letter-spacing: -0.02em;
@@ -340,22 +405,47 @@
     .area{
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding: 24px;
+      gap: 16px;
+      padding: 28px;
       border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.01);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .area:hover{
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.04);
       border-color: var(--border-default);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .area-icon{
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .area-icon svg{
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .area h3{
       margin: 0;
+      font-family: var(--font-display);
       font-size: 18px;
       font-weight: 600;
       letter-spacing: -0.01em;
@@ -378,37 +468,62 @@
     .paper{
       padding: 24px;
       border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.01);
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border-subtle);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .paper:hover{
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.04);
       border-color: var(--border-default);
       transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .paper-header{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
     }
 
     .paper-title{
-      margin: 0 0 8px;
+      margin: 0;
+      font-family: var(--font-display);
       font-size: 16px;
       font-weight: 500;
       color: var(--text-primary);
       line-height: 1.4;
+      flex: 1;
+    }
+
+    .paper-venue{
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .paper-authors{
       margin: 0 0 12px;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
-      font-style: italic;
     }
 
     .paper-summary{
-      margin: 12px 0 0;
+      margin: 0;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
       font-size: 14px;
       color: var(--text-secondary);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .paper-meta{
@@ -417,21 +532,30 @@
       color: var(--text-muted);
     }
 
-    .paper-venue{
-      color: var(--accent);
-      font-weight: 500;
-    }
-
     .contact-section{
       text-align: center;
-      padding: 48px 32px;
+      padding: 56px 40px;
       border-radius: var(--radius-xl);
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-tertiary) 100%);
+      border: 1px solid var(--border-default);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
     }
 
     .contact-section h3{
       margin: 0 0 12px;
+      font-family: var(--font-display);
       font-size: clamp(20px, 2.8vw, 24px);
       font-weight: 600;
       letter-spacing: -0.01em;
@@ -448,24 +572,50 @@
     .footer{
       width: 100%;
       border-top: 1px solid var(--border-subtle);
-      padding: 40px 20px;
-      text-align: center;
+      padding: 48px 20px 40px;
       margin-top: auto;
     }
 
     .footer-inner{
       max-width: var(--maxw);
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
     }
 
     .footer-brand{
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-weight: 500;
-      font-size: 15px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 16px;
       color: var(--text-primary);
-      margin-bottom: 12px;
+    }
+
+    .footer-tagline{
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .footer-links{
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-link{
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover{
+      color: var(--accent);
     }
 
     .copyright{
@@ -493,37 +643,50 @@
         FORTH AI
       </div>
 
-      <h1 class="reveal-text delay-1">The future of work is&nbsp;AI-native</h1>
+      <h1 class="reveal-text delay-1">Independent research lab for <span class="accent-word">AI-native</span> enterprise</h1>
 
       <p class="lead reveal-text delay-2">
-        We research workforce transformation, AI safety in production, and build systems that demonstrate what's possible when AI is not a tool but the foundation.
+        We research workforce transformation, AI safety in production, and build systems that demonstrate what's possible when AI is not a tool — but the foundation.
       </p>
 
-      <p class="nuance reveal-text delay-3">
-        While no one can predict every outcome of AI-native transformation, we do know that building reliable enterprise systems requires both bold experimentation and deliberate safeguards.
-      </p>
+      <div class="focus-pills reveal-text delay-3">
+        <span class="pill">Workforce reskilling</span>
+        <span class="pill-divider">•</span>
+        <span class="pill">AI safety</span>
+        <span class="pill-divider">•</span>
+        <span class="pill">AI-native enterprise</span>
+      </div>
 
       <a class="cta reveal-text delay-4" href="#research">View research</a>
     </header>
 
     <section class="section" id="focus">
-      <h2 class="section-title">Social Missions</h2>
+      <h2 class="section-title">Research Focus</h2>
       <p class="section-subtitle">
         Three complementary directions — from how people adapt, to how systems behave, to what becomes possible.
       </p>
 
       <div class="areas">
         <div class="area">
+          <div class="area-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
           <h3>Workforce reskilling</h3>
           <p>How organizations adapt when AI becomes the default. Not just training on tools, but redesigning work around new capabilities.</p>
         </div>
 
         <div class="area">
+          <div class="area-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
           <h3>AI safety in production</h3>
           <p>Methods for building accountable systems that operate reliably at scale. Safety isn't theoretical—it's how we build.</p>
         </div>
 
         <div class="area">
+          <div class="area-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01M6 12h.01M10 8h8M10 12h8"/></svg>
+          </div>
           <h3>AI-native enterprise</h3>
           <p>Production systems that demonstrate research in practice. Closing the gap between what's possible in demos and what works in deployment.</p>
         </div>
@@ -538,38 +701,48 @@
 
       <div class="research-list">
         <article class="paper">
-          <h3 class="paper-title">Balancing Accuracy and Efficiency in Multi-Turn Intent Classification for LLM-Powered Dialog Systems in Production</h3>
+          <div class="paper-header">
+            <h3 class="paper-title">Balancing Accuracy and Efficiency in Multi-Turn Intent Classification for LLM-Powered Dialog Systems in Production</h3>
+            <span class="paper-venue">IAAI 2026</span>
+          </div>
           <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-          <p class="paper-meta"><span class="paper-venue">IAAI 2026</span></p>
-          <p class="paper-summary">Production dialogue systems face a critical challenge: achieving high accuracy while maintaining low latency at scale. This work introduces Symbol Tuning and C-LARA, two complementary approaches that enable enterprise deployment of LLM-powered intent classification. By simplifying intent representations and using LLMs for synthetic data generation, we show how to fine-tune compact models that match large model performance at a fraction of the computational cost. This demonstrates a practical path toward AI-native enterprise systems that are both intelligent and economically viable.</p>
+          <p class="paper-summary">Production dialogue systems face a critical challenge: achieving high accuracy while maintaining low latency at scale. This work introduces Symbol Tuning and C-LARA — two complementary approaches that enable enterprise deployment of LLM-powered intent classification at a fraction of the computational cost.</p>
         </article>
 
         <article class="paper">
-          <h3 class="paper-title">From Intents to Conversations: Generating Intent-Driven Dialogues with Contrastive Learning for Multi-Turn Classification</h3>
+          <div class="paper-header">
+            <h3 class="paper-title">From Intents to Conversations: Generating Intent-Driven Dialogues with Contrastive Learning</h3>
+            <span class="paper-venue">CIKM 2025</span>
+          </div>
           <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-          <p class="paper-meta"><span class="paper-venue">CIKM 2025</span></p>
-          <p class="paper-summary">Training multi-turn intent classifiers requires extensive conversational data that captures realistic dialogue patterns—a resource that's often scarce or unavailable. We present Chain-of-Intent, which combines Hidden Markov Models with LLMs to generate context-aware dialogues through self-play, alongside MINT-CL for classification with multi-task contrastive learning. This addresses the fundamental data scarcity problem in conversational AI, enabling organizations to build robust dialogue systems even when starting with limited training examples. The approach reflects our belief that AI systems should help create the conditions for their own improvement.</p>
+          <p class="paper-summary">Chain-of-Intent combines Hidden Markov Models with LLMs to generate context-aware dialogues through self-play, addressing the fundamental data scarcity problem in conversational AI.</p>
         </article>
 
         <article class="paper">
-          <h3 class="paper-title">Understanding Fairness-Accuracy Trade-offs in Machine Learning Models: Does Promoting Fairness Undermine Performance?</h3>
+          <div class="paper-header">
+            <h3 class="paper-title">Understanding Fairness-Accuracy Trade-offs in Machine Learning Models</h3>
+            <span class="paper-venue">ASONAM 2025</span>
+          </div>
           <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
-          <p class="paper-meta"><span class="paper-venue">ASONAM 2025</span></p>
-          <p class="paper-summary">The conventional wisdom holds that fairness and accuracy exist in tension—improving one degrades the other. Using real university admissions data, we challenge this assumption by introducing a consistency metric that measures decision agreement among ML models and human evaluators from diverse backgrounds. Our findings reveal that ML models exceed human fairness consistency by 14-18%, while maintaining comparable accuracy. This suggests that properly designed AI systems can simultaneously advance both fairness and performance, supporting our mission to build accountable systems that benefit from AI's systematic nature rather than replicating human biases.</p>
+          <p class="paper-summary">Using real university admissions data, we challenge the assumption that fairness and accuracy exist in tension. Our findings reveal that ML models exceed human fairness consistency by 14-18% while maintaining comparable accuracy.</p>
         </article>
 
         <article class="paper">
-          <h3 class="paper-title">BGM-HAN: A Hierarchical Attention Network for Accurate and Fair Decision Assessment on Semi-Structured Profiles</h3>
+          <div class="paper-header">
+            <h3 class="paper-title">BGM-HAN: Hierarchical Attention for Fair Decision Assessment on Semi-Structured Profiles</h3>
+            <span class="paper-venue">ASONAM 2025</span>
+          </div>
           <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
-          <p class="paper-meta"><span class="paper-venue">ASONAM 2025</span></p>
-          <p class="paper-summary">High-stakes decisions like university admissions involve semi-structured data—a mix of quantitative metrics and qualitative narratives that resist standard ML approaches. BGM-HAN combines Byte-Pair Encoding with gated multi-head hierarchical attention to capture multi-level representations essential for nuanced assessment. Achieving an F1-score of 0.8453, it outperforms both traditional ML and large language model baselines while offering interpretability—a critical requirement when decisions affect people's lives. This work demonstrates how specialized architectures can handle the complexity of real-world decision-making while maintaining transparency and fairness.</p>
+          <p class="paper-summary">Combining Byte-Pair Encoding with gated multi-head hierarchical attention for nuanced assessment of semi-structured data. Achieves F1-score of 0.8453 while offering interpretability for high-stakes decisions.</p>
         </article>
 
         <article class="paper">
-          <h3 class="paper-title">LARA: Linguistic-Adaptive Retrieval-Augmentation for Multi-Turn Intent Classification</h3>
+          <div class="paper-header">
+            <h3 class="paper-title">LARA: Linguistic-Adaptive Retrieval-Augmentation for Multi-Turn Intent Classification</h3>
+            <span class="paper-venue">EMNLP 2024</span>
+          </div>
           <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-          <p class="paper-meta"><span class="paper-venue">EMNLP 2024</span> (Industry Track)</p>
-          <p class="paper-summary">Enterprise chatbots must handle conversations across multiple languages while managing hundreds of distinct intents—a combination that strains traditional approaches. LARA combines a fine-tuned compact model with retrieval-augmented LLM architecture, dynamically leveraging past dialogues and relevant intents to improve contextual understanding. Achieving 3.67% accuracy improvement over state-of-the-art baselines across six languages, it demonstrates how retrieval mechanisms can enhance cross-lingual capabilities without extensive retraining. This represents a step toward truly global AI systems that maintain performance across linguistic boundaries while remaining deployable at scale.</p>
+          <p class="paper-summary">Combines a fine-tuned compact model with retrieval-augmented LLM architecture for cross-lingual intent classification. Achieves 3.67% accuracy improvement across six languages.</p>
         </article>
       </div>
 
@@ -582,7 +755,7 @@
       <div class="contact-section">
         <h3>Get in touch</h3>
         <p>Research collaboration, corporate training, or exploring our work.</p>
-        <a class="cta" href="mailto:hello@forth.ai">hello@forth.ai</a>
+        <a class="cta cta-primary" href="mailto:hello@forth.ai">hello@forth.ai</a>
       </div>
     </section>
   </div>
@@ -592,6 +765,11 @@
       <div class="footer-brand">
         <span class="dot" aria-hidden="true"></span>
         Forth AI
+      </div>
+      <p class="footer-tagline">Independent research lab for AI-native enterprise</p>
+      <div class="footer-links">
+        <a class="footer-link" href="https://scholar.google.com/citations?user=WV190vsAAAAJ" target="_blank" rel="noopener">Publications</a>
+        <a class="footer-link" href="mailto:hello@forth.ai">Contact</a>
       </div>
       <div class="copyright">© 2025 Forth AI</div>
     </div>
