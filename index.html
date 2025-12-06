@@ -316,6 +316,20 @@
       line-height: 1.4;
     }
 
+    .paper-authors{
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .paper-summary{
+      margin: 12px 0 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     .paper-meta{
       margin: 0;
       font-size: 14px;
@@ -452,7 +466,7 @@
     </header>
 
     <section class="section" id="focus">
-      <h2 class="section-title">Research areas</h2>
+      <h2 class="section-title">Social Missions</h2>
       <p class="section-subtitle">
         Three complementary directions — from how people adapt, to how systems behave, to what becomes possible.
       </p>
@@ -484,32 +498,37 @@
       <div class="research-list">
         <article class="paper">
           <h3 class="paper-title">Balancing Accuracy and Efficiency in Multi-Turn Intent Classification for LLM-Powered Dialog Systems in Production</h3>
+          <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
           <p class="paper-meta"><span class="paper-venue">IAAI 2026</span></p>
+          <p class="paper-summary">Production dialogue systems face a critical challenge: achieving high accuracy while maintaining low latency at scale. This work introduces Symbol Tuning and C-LARA, two complementary approaches that enable enterprise deployment of LLM-powered intent classification. By simplifying intent representations and using LLMs for synthetic data generation, we show how to fine-tune compact models that match large model performance at a fraction of the computational cost. This demonstrates a practical path toward AI-native enterprise systems that are both intelligent and economically viable.</p>
         </article>
 
         <article class="paper">
           <h3 class="paper-title">From Intents to Conversations: Generating Intent-Driven Dialogues with Contrastive Learning for Multi-Turn Classification</h3>
+          <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
           <p class="paper-meta"><span class="paper-venue">CIKM 2025</span></p>
+          <p class="paper-summary">Training multi-turn intent classifiers requires extensive conversational data that captures realistic dialogue patterns—a resource that's often scarce or unavailable. We present Chain-of-Intent, which combines Hidden Markov Models with LLMs to generate context-aware dialogues through self-play, alongside MINT-CL for classification with multi-task contrastive learning. This addresses the fundamental data scarcity problem in conversational AI, enabling organizations to build robust dialogue systems even when starting with limited training examples. The approach reflects our belief that AI systems should help create the conditions for their own improvement.</p>
         </article>
 
         <article class="paper">
-          <h3 class="paper-title">Fairness And Performance In Harmony: Data Debiasing Is All You Need</h3>
+          <h3 class="paper-title">Understanding Fairness-Accuracy Trade-offs in Machine Learning Models: Does Promoting Fairness Undermine Performance?</h3>
+          <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
           <p class="paper-meta"><span class="paper-venue">ASONAM 2025</span></p>
-        </article>
-
-        <article class="paper">
-          <h3 class="paper-title">Towards Objective and Unbiased Decision Assessments with LLM-Enhanced Hierarchical Attention Networks</h3>
-          <p class="paper-meta"><span class="paper-venue">ASONAM 2025</span></p>
+          <p class="paper-summary">The conventional wisdom holds that fairness and accuracy exist in tension—improving one degrades the other. Using real university admissions data, we challenge this assumption by introducing a consistency metric that measures decision agreement among ML models and human evaluators from diverse backgrounds. Our findings reveal that ML models exceed human fairness consistency by 14-18%, while maintaining comparable accuracy. This suggests that properly designed AI systems can simultaneously advance both fairness and performance, supporting our mission to build accountable systems that benefit from AI's systematic nature rather than replicating human biases.</p>
         </article>
 
         <article class="paper">
           <h3 class="paper-title">BGM-HAN: A Hierarchical Attention Network for Accurate and Fair Decision Assessment on Semi-Structured Profiles</h3>
+          <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
           <p class="paper-meta"><span class="paper-venue">ASONAM 2025</span></p>
+          <p class="paper-summary">High-stakes decisions like university admissions involve semi-structured data—a mix of quantitative metrics and qualitative narratives that resist standard ML approaches. BGM-HAN combines Byte-Pair Encoding with gated multi-head hierarchical attention to capture multi-level representations essential for nuanced assessment. Achieving an F1-score of 0.8453, it outperforms both traditional ML and large language model baselines while offering interpretability—a critical requirement when decisions affect people's lives. This work demonstrates how specialized architectures can handle the complexity of real-world decision-making while maintaining transparency and fairness.</p>
         </article>
 
         <article class="paper">
           <h3 class="paper-title">LARA: Linguistic-Adaptive Retrieval-Augmentation for Multi-Turn Intent Classification</h3>
+          <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
           <p class="paper-meta"><span class="paper-venue">EMNLP 2024</span> (Industry Track)</p>
+          <p class="paper-summary">Enterprise chatbots must handle conversations across multiple languages while managing hundreds of distinct intents—a combination that strains traditional approaches. LARA combines a fine-tuned compact model with retrieval-augmented LLM architecture, dynamically leveraging past dialogues and relevant intents to improve contextual understanding. Achieving 3.67% accuracy improvement over state-of-the-art baselines across six languages, it demonstrates how retrieval mechanisms can enhance cross-lingual capabilities without extensive retraining. This represents a step toward truly global AI systems that maintain performance across linguistic boundaries while remaining deployable at scale.</p>
         </article>
       </div>
 
