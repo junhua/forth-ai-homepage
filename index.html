@@ -93,11 +93,10 @@
     /* Hero graphic - Three Pillars visualization */
     .hero-graphic {
       position: absolute;
-      top: 50%;
-      right: 2%;
-      transform: translateY(-50%);
-      width: min(480px, 35vw);
-      height: min(480px, 35vw);
+      top: clamp(100px, 14vh, 180px);
+      right: 5%;
+      width: min(420px, 32vw);
+      height: min(420px, 32vw);
       pointer-events: none;
       z-index: 0;
     }
@@ -874,59 +873,59 @@
       </div>
 
       <a class="cta" href="#research">View research</a>
-
-      <!-- Three Pillars Hero Graphic -->
-      <div class="hero-graphic" aria-hidden="true">
-        <svg viewBox="0 0 400 400">
-          <!-- Orbital rings -->
-          <circle class="orbit orbit-1" cx="200" cy="200" r="160" transform-origin="200 200"/>
-          <circle class="orbit orbit-2" cx="200" cy="200" r="120" transform-origin="200 200"/>
-
-          <!-- Base platform -->
-          <path class="platform" d="M60 280 L200 340 L340 280"/>
-
-          <!-- Three pillars -->
-          <rect class="pillar pillar-1" x="80" y="180" width="60" height="100" rx="6"/>
-          <rect class="pillar pillar-2" x="170" y="140" width="60" height="140" rx="6"/>
-          <rect class="pillar pillar-3" x="260" y="160" width="60" height="120" rx="6"/>
-
-          <!-- Pillar icons -->
-          <!-- Workforce (people) -->
-          <g class="pillar-icon icon-1" transform="translate(95, 200)">
-            <circle cx="15" cy="8" r="6"/>
-            <path d="M5 28 Q15 20 25 28"/>
-          </g>
-
-          <!-- Safety (shield) -->
-          <g class="pillar-icon icon-2" transform="translate(185, 160)">
-            <path d="M15 5 L25 10 L25 22 Q25 28 15 32 Q5 28 5 22 L5 10 Z"/>
-            <polyline points="10,18 14,22 22,14"/>
-          </g>
-
-          <!-- Enterprise (monitor) -->
-          <g class="pillar-icon icon-3" transform="translate(275, 180)">
-            <rect x="3" y="5" width="24" height="16" rx="2"/>
-            <line x1="15" y1="21" x2="15" y2="26"/>
-            <line x1="8" y1="26" x2="22" y2="26"/>
-          </g>
-
-          <!-- Connection arcs -->
-          <path class="connection-arc arc-1" d="M110 180 Q140 120 200 140"/>
-          <path class="connection-arc arc-2" d="M200 140 Q260 120 290 160"/>
-          <path class="connection-arc arc-3" d="M290 160 Q320 200 290 240 Q200 280 110 240 Q80 200 110 180"/>
-
-          <!-- Central node -->
-          <circle class="central-node" cx="200" cy="200" r="8" transform-origin="200 200"/>
-
-          <!-- Floating particles -->
-          <circle class="particle particle-1" cx="130" cy="120" r="3"/>
-          <circle class="particle particle-2" cx="270" cy="100" r="2"/>
-          <circle class="particle particle-3" cx="320" cy="180" r="3"/>
-          <circle class="particle particle-4" cx="80" cy="220" r="2"/>
-          <circle class="particle particle-5" cx="200" cy="80" r="2"/>
-        </svg>
-      </div>
     </header>
+
+    <!-- Three Pillars Hero Graphic (positioned relative to .wrap) -->
+    <div class="hero-graphic" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <!-- Orbital rings -->
+        <circle class="orbit orbit-1" cx="200" cy="200" r="160" transform-origin="200 200"/>
+        <circle class="orbit orbit-2" cx="200" cy="200" r="120" transform-origin="200 200"/>
+
+        <!-- Base platform -->
+        <path class="platform" d="M60 280 L200 340 L340 280"/>
+
+        <!-- Three pillars -->
+        <rect class="pillar pillar-1" x="80" y="180" width="60" height="100" rx="6"/>
+        <rect class="pillar pillar-2" x="170" y="140" width="60" height="140" rx="6"/>
+        <rect class="pillar pillar-3" x="260" y="160" width="60" height="120" rx="6"/>
+
+        <!-- Pillar icons -->
+        <!-- Workforce (people) -->
+        <g class="pillar-icon icon-1" transform="translate(95, 200)">
+          <circle cx="15" cy="8" r="6"/>
+          <path d="M5 28 Q15 20 25 28"/>
+        </g>
+
+        <!-- Safety (shield) -->
+        <g class="pillar-icon icon-2" transform="translate(185, 160)">
+          <path d="M15 5 L25 10 L25 22 Q25 28 15 32 Q5 28 5 22 L5 10 Z"/>
+          <polyline points="10,18 14,22 22,14"/>
+        </g>
+
+        <!-- Enterprise (monitor) -->
+        <g class="pillar-icon icon-3" transform="translate(275, 180)">
+          <rect x="3" y="5" width="24" height="16" rx="2"/>
+          <line x1="15" y1="21" x2="15" y2="26"/>
+          <line x1="8" y1="26" x2="22" y2="26"/>
+        </g>
+
+        <!-- Connection arcs -->
+        <path class="connection-arc arc-1" d="M110 180 Q140 120 200 140"/>
+        <path class="connection-arc arc-2" d="M200 140 Q260 120 290 160"/>
+        <path class="connection-arc arc-3" d="M290 160 Q320 200 290 240 Q200 280 110 240 Q80 200 110 180"/>
+
+        <!-- Central node -->
+        <circle class="central-node" cx="200" cy="200" r="8" transform-origin="200 200"/>
+
+        <!-- Floating particles -->
+        <circle class="particle particle-1" cx="130" cy="120" r="3"/>
+        <circle class="particle particle-2" cx="270" cy="100" r="2"/>
+        <circle class="particle particle-3" cx="320" cy="180" r="3"/>
+        <circle class="particle particle-4" cx="80" cy="220" r="2"/>
+        <circle class="particle particle-5" cx="200" cy="80" r="2"/>
+      </svg>
+    </div>
 
     <section class="section" id="focus">
       <div class="section-header">
