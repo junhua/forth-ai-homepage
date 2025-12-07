@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
-  <title>Forth AI — Independent Research Lab</title>
-  <meta name="description" content="Independent research lab for AI-native enterprise. Workforce reskilling, AI safety, and production-ready agentic systems." />
+  <title>Forth AI</title>
+  <meta name="description" content="Research at the intersection of workforce transformation, AI safety, and what becomes possible when AI is the foundation." />
 
   <!-- Brand Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
@@ -19,12 +19,15 @@
       --bg-elevated: #1f1f24;
       --border-subtle: rgba(255, 255, 255, 0.06);
       --border-default: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(245, 158, 11, 0.3);
       --text-primary: #fafafa;
       --text-secondary: #a1a1aa;
       --text-muted: #71717a;
       --accent: #f59e0b;
       --accent-soft: rgba(245, 158, 11, 0.15);
+      --accent-glow: rgba(245, 158, 11, 0.4);
       --glass: rgba(255, 255, 255, 0.03);
+      --glass-strong: rgba(255, 255, 255, 0.05);
       --maxw: 1100px;
       --radius: 12px;
       --radius-lg: 16px;
@@ -87,123 +90,218 @@
       opacity: .5;
     }
 
-    /* Hero graphic - simple illustrative style */
+    /* Hero graphic - Three Pillars visualization */
     .hero-graphic {
       position: absolute;
       top: 50%;
-      right: 8%;
+      right: 2%;
       transform: translateY(-50%);
-      width: min(450px, 32vw);
-      height: min(450px, 32vw);
+      width: min(480px, 35vw);
+      height: min(480px, 35vw);
       pointer-events: none;
       z-index: 0;
-      opacity: 0;
-      animation: fadeInGraphic 1s ease-out 0.8s forwards;
-    }
-
-    @keyframes fadeInGraphic {
-      to {
-        opacity: 1;
-      }
     }
 
     .hero-graphic svg {
       width: 100%;
       height: 100%;
+      overflow: visible;
     }
 
-    /* Foundation strokes (AI as base layer) */
-    .hero-graphic .foundation {
-      stroke: var(--accent);
-      stroke-width: 10;
-      stroke-linecap: round;
-      fill: none;
+    /* Ambient glow behind graphic */
+    .hero-graphic::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 60%);
       opacity: 0;
-      animation: drawFoundation 1s ease-out 1s forwards;
+      animation: ambientGlow 1.5s ease-out 0.5s forwards;
+      filter: blur(60px);
     }
 
-    .foundation:nth-child(1) { animation-delay: 1s; }
-    .foundation:nth-child(2) { animation-delay: 1.1s; }
-
-    @keyframes drawFoundation {
-      to {
-        opacity: 0.95;
-      }
+    @keyframes ambientGlow {
+      to { opacity: 0.3; }
     }
 
-    /* Building blocks (AI-native systems) */
-    .hero-graphic .building-block {
+    /* Base platform - Research foundation */
+    .hero-graphic .platform {
       fill: none;
       stroke: var(--accent);
-      stroke-width: 6;
+      stroke-width: 2;
       opacity: 0;
-      animation: riseUp 0.8s ease-out forwards;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: drawPlatform 1.2s ease-out 0.8s forwards;
     }
 
-    .building-block:nth-child(3) { animation-delay: 1.3s; }
-    .building-block:nth-child(4) { animation-delay: 1.4s; }
-    .building-block:nth-child(5) { animation-delay: 1.5s; }
-
-    @keyframes riseUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 0.85;
-        transform: translateY(0);
-      }
-    }
-
-    /* Interconnection dots */
-    .hero-graphic .accent-dot {
-      fill: var(--accent);
-      opacity: 0;
-      animation: fadeInDot 0.4s ease-out forwards;
-    }
-
-    .accent-dot:nth-child(6) { animation-delay: 1.6s; }
-    .accent-dot:nth-child(7) { animation-delay: 1.7s; }
-    .accent-dot:nth-child(8) { animation-delay: 1.8s; }
-
-    @keyframes fadeInDot {
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Connection line */
-    .hero-graphic .connection-line {
-      stroke: var(--accent);
-      stroke-width: 3;
-      stroke-linecap: round;
-      fill: none;
-      opacity: 0;
-      stroke-dasharray: 300;
-      stroke-dashoffset: 300;
-      animation: drawConnection 1.2s ease-out 1.9s forwards;
-    }
-
-    @keyframes drawConnection {
+    @keyframes drawPlatform {
       to {
         opacity: 0.6;
         stroke-dashoffset: 0;
       }
     }
 
-    /* Text reveal animations */
-    .reveal-text {
+    /* Three pillars representing focus areas */
+    .hero-graphic .pillar {
+      fill: var(--glass-strong);
+      stroke: var(--accent);
+      stroke-width: 1.5;
       opacity: 0;
-      transform: translateY(20px);
-      animation: revealUp 0.8s ease-out forwards;
+      transform-origin: center bottom;
+      animation: risePillar 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .reveal-text.delay-1 { animation-delay: 0.2s; }
-    .reveal-text.delay-2 { animation-delay: 0.4s; }
-    .reveal-text.delay-3 { animation-delay: 0.6s; }
-    .reveal-text.delay-4 { animation-delay: 0.8s; }
+    .pillar-1 { animation-delay: 1.1s; }
+    .pillar-2 { animation-delay: 1.25s; }
+    .pillar-3 { animation-delay: 1.4s; }
+
+    @keyframes risePillar {
+      from {
+        opacity: 0;
+        transform: scaleY(0) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+      }
+    }
+
+    /* Pillar icons */
+    .hero-graphic .pillar-icon {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+      animation: fadeScale 0.5s ease-out forwards;
+    }
+
+    .icon-1 { animation-delay: 1.5s; }
+    .icon-2 { animation-delay: 1.65s; }
+    .icon-3 { animation-delay: 1.8s; }
+
+    @keyframes fadeScale {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Connection arcs between pillars */
+    .hero-graphic .connection-arc {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1;
+      stroke-dasharray: 150;
+      stroke-dashoffset: 150;
+      opacity: 0;
+      animation: drawArc 1s ease-out forwards;
+    }
+
+    .arc-1 { animation-delay: 1.9s; }
+    .arc-2 { animation-delay: 2.0s; }
+    .arc-3 { animation-delay: 2.1s; }
+
+    @keyframes drawArc {
+      to {
+        opacity: 0.5;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Floating particles */
+    .hero-graphic .particle {
+      fill: var(--accent);
+      opacity: 0;
+      animation: floatParticle 3s ease-in-out infinite;
+    }
+
+    .particle-1 { animation-delay: 2.2s; }
+    .particle-2 { animation-delay: 2.4s; }
+    .particle-3 { animation-delay: 2.6s; }
+    .particle-4 { animation-delay: 2.8s; }
+    .particle-5 { animation-delay: 3.0s; }
+
+    @keyframes floatParticle {
+      0%, 100% {
+        opacity: 0.8;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 0.4;
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Central node - the unifying element */
+    .hero-graphic .central-node {
+      fill: var(--accent);
+      opacity: 0;
+      animation: pulseNode 2s ease-in-out 2.3s infinite;
+    }
+
+    @keyframes pulseNode {
+      0%, 100% {
+        opacity: 0.9;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+      }
+    }
+
+    /* Orbital ring */
+    .hero-graphic .orbit {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 0.5;
+      opacity: 0;
+      stroke-dasharray: 8 4;
+      animation: spinOrbit 20s linear infinite;
+    }
+
+    .orbit-1 { animation-delay: 2.2s; }
+    .orbit-2 { animation-delay: 2.4s; }
+
+    @keyframes spinOrbit {
+      from {
+        opacity: 0.3;
+        transform: rotate(0deg);
+      }
+      to {
+        opacity: 0.3;
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Text reveal animations - visible by default, animation is enhancement */
+    .reveal-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animation only when CSS animations are supported and enabled */
+    @supports (animation: name) {
+      .reveal-text {
+        animation: revealUp 0.8s ease-out both;
+      }
+      .reveal-text.delay-1 { animation-delay: 0.2s; }
+      .reveal-text.delay-2 { animation-delay: 0.4s; }
+      .reveal-text.delay-3 { animation-delay: 0.6s; }
+      .reveal-text.delay-4 { animation-delay: 0.8s; }
+    }
 
     @keyframes revealUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
@@ -216,17 +314,41 @@
       .network-node,
       .network-line,
       .orbit-ring,
-      .reveal-text {
+      .reveal-text,
+      .scroll-reveal,
+      .scroll-reveal-left {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+        transition: none !important;
       }
     }
 
-    /* Hide graphic on mobile for performance */
-    @media (max-width: 768px) {
+    /* Hide detailed graphic on tablet and below, show simplified version */
+    @media (max-width: 900px) {
       .hero-graphic {
         display: none;
+      }
+    }
+
+    /* Mobile simplified accent - decorative glow */
+    .mobile-accent {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-accent {
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: 5%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+        filter: blur(60px);
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 0;
       }
     }
 
@@ -236,7 +358,34 @@
       width: min(90vw, var(--maxw));
       margin: 0 auto;
       padding: clamp(100px, 14vh, 180px) 0 clamp(80px, 12vh, 140px);
-      text-align: center;
+      text-align: left;
+      max-width: 55%;
+      margin-left: 8%;
+    }
+
+    @media (max-width: 1200px) {
+      .hero {
+        max-width: 65%;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        max-width: 85%;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        max-width: 90%;
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      .focus-pills {
+        justify-content: center;
+      }
     }
 
     .brand{
@@ -403,6 +552,7 @@
     }
 
     .area{
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -412,14 +562,36 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    /* Glow effect on hover */
+    .area::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, transparent 40%, var(--accent) 50%, transparent 60%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .area:hover::before {
+      opacity: 1;
     }
 
     .area:hover{
-      background: rgba(255, 255, 255, 0.04);
-      border-color: var(--border-default);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      background: var(--glass-strong);
+      transform: translateY(-6px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 60px var(--accent-soft);
     }
 
     .area-icon{
@@ -466,20 +638,38 @@
     }
 
     .paper{
+      position: relative;
       padding: 24px;
       border-radius: var(--radius-lg);
       background: var(--glass);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border-subtle);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .paper::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: height 0.3s ease;
     }
 
     .paper:hover{
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--glass-strong);
       border-color: var(--border-default);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transform: translateX(8px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .paper:hover::after {
+      height: 60%;
     }
 
     .paper-header{
@@ -534,7 +724,7 @@
 
     .contact-section{
       text-align: center;
-      padding: 56px 40px;
+      padding: 64px 48px;
       border-radius: var(--radius-xl);
       background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-tertiary) 100%);
       border: 1px solid var(--border-default);
@@ -548,9 +738,28 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
+      width: 300px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.6; width: 200px; }
+      50% { opacity: 1; width: 400px; }
+    }
+
+    .contact-glow {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 200px;
+      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0.4;
+      filter: blur(40px);
+      pointer-events: none;
     }
 
     .contact-section h3{
@@ -631,25 +840,32 @@
         display: none;
       }
     }
+
+
+    /* Section header styling */
+    .section-header {
+      margin-bottom: 48px;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="backdrop" aria-hidden="true"></div>
+    <div class="mobile-accent" aria-hidden="true"></div>
 
     <header class="hero" role="banner">
-      <div class="brand reveal-text">
+      <div class="brand">
         <span class="dot" aria-hidden="true"></span>
         FORTH AI
       </div>
 
-      <h1 class="reveal-text delay-1">Independent research lab for <span class="accent-word">AI-native</span> enterprise</h1>
+      <h1>When AI becomes <span class="accent-word">the foundation</span></h1>
 
-      <p class="lead reveal-text delay-2">
-        We research workforce transformation, AI safety in production, and build systems that demonstrate what's possible when AI is not a tool — but the foundation.
+      <p class="lead">
+        How work transforms. How systems stay accountable. What becomes possible.
       </p>
 
-      <div class="focus-pills reveal-text delay-3">
+      <div class="focus-pills">
         <span class="pill">Workforce reskilling</span>
         <span class="pill-divider">•</span>
         <span class="pill">AI safety</span>
@@ -657,14 +873,68 @@
         <span class="pill">AI-native enterprise</span>
       </div>
 
-      <a class="cta reveal-text delay-4" href="#research">View research</a>
+      <a class="cta" href="#research">View research</a>
+
+      <!-- Three Pillars Hero Graphic -->
+      <div class="hero-graphic" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <!-- Orbital rings -->
+          <circle class="orbit orbit-1" cx="200" cy="200" r="160" transform-origin="200 200"/>
+          <circle class="orbit orbit-2" cx="200" cy="200" r="120" transform-origin="200 200"/>
+
+          <!-- Base platform -->
+          <path class="platform" d="M60 280 L200 340 L340 280"/>
+
+          <!-- Three pillars -->
+          <rect class="pillar pillar-1" x="80" y="180" width="60" height="100" rx="6"/>
+          <rect class="pillar pillar-2" x="170" y="140" width="60" height="140" rx="6"/>
+          <rect class="pillar pillar-3" x="260" y="160" width="60" height="120" rx="6"/>
+
+          <!-- Pillar icons -->
+          <!-- Workforce (people) -->
+          <g class="pillar-icon icon-1" transform="translate(95, 200)">
+            <circle cx="15" cy="8" r="6"/>
+            <path d="M5 28 Q15 20 25 28"/>
+          </g>
+
+          <!-- Safety (shield) -->
+          <g class="pillar-icon icon-2" transform="translate(185, 160)">
+            <path d="M15 5 L25 10 L25 22 Q25 28 15 32 Q5 28 5 22 L5 10 Z"/>
+            <polyline points="10,18 14,22 22,14"/>
+          </g>
+
+          <!-- Enterprise (monitor) -->
+          <g class="pillar-icon icon-3" transform="translate(275, 180)">
+            <rect x="3" y="5" width="24" height="16" rx="2"/>
+            <line x1="15" y1="21" x2="15" y2="26"/>
+            <line x1="8" y1="26" x2="22" y2="26"/>
+          </g>
+
+          <!-- Connection arcs -->
+          <path class="connection-arc arc-1" d="M110 180 Q140 120 200 140"/>
+          <path class="connection-arc arc-2" d="M200 140 Q260 120 290 160"/>
+          <path class="connection-arc arc-3" d="M290 160 Q320 200 290 240 Q200 280 110 240 Q80 200 110 180"/>
+
+          <!-- Central node -->
+          <circle class="central-node" cx="200" cy="200" r="8" transform-origin="200 200"/>
+
+          <!-- Floating particles -->
+          <circle class="particle particle-1" cx="130" cy="120" r="3"/>
+          <circle class="particle particle-2" cx="270" cy="100" r="2"/>
+          <circle class="particle particle-3" cx="320" cy="180" r="3"/>
+          <circle class="particle particle-4" cx="80" cy="220" r="2"/>
+          <circle class="particle particle-5" cx="200" cy="80" r="2"/>
+        </svg>
+      </div>
     </header>
 
     <section class="section" id="focus">
-      <h2 class="section-title">Research Focus</h2>
-      <p class="section-subtitle">
-        Three complementary directions — from how people adapt, to how systems behave, to what becomes possible.
-      </p>
+      <div class="section-header">
+        <h2 class="section-title">Focus</h2>
+        <p class="section-subtitle">
+          Three directions — how people adapt, how systems behave, what becomes possible.
+        </p>
+      </div>
 
       <div class="areas">
         <div class="area">
@@ -672,7 +942,7 @@
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3>Workforce reskilling</h3>
-          <p>How organizations adapt when AI becomes the default. Not just training on tools, but redesigning work around new capabilities.</p>
+          <p>Not training on tools. Redesigning work around new capabilities.</p>
         </div>
 
         <div class="area">
@@ -680,7 +950,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h3>AI safety in production</h3>
-          <p>Methods for building accountable systems that operate reliably at scale. Safety isn't theoretical—it's how we build.</p>
+          <p>Accountable systems at scale. Safety isn't theoretical — it's how we build.</p>
         </div>
 
         <div class="area">
@@ -688,16 +958,18 @@
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01M6 12h.01M10 8h8M10 12h8"/></svg>
           </div>
           <h3>AI-native enterprise</h3>
-          <p>Production systems that demonstrate research in practice. Closing the gap between what's possible in demos and what works in deployment.</p>
+          <p>Closing the gap between demos and deployment.</p>
         </div>
       </div>
     </section>
 
     <section class="section" id="research">
-      <h2 class="section-title">Publications</h2>
-      <p class="section-subtitle">
-        Recent work on multi-turn dialogue systems, fairness in decision-making, and production-ready AI deployment.
-      </p>
+      <div class="section-header">
+        <h2 class="section-title">Publications</h2>
+        <p class="section-subtitle">
+          Multi-turn dialogue, fairness in decision-making, production AI.
+        </p>
+      </div>
 
       <div class="research-list">
         <article class="paper">
@@ -753,8 +1025,9 @@
 
     <section class="section">
       <div class="contact-section">
-        <h3>Get in touch</h3>
-        <p>Research collaboration, corporate training, or exploring our work.</p>
+        <div class="contact-glow" aria-hidden="true"></div>
+        <h3>Let's talk</h3>
+        <p>Collaboration, training, or just curious.</p>
         <a class="cta cta-primary" href="mailto:hello@forth.ai">hello@forth.ai</a>
       </div>
     </section>
@@ -766,7 +1039,7 @@
         <span class="dot" aria-hidden="true"></span>
         Forth AI
       </div>
-      <p class="footer-tagline">Independent research lab for AI-native enterprise</p>
+      <p class="footer-tagline">Research · Systems · What comes next</p>
       <div class="footer-links">
         <a class="footer-link" href="https://scholar.google.com/citations?user=WV190vsAAAAJ" target="_blank" rel="noopener">Publications</a>
         <a class="footer-link" href="mailto:hello@forth.ai">Contact</a>
@@ -774,5 +1047,21 @@
       <div class="copyright">© 2025 Forth AI</div>
     </div>
   </footer>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
