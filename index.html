@@ -348,12 +348,10 @@
     .hero{
       position: relative;
       z-index: 1;
-      width: min(90vw, var(--maxw));
-      margin: 0 auto;
       padding: clamp(100px, 14vh, 180px) 0 clamp(80px, 12vh, 140px);
       text-align: left;
-      max-width: 55%;
-      margin-left: 8%;
+      max-width: min(55%, 650px);
+      margin-left: max(8%, calc((100vw - 1400px) / 2 + 80px));
     }
 
     @media (max-width: 1200px) {
