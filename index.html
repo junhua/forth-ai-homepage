@@ -679,20 +679,10 @@
 
     .safety-graphic .check {
       stroke: var(--accent);
-      stroke-width: 2;
+      stroke-width: 2.5;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-dasharray: 20;
-      stroke-dashoffset: 20;
-      animation: drawCheck 1.5s ease-out forwards;
-    }
-
-    .area:hover .safety-graphic .check {
-      animation: drawCheck 0.5s ease-out forwards;
-    }
-
-    @keyframes drawCheck {
-      to { stroke-dashoffset: 0; }
+      fill: none;
     }
 
     .safety-graphic .ring {
@@ -1171,7 +1161,7 @@
               <!-- Shield - same shape as icon, scaled up -->
               <path class="shield" d="M70 110 s32-16 32-40 V30 l-32-12 -32 12 v40 c0 24 32 40 32 40 z"/>
               <!-- Checkmark - centered in shield -->
-              <polyline class="check" points="58,58 67,70 82,50" fill="none"/>
+              <polyline class="check" points="55,60 65,72 85,48" fill="none"/>
             </svg>
           </div>
           <div class="area-icon">
