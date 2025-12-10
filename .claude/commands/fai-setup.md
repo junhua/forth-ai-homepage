@@ -26,7 +26,7 @@ git clone git@github.com:Forth-AI/doc-business.git Business
 git clone git@github.com:junhua/non-llm-ai-for-finance.git Research/non-llm-ai-for-finance
 
 # Tech - demos
-git clone git@github.com:Forth-AI/invoicing.git Tech/demos/invoicing
+git clone git@github.com:Forth-AI/demo-agentic-accounting.git Tech/demos/accounting
 
 # Tech - homepage
 git clone git@github.com:Forth-AI/forth-ai-homepage.git Tech/forth-ai-homepage

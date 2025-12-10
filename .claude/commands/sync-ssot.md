@@ -11,7 +11,6 @@ Sync the SSOT `CLAUDE.md` and `.claude/` folder (commands, skills, hooks, settin
 **Tech:**
 - `Tech/forth-ai-homepage`
 - `Tech/demos/accounting`
-- `Tech/demos/invoicing`
 
 **Research:**
 - `Research/shopee-collaborations/llm-recsys`
@@ -36,7 +35,6 @@ SSOT_CLAUDEMD="$SSOT_DIR/CLAUDE.md"
 PROJECTS=(
   "/Users/junhua/Workspace/ForthAI/Tech/forth-ai-homepage"
   "/Users/junhua/Workspace/ForthAI/Tech/demos/accounting"
-  "/Users/junhua/Workspace/ForthAI/Tech/demos/invoicing"
   "/Users/junhua/Workspace/ForthAI/Research/shopee-collaborations/llm-recsys"
   "/Users/junhua/Workspace/ForthAI/Research/shopee-collaborations/sia"
   "/Users/junhua/Workspace/ForthAI/Research/shopee-collaborations/sit-recommender"
