@@ -621,6 +621,136 @@
       stroke-linejoin: round;
     }
 
+    /* Area graphic illustrations */
+    .area-graphic {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 140px;
+      height: 140px;
+      opacity: 0.15;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .area:hover .area-graphic {
+      opacity: 0.25;
+    }
+
+    .area-graphic svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* Workforce graphic animations */
+    .workforce-graphic .person {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      opacity: 0.8;
+    }
+
+    .workforce-graphic .connection {
+      stroke: var(--accent);
+      stroke-width: 1;
+      stroke-dasharray: 4 2;
+      animation: flowDash 2s linear infinite;
+    }
+
+    .workforce-graphic .node {
+      fill: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .workforce-graphic .node:nth-child(2) { animation-delay: 0.3s; }
+    .workforce-graphic .node:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes flowDash {
+      to { stroke-dashoffset: -12; }
+    }
+
+    /* Safety graphic animations */
+    .safety-graphic .shield {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+    }
+
+    .safety-graphic .check {
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+      animation: drawCheck 1.5s ease-out forwards;
+    }
+
+    .area:hover .safety-graphic .check {
+      animation: drawCheck 0.5s ease-out forwards;
+    }
+
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .safety-graphic .ring {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 0.5;
+      opacity: 0.5;
+      transform-origin: center;
+      animation: expandRing 3s ease-out infinite;
+    }
+
+    .safety-graphic .ring:nth-child(2) { animation-delay: 1s; }
+    .safety-graphic .ring:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes expandRing {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* Enterprise graphic animations */
+    .enterprise-graphic .block {
+      fill: var(--accent);
+      opacity: 0.3;
+    }
+
+    .enterprise-graphic .block-outline {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1;
+    }
+
+    .enterprise-graphic .data-line {
+      stroke: var(--accent);
+      stroke-width: 1;
+      stroke-dasharray: 8 4;
+      animation: dataFlow 1.5s linear infinite;
+    }
+
+    .enterprise-graphic .data-line:nth-child(2) { animation-delay: 0.5s; }
+    .enterprise-graphic .data-line:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes dataFlow {
+      to { stroke-dashoffset: -24; }
+    }
+
+    .enterprise-graphic .pulse-dot {
+      fill: var(--accent);
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+
+    .enterprise-graphic .pulse-dot:nth-child(2) { animation-delay: 0.4s; }
+    .enterprise-graphic .pulse-dot:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
     .area h3{
       margin: 0;
       font-family: var(--font-display);
@@ -1000,6 +1130,30 @@
 
       <div class="areas">
         <div class="area">
+          <div class="area-graphic workforce-graphic" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+              <!-- Network of people transforming -->
+              <circle class="node" cx="40" cy="50" r="4"/>
+              <circle class="node" cx="100" cy="40" r="4"/>
+              <circle class="node" cx="70" cy="90" r="4"/>
+              <line class="connection" x1="40" y1="50" x2="100" y2="40"/>
+              <line class="connection" x1="100" y1="40" x2="70" y2="90"/>
+              <line class="connection" x1="70" y1="90" x2="40" y2="50"/>
+              <!-- Person silhouettes -->
+              <g class="person" transform="translate(30, 60)">
+                <circle cx="10" cy="8" r="6"/>
+                <path d="M2 28 Q10 22 18 28"/>
+              </g>
+              <g class="person" transform="translate(90, 50)">
+                <circle cx="10" cy="8" r="6"/>
+                <path d="M2 28 Q10 22 18 28"/>
+              </g>
+              <g class="person" transform="translate(60, 100)">
+                <circle cx="10" cy="8" r="6"/>
+                <path d="M2 28 Q10 22 18 28"/>
+              </g>
+            </svg>
+          </div>
           <div class="area-icon">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -1008,6 +1162,18 @@
         </div>
 
         <div class="area">
+          <div class="area-graphic safety-graphic" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+              <!-- Expanding rings -->
+              <circle class="ring" cx="70" cy="70" r="50"/>
+              <circle class="ring" cx="70" cy="70" r="50"/>
+              <circle class="ring" cx="70" cy="70" r="50"/>
+              <!-- Shield -->
+              <path class="shield" d="M70 25 L100 38 L100 65 Q100 90 70 105 Q40 90 40 65 L40 38 Z"/>
+              <!-- Checkmark -->
+              <polyline class="check" points="55,70 65,80 85,55" fill="none"/>
+            </svg>
+          </div>
           <div class="area-icon">
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
@@ -1016,6 +1182,25 @@
         </div>
 
         <div class="area">
+          <div class="area-graphic enterprise-graphic" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+              <!-- Stacked blocks representing system layers -->
+              <rect class="block" x="30" y="90" width="80" height="20" rx="3"/>
+              <rect class="block-outline" x="30" y="90" width="80" height="20" rx="3"/>
+              <rect class="block" x="40" y="65" width="60" height="20" rx="3"/>
+              <rect class="block-outline" x="40" y="65" width="60" height="20" rx="3"/>
+              <rect class="block" x="50" y="40" width="40" height="20" rx="3"/>
+              <rect class="block-outline" x="50" y="40" width="40" height="20" rx="3"/>
+              <!-- Data flow lines -->
+              <line class="data-line" x1="70" y1="40" x2="70" y2="20"/>
+              <line class="data-line" x1="30" y1="100" x2="10" y2="100"/>
+              <line class="data-line" x1="110" y1="100" x2="130" y2="100"/>
+              <!-- Pulse dots -->
+              <circle class="pulse-dot" cx="70" cy="20" r="3" transform-origin="70 20"/>
+              <circle class="pulse-dot" cx="10" cy="100" r="3" transform-origin="10 100"/>
+              <circle class="pulse-dot" cx="130" cy="100" r="3" transform-origin="130 100"/>
+            </svg>
+          </div>
           <div class="area-icon">
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01M6 12h.01M10 8h8M10 12h8"/></svg>
           </div>
