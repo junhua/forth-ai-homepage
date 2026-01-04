@@ -12,6 +12,10 @@ Sync the SSOT `CLAUDE.md` and `.claude/` folder (commands, skills, hooks, settin
 - `Tech/forth-ai-homepage`
 - `Tech/demos/accounting`
 
+**Products (Independent Branding):**
+- `Tech/products/omnisonant` — Omnisonant brand (no Forth AI references)
+- `Tech/products/inframagics` — Inframagics brand (no Forth AI references)
+
 **Research:**
 - `Research/shopee-collaborations/llm-recsys`
 - `Research/shopee-collaborations/sia`
@@ -32,6 +36,7 @@ SSOT_DIR="/Users/junhua/Workspace/ForthAI/SSOT"
 SSOT_CLAUDE="$SSOT_DIR/.claude"
 SSOT_CLAUDEMD="$SSOT_DIR/CLAUDE.md"
 
+# Standard projects (full Forth AI branding)
 PROJECTS=(
   "/Users/junhua/Workspace/ForthAI/Tech/forth-ai-homepage"
   "/Users/junhua/Workspace/ForthAI/Tech/demos/accounting"
@@ -41,24 +46,50 @@ PROJECTS=(
   "/Users/junhua/Workspace/ForthAI/Research/non-llm-ai-for-finance"
 )
 
+# Independent brand products (strip Forth AI references from CLAUDE.md)
+INDEPENDENT_PRODUCTS=(
+  "/Users/junhua/Workspace/ForthAI/Tech/products/omnisonant"
+  "/Users/junhua/Workspace/ForthAI/Tech/products/inframagics"
+)
+
 echo "Syncing SSOT to all projects..."
 echo ""
 
+# Sync standard projects
 for project in "${PROJECTS[@]}"; do
   if [ -d "$project" ]; then
-    # Sync CLAUDE.md
     cp "$SSOT_CLAUDEMD" "$project/CLAUDE.md"
-
-    # Remove existing .claude (except .local.md files which are project-specific)
     if [ -d "$project/.claude" ]; then
       find "$project/.claude" -type f ! -name "*.local.md" -delete 2>/dev/null
       find "$project/.claude" -type d -empty -delete 2>/dev/null
     fi
-
-    # Copy fresh .claude folder from SSOT
     cp -r "$SSOT_CLAUDE" "$project/"
-
     echo "✓ Synced: $(basename "$project")"
+  else
+    echo "✗ Not found: $project"
+  fi
+done
+
+# Sync independent brand products (strip Forth AI identity section)
+for project in "${INDEPENDENT_PRODUCTS[@]}"; do
+  if [ -d "$project" ]; then
+    # Copy CLAUDE.md but remove Identity section and Forth AI specific references
+    sed -E '
+      /^## Identity/,/^---/{
+        /^---/!d
+      }
+      s/Forth AI/[Company]/g
+      s/forth\.ai/[company-domain]/g
+      s/Junhua \(Jeph\) Liu/[Founder]/g
+      s/Kwan Hui Lim/[Co-founder]/g
+    ' "$SSOT_CLAUDEMD" > "$project/CLAUDE.md"
+
+    if [ -d "$project/.claude" ]; then
+      find "$project/.claude" -type f ! -name "*.local.md" -delete 2>/dev/null
+      find "$project/.claude" -type d -empty -delete 2>/dev/null
+    fi
+    cp -r "$SSOT_CLAUDE" "$project/"
+    echo "✓ Synced (independent brand): $(basename "$project")"
   else
     echo "✗ Not found: $project"
   fi

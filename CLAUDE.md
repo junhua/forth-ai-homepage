@@ -44,76 +44,6 @@ Work that doesn't connect to OKRs is entropy. Delete it or update OKRs.
 
 ---
 
-## Execution Principles
-
-Apply Musk's 5-step algorithm in sequence:
-
-1. **Question requirements** — "Your requirements are definitely dumb." Ask why it needs to exist.
-2. **Delete** — Remove any part you can. If not adding back 10% of deletions, not deleting enough.
-3. **Simplify** — Don't optimize what shouldn't exist. Simplification beats optimization.
-4. **Accelerate** — Move faster only after steps 1-3. Speed in wrong direction is waste.
-5. **Automate last** — Never automate a flawed process.
-
----
-
-## Minimal Entropy
-
-- **Single source of truth**: Each fact in ONE place. Reference, don't duplicate.
-- **Clear ownership**: Every task/decision/document has one owner.
-- **Explicit > implicit**: State assumptions. Document decisions. Name the "why."
-- **Compression**: Fewer words is better.
-- **Clean handoffs**: Status files enable seamless session continuation.
-
----
-
-## AI-Native Workforce
-
-**Estimate in AI-hours, not human hours.**
-
-| Human thinking | AI thinking |
-|----------------|-------------|
-| "2 weeks" | "4 AI-hours across parallel sessions" |
-| "Testing is expensive" | "Testing is cheap" |
-| "Documentation is burden" | "Documentation is near-zero cost" |
-
-**Parallelize**: Multiple Claude sessions run simultaneously. Design for independence.
-
-**Task design**: Clear specs, bounded scope, verifiable outputs, minimal dependencies.
-
----
-
-## Quality Standards
-
-AI builds fast, so build bulletproof. Quality is non-negotiable.
-
-**Every feature**: E2E tests, integration tests, unit tests, TypeScript strict mode
-**Every bug fix**: Regression test written BEFORE the fix
-
-**Guardrails**: TypeScript strict, ESLint/Prettier in CI, pre-commit hooks, all tests pass, error monitoring
-
----
-
-## Working Protocol
-
-**Status tracking**: Maintain `status.md` in active folders. Update before ending sessions.
-
-**Decision logging**: `/Operations/decisions/YYYY-MM-DD-topic.md` for significant decisions.
-
-**Session handoffs**: Write everything to files. Next session continues without asking "what were we doing?"
-
----
-
-## IP Rules
-
-| Entity | Default | License |
-|--------|---------|---------|
-| Foundation | Open | Apache 2.0 / CC BY 4.0 |
-| Pte Ltd | Proprietary | Proprietary |
-
-**Shared**: Brand ("Forth AI"), demos (Pte Ltd owns code, Foundation references)
-
----
-
 ## Folder Structure
 
 ```
@@ -147,3 +77,8 @@ Private/        # Junhua only (keys, finance)
 - Main domain: **forth.ai**
 - Push demos to Vercel via CLI (not GitHub trigger)
 - Fetch/update today's date on first prompt
+- Use git@github.com:Forth-AI/omnisonant.git for Omnisonant's product repo
+- Use git@github.com:Forth-AI/inframagics.git for Inframagics's product repo
+- use bun
+- Use nextjs 16
+- DO NOT add Claude or Claude Code as GitHub commit Co-Author

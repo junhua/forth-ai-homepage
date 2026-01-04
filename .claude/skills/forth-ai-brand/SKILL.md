@@ -1,11 +1,11 @@
 ---
 name: forth-ai-brand
-description: Apply Forth AI brand guidelines when creating frontends. Use for UI components, pages, applications, and design systems. Enforces radical simplicity, implicit elegance, abstract graphics, and the Forth AI visual identity.
+description: Apply Forth AI brand guidelines when creating frontends. Use for UI components, pages, applications, and design systems. Enforces radical simplicity, polymorphic interfaces, and the Forth AI visual identity.
 ---
 
 # Forth AI Design System
 
-**Forth AI** is the AI-native enterprise. All interfaces must embody radical simplicity, implicit elegance, and joyful usability.
+**Forth AI** is the AI-native enterprise. All interfaces must embody radical simplicity and joyful usability.
 
 ## Source Documents
 
@@ -13,38 +13,27 @@ Before building, read these canonical documents:
 
 | Document | Path | Contains |
 |----------|------|----------|
-| **Design Doctrine** | `SSOT/Product/design-doctrine.md` | UX philosophy, layout doctrine, interaction principles |
-| **Brand Guide** | `SSOT/GTM/brand-guide.md` | Visual identity, colors, typography, messaging |
-| **Design Principles** | `references/design-principles.md` | Elegance, graphics, universal interface |
-| **Visual Identity** | `references/visual-identity.md` | Colors, fonts, effects, components |
+| **Design Doctrine** | `SSOT/Product/design-doctrine.md` | UX philosophy, layout doctrine, interaction principles, governance rules |
+| **Brand Guide** | `SSOT/GTM/brand-guide.md` | Visual identity, colors, typography, components, messaging |
+| **Product Vision** | `SSOT/Product/vision.md` | What we're building and why |
 
 ---
 
 ## Core Philosophy (Quick Reference)
 
-### Implicit Over Explicit
-
-**Design should communicate through implication, not declaration.**
-
-| Explicit (Avoid) | Implicit (Prefer) |
-|------------------|-------------------|
-| Section labels everywhere | Typography hierarchy conveys structure |
-| "Click here" text | Visual affordance invites interaction |
-| Borders around everything | Whitespace creates separation |
-| Explanatory paragraphs | Layout communicates meaning |
-
-### Show, Don't Tell
-
-- Let visual hierarchy replace labels
-- Use position and size to indicate importance
-- Trust users to understand structure from design
-- Remove every element that can be removed
-
 ### The One Interface
 
 **Google Search simplicity × ChatGPT polymorphism × Enterprise predictability.**
 
-One universal input box handles everything. If a user needs a different page for a similar task, the design has failed.
+One universal input box handles:
+- Search
+- Actions & workflows
+- Automations
+- Queries
+- Data retrieval
+- Configuration
+
+**Rule**: If a user needs a different page to perform a fundamentally similar task, the design has failed.
 
 ### Speed = Product Value
 
@@ -158,70 +147,13 @@ The centerpiece. Identical across all modules.
 
 ---
 
-## Abstract Graphics
-
-### When to Create Graphics
-
-Graphics reinforce meaning — they don't decorate.
-
-| Context | Graphic Type |
-|---------|--------------|
-| Hero section | Animated abstract illustration |
-| Empty states | Static metaphorical illustration |
-| Feature cards | Icon in accent container |
-| Loading | Subtle animated indicator |
-
-### Graphic Design Principles
-
-**Meaningful abstraction:**
-- Simple geometric shapes (circles, lines, rectangles)
-- Each element represents something conceptual
-- Relationships between shapes tell a story
-- Negative space matters
-
-**Example concepts:**
-```
-Foundation strokes → Platform/base
-Rising blocks → Growth/building
-Connection dots → Ideas/nodes
-Linking lines → Relationships
-```
-
-### Animation Patterns
-
-| Type | Meaning | Timing |
-|------|---------|--------|
-| Fade + rise | Emergence | 0.4-0.8s |
-| Draw path | Connection | 1-1.5s |
-| Pulse | Activity | 2s loop |
-| Stagger | Sequence | 100-150ms delay |
-
-**CSS for draw-on effect:**
-```css
-.line {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: draw 1.2s ease-out forwards;
-}
-@keyframes draw { to { stroke-dashoffset: 0; } }
-```
-
-### When NOT to Use Graphics
-
-- When text alone is clearer
-- When animation distracts from content
-- When graphic doesn't reinforce meaning
-- On mobile (hide or simplify)
-
----
-
 ## Do NOT Add
 
-- New sidebars or persistent panels
-- Section labels where hierarchy is clear
-- Decorative graphics without meaning
+- New sidebars
+- New persistent panels
+- New "mini dashboards"
+- New icons (use existing set)
 - More than 6 colors
-- Borders everywhere
 - Any feature that breaks the "one box" metaphor
 
 ---
@@ -230,23 +162,15 @@ Linking lines → Relationships
 
 Before shipping any interface:
 
-**Elegance**
-- [ ] Implicit over explicit — structure communicates without labels
-- [ ] Visual hierarchy is clear without borders/dividers
-- [ ] Every element earns its place (can't remove anything)
-- [ ] Typography alone conveys importance
-
-**Visual Identity**
-- [ ] Brand fonts (Clash Display, General Sans)
-- [ ] Dark theme with amber accent
-- [ ] Glass effects where appropriate
-- [ ] Meaningful graphics (not decoration)
-
-**Usability**
-- [ ] Zero learning curve (30-second test)
-- [ ] Single obvious entry point
-- [ ] Speed targets met (<500ms)
+- [ ] Single obvious entry point (universal input)
+- [ ] Zero learning curve (30-second test passes)
+- [ ] No unnecessary UI elements
+- [ ] Speed targets met (<500ms latency)
+- [ ] Streaming responses where applicable
+- [ ] Brand colors applied correctly
+- [ ] Typography hierarchy clear
 - [ ] Reversible actions available
+- [ ] No disruptive navigation
 - [ ] Sparks joy
 
 ---
