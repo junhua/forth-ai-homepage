@@ -116,31 +116,35 @@
             line-height: 1.6;
         }
 
-        .tags-wrapper {
+        .trusted-by {
             display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .tag {
-            padding: 10px 24px;
-            font-size: 15px;
-            color: #D1D5DB;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        .trusted-by-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #6B7280;
+            font-weight: 500;
         }
 
-        .tag:hover {
-            border-color: #FCD34D;
-            color: #FCD34D;
-            background: rgba(252, 211, 77, 0.05);
-            transform: translateY(-2px);
+        .trusted-logos {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .trusted-logos img {
+            height: 28px;
+            opacity: 0.6;
+            filter: grayscale(100%) brightness(2);
+            transition: opacity 0.3s ease;
+        }
+
+        .trusted-logos img:hover {
+            opacity: 0.9;
         }
 
         /* Hero Abstract Graphic - Simulated with Canvas */
@@ -457,10 +461,12 @@
                     <p class="hero-subtitle anim-fade-up delay-1">
                         How work transforms. How systems stay accountable. What becomes possible when intelligence is woven into the fabric of enterprise.
                     </p>
-                    <div class="tags-wrapper anim-fade-up delay-2">
-                        <div class="tag">Workforce reskilling</div>
-                        <div class="tag">AI safety</div>
-                        <div class="tag">AI-native enterprise</div>
+                    <div class="trusted-by anim-fade-up delay-2">
+                        <span class="trusted-by-label">Trusted by</span>
+                        <div class="trusted-logos">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg" alt="Shopee" height="28">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Panasonic_logo_%28Blue%29.svg" alt="Panasonic" height="28">
+                        </div>
                     </div>
                 </div>
             </div>
