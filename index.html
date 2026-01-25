@@ -1,1355 +1,658 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
-  <title>Forth AI</title>
-  <meta name="description" content="Research at the intersection of workforce transformation, AI safety, and what becomes possible when AI is the foundation." />
-
-  <!-- Brand Fonts -->
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/geist-mono" rel="stylesheet">
-  <style>
-    :root{
-      --bg-primary: #0a0a0c;
-      --bg-secondary: #111114;
-      --bg-tertiary: #18181c;
-      --bg-elevated: #1f1f24;
-      --border-subtle: rgba(255, 255, 255, 0.06);
-      --border-default: rgba(255, 255, 255, 0.1);
-      --border-glow: rgba(245, 158, 11, 0.3);
-      --text-primary: #fafafa;
-      --text-secondary: #a1a1aa;
-      --text-muted: #71717a;
-      --accent: #f59e0b;
-      --accent-soft: rgba(245, 158, 11, 0.15);
-      --accent-glow: rgba(245, 158, 11, 0.4);
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-strong: rgba(255, 255, 255, 0.05);
-      --maxw: 1100px;
-      --radius: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-      /* Fonts */
-      --font-display: 'Clash Display', sans-serif;
-      --font-body: 'General Sans', -apple-system, sans-serif;
-      --font-mono: 'Geist Mono', monospace;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-
-    body{
-      margin: 0;
-      font-family: var(--font-body);
-      color: var(--text-primary);
-      background: var(--bg-primary);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      font-size: 15px;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* Subtle noise texture */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.015;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      z-index: 9999;
-    }
-
-    .wrap{
-      position: relative;
-      flex: 1 0 auto;
-      overflow: clip;
-    }
-
-    .backdrop{
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    .backdrop::before{
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.06), rgba(245,158,11,0) 50%),
-        repeating-linear-gradient(to right, rgba(255,255,255,0.015) 0 1px, transparent 1px 60px),
-        repeating-linear-gradient(to bottom, rgba(255,255,255,0.015) 0 1px, transparent 1px 60px);
-      opacity: .5;
-    }
-
-    /* Hero graphic - Three Pillars visualization */
-    .hero-graphic {
-      position: absolute;
-      top: clamp(100px, 14vh, 180px);
-      right: max(5%, calc((100vw - 1400px) / 2 + 40px));
-      width: min(380px, 28vw);
-      height: min(380px, 28vw);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @media (min-width: 1400px) {
-      .hero-graphic {
-        right: calc((100vw - 1400px) / 2 + 80px);
-      }
-    }
-
-    @media (max-width: 1100px) {
-      .hero-graphic {
-        width: min(320px, 30vw);
-        height: min(320px, 30vw);
-        right: 3%;
-        opacity: 0.7;
-      }
-    }
-
-    .hero-graphic svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Ambient glow behind graphic */
-    .hero-graphic::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 60%);
-      opacity: 0;
-      animation: ambientGlow 1.5s ease-out 0.5s forwards;
-      filter: blur(60px);
-    }
-
-    @keyframes ambientGlow {
-      to { opacity: 0.3; }
-    }
-
-    /* Base platform - Research foundation */
-    .hero-graphic .platform {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      opacity: 0;
-      stroke-dasharray: 400;
-      stroke-dashoffset: 400;
-      animation: drawPlatform 1.2s ease-out 0.8s forwards;
-    }
-
-    @keyframes drawPlatform {
-      to {
-        opacity: 0.6;
-        stroke-dashoffset: 0;
-      }
-    }
-
-    /* Three pillars representing focus areas */
-    .hero-graphic .pillar {
-      fill: var(--glass-strong);
-      stroke: var(--accent);
-      stroke-width: 1.5;
-      opacity: 0;
-      transform-origin: center bottom;
-      animation: risePillar 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .pillar-1 { animation-delay: 1.1s; }
-    .pillar-2 { animation-delay: 1.25s; }
-    .pillar-3 { animation-delay: 1.4s; }
-
-    @keyframes risePillar {
-      from {
-        opacity: 0;
-        transform: scaleY(0) translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: scaleY(1) translateY(0);
-      }
-    }
-
-    /* Pillar icons */
-    .hero-graphic .pillar-icon {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0;
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    .icon-1 { animation-delay: 1.5s; }
-    .icon-2 { animation-delay: 1.65s; }
-    .icon-3 { animation-delay: 1.8s; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Connection arcs between pillars */
-    .hero-graphic .connection-arc {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 1;
-      stroke-dasharray: 150;
-      stroke-dashoffset: 150;
-      opacity: 0;
-      animation: drawArc 1s ease-out forwards;
-    }
-
-    .arc-1 { animation-delay: 1.9s; }
-    .arc-2 { animation-delay: 2.0s; }
-    .arc-3 { animation-delay: 2.1s; }
-
-    @keyframes drawArc {
-      to {
-        opacity: 0.5;
-        stroke-dashoffset: 0;
-      }
-    }
-
-    /* Floating particles */
-    .hero-graphic .particle {
-      fill: var(--accent);
-      opacity: 0;
-      animation: floatParticle 3s ease-in-out infinite;
-    }
-
-    .particle-1 { animation-delay: 2.2s; }
-    .particle-2 { animation-delay: 2.4s; }
-    .particle-3 { animation-delay: 2.6s; }
-    .particle-4 { animation-delay: 2.8s; }
-    .particle-5 { animation-delay: 3.0s; }
-
-    @keyframes floatParticle {
-      0%, 100% {
-        opacity: 0.8;
-        transform: translateY(0);
-      }
-      50% {
-        opacity: 0.4;
-        transform: translateY(-8px);
-      }
-    }
-
-    /* Central node - the unifying element */
-    .hero-graphic .central-node {
-      fill: var(--accent);
-      opacity: 0;
-      animation: pulseNode 2s ease-in-out 2.3s infinite;
-    }
-
-    @keyframes pulseNode {
-      0%, 100% {
-        opacity: 0.9;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.5;
-        transform: scale(1.1);
-      }
-    }
-
-    /* Orbital ring */
-    .hero-graphic .orbit {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 0.5;
-      opacity: 0;
-      stroke-dasharray: 8 4;
-      animation: spinOrbit 20s linear infinite;
-    }
-
-    .orbit-1 { animation-delay: 2.2s; }
-    .orbit-2 { animation-delay: 2.4s; }
-
-    @keyframes spinOrbit {
-      from {
-        opacity: 0.3;
-        transform: rotate(0deg);
-      }
-      to {
-        opacity: 0.3;
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Text reveal animations - visible by default, animation is enhancement */
-    .reveal-text {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Animation only when CSS animations are supported and enabled */
-    @supports (animation: name) {
-      .reveal-text {
-        animation: revealUp 0.8s ease-out both;
-      }
-      .reveal-text.delay-1 { animation-delay: 0.2s; }
-      .reveal-text.delay-2 { animation-delay: 0.4s; }
-      .reveal-text.delay-3 { animation-delay: 0.6s; }
-      .reveal-text.delay-4 { animation-delay: 0.8s; }
-    }
-
-    @keyframes revealUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Reduce motion support */
-    @media (prefers-reduced-motion: reduce) {
-      .hero-graphic,
-      .network-node,
-      .network-line,
-      .orbit-ring,
-      .reveal-text,
-      .scroll-reveal,
-      .scroll-reveal-left {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
-    }
-
-    /* Hide detailed graphic on tablet and below, show simplified version */
-    @media (max-width: 900px) {
-      .hero-graphic {
-        display: none;
-      }
-    }
-
-    /* Mobile simplified accent - decorative glow */
-    .mobile-accent {
-      display: none;
-    }
-
-    @media (max-width: 900px) {
-      .mobile-accent {
-        display: block;
-        position: absolute;
-        top: 10%;
-        right: 5%;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-        filter: blur(60px);
-        opacity: 0.3;
-        pointer-events: none;
-        z-index: 0;
-      }
-    }
-
-    .hero{
-      position: relative;
-      z-index: 1;
-      padding: clamp(100px, 14vh, 180px) 0 clamp(80px, 12vh, 140px);
-      text-align: left;
-      max-width: min(55%, 650px);
-      margin-left: max(8%, calc((100vw - 1400px) / 2 + 80px));
-    }
-
-    @media (max-width: 1200px) {
-      .hero {
-        max-width: 65%;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        max-width: 85%;
-        margin: 0 auto;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        max-width: 90%;
-        padding-left: 5%;
-        padding-right: 5%;
-      }
-      .focus-pills {
-        justify-content: center;
-      }
-    }
-
-    .brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 48px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .dot{
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.8;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.4; }
-    }
-
-    h1{
-      margin: 0 0 28px;
-      font-family: var(--font-display);
-      font-weight: 600;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      font-size: clamp(42px, 7vw, 72px);
-      color: var(--text-primary);
-      max-width: 800px;
-      margin-inline: auto;
-    }
-
-    h1 .accent-word {
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .lead{
-      margin: 0 auto 24px;
-      max-width: 680px;
-      color: var(--text-secondary);
-      font-size: clamp(17px, 2.2vw, 20px);
-      line-height: 1.6;
-      font-weight: 400;
-    }
-
-    .nuance{
-      margin: 0 auto 48px;
-      max-width: 720px;
-      color: var(--text-muted);
-      font-size: clamp(15px, 2vw, 17px);
-      line-height: 1.65;
-      font-weight: 400;
-      font-style: italic;
-    }
-
-    .focus-pills{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-
-    .pill{
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-    }
-
-    .pill-divider{
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    @media (max-width: 480px){
-      .pill-divider{
-        display: none;
-      }
-      .focus-pills{
-        gap: 8px;
-      }
-    }
-
-    .cta{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 28px;
-      border-radius: 10px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-default);
-      color: var(--text-primary);
-      font-weight: 500;
-      font-size: 15px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-    }
-
-    .cta:hover{
-      background: var(--bg-tertiary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .cta-primary{
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #000;
-    }
-
-    .cta-primary:hover{
-      background: #d97706;
-      border-color: #d97706;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
-    }
-
-    .section{
-      position: relative;
-      z-index: 1;
-      width: min(90vw, var(--maxw));
-      margin: 0 auto;
-      padding: clamp(80px, 12vh, 120px) 0;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .section-title{
-      margin: 0 0 16px;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(24px, 3.5vw, 32px);
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-    }
-
-    .section-subtitle{
-      margin: 0 0 48px;
-      max-width: 680px;
-      color: var(--text-muted);
-      font-size: clamp(15px, 2vw, 17px);
-      line-height: 1.65;
-    }
-
-    .areas{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-    }
-
-    .area{
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 28px;
-      border-radius: var(--radius-lg);
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
-    }
-
-    /* Glow effect on hover */
-    .area::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, transparent 40%, var(--accent) 50%, transparent 60%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .area:hover::before {
-      opacity: 1;
-    }
-
-    .area:hover{
-      background: var(--glass-strong);
-      transform: translateY(-6px);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        0 0 60px var(--accent-soft);
-    }
-
-    .area-icon{
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .area-icon svg{
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Area graphic illustrations */
-    .area-graphic {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 140px;
-      height: 140px;
-      opacity: 0.15;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
-
-    .area:hover .area-graphic {
-      opacity: 0.25;
-    }
-
-    .area-graphic svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Workforce graphic animations */
-    .workforce-graphic .person {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 1.5;
-      opacity: 0.8;
-    }
-
-    .workforce-graphic .connection {
-      stroke: var(--accent);
-      stroke-width: 1;
-      stroke-dasharray: 4 2;
-      animation: flowDash 2s linear infinite;
-    }
-
-    .workforce-graphic .node {
-      fill: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .workforce-graphic .node:nth-child(2) { animation-delay: 0.3s; }
-    .workforce-graphic .node:nth-child(3) { animation-delay: 0.6s; }
-
-    @keyframes flowDash {
-      to { stroke-dashoffset: -12; }
-    }
-
-    /* Safety graphic animations */
-    .safety-graphic .shield {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 1.5;
-    }
-
-    .safety-graphic .check {
-      stroke: var(--accent);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-    }
-
-    .safety-graphic .ring {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 0.5;
-      opacity: 0.5;
-      transform-origin: center;
-      animation: expandRing 3s ease-out infinite;
-    }
-
-    .safety-graphic .ring:nth-child(2) { animation-delay: 1s; }
-    .safety-graphic .ring:nth-child(3) { animation-delay: 2s; }
-
-    @keyframes expandRing {
-      0% { transform: scale(0.8); opacity: 0.6; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
-    /* Enterprise graphic animations */
-    .enterprise-graphic .block {
-      fill: var(--accent);
-      opacity: 0.3;
-    }
-
-    .enterprise-graphic .block-outline {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 1;
-    }
-
-    .enterprise-graphic .data-line {
-      stroke: var(--accent);
-      stroke-width: 1;
-      stroke-dasharray: 8 4;
-      animation: dataFlow 1.5s linear infinite;
-    }
-
-    .enterprise-graphic .data-line:nth-child(2) { animation-delay: 0.5s; }
-    .enterprise-graphic .data-line:nth-child(3) { animation-delay: 1s; }
-
-    @keyframes dataFlow {
-      to { stroke-dashoffset: -24; }
-    }
-
-    .enterprise-graphic .pulse-dot {
-      fill: var(--accent);
-      animation: pulseDot 2s ease-in-out infinite;
-    }
-
-    .enterprise-graphic .pulse-dot:nth-child(2) { animation-delay: 0.4s; }
-    .enterprise-graphic .pulse-dot:nth-child(3) { animation-delay: 0.8s; }
-
-    @keyframes pulseDot {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    .area h3{
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-
-    .area p{
-      margin: 0;
-      color: var(--text-secondary);
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    .research-list{
-      display: grid;
-      gap: 24px;
-      margin-top: 32px;
-    }
-
-    .paper{
-      position: relative;
-      padding: 24px;
-      border-radius: var(--radius-lg);
-      background: var(--glass);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border-subtle);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .paper::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 0;
-      background: var(--accent);
-      border-radius: 2px;
-      transition: height 0.3s ease;
-    }
-
-    .paper:hover{
-      background: var(--glass-strong);
-      border-color: var(--border-default);
-      transform: translateX(8px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .paper:hover::after {
-      height: 60%;
-    }
-
-    .paper-header{
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-
-    .paper-title{
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text-primary);
-      line-height: 1.4;
-      flex: 1;
-    }
-
-    .paper-venue{
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-
-    .paper-authors{
-      margin: 0 0 12px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .paper-summary{
-      margin: 0;
-      padding-top: 12px;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    .paper-meta{
-      margin: 0;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .contact-section{
-      text-align: center;
-      padding: 64px 48px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-tertiary) 100%);
-      border: 1px solid var(--border-default);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-section::before{
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0.6; width: 200px; }
-      50% { opacity: 1; width: 400px; }
-    }
-
-    .contact-glow {
-      position: absolute;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 200px;
-      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
-      opacity: 0.4;
-      filter: blur(40px);
-      pointer-events: none;
-    }
-
-    .contact-section h3{
-      margin: 0 0 12px;
-      font-family: var(--font-display);
-      font-size: clamp(20px, 2.8vw, 24px);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    .contact-section p{
-      margin: 0 auto 28px;
-      max-width: 480px;
-      color: var(--text-secondary);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .footer{
-      width: 100%;
-      border-top: 1px solid var(--border-subtle);
-      padding: 48px 20px 40px;
-      margin-top: auto;
-    }
-
-    .footer-inner{
-      max-width: var(--maxw);
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .footer-brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 16px;
-      color: var(--text-primary);
-    }
-
-    .footer-tagline{
-      font-size: 14px;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    .footer-links{
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .footer-link{
-      font-size: 14px;
-      color: var(--text-secondary);
-      transition: color 0.2s ease;
-    }
-
-    .footer-link:hover{
-      color: var(--accent);
-    }
-
-    .copyright{
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 768px){
-      .areas{
-        grid-template-columns: 1fr;
-      }
-      .artifact {
-        display: none;
-      }
-    }
-
-
-    /* Section header styling */
-    .section-header {
-      margin-bottom: 48px;
-    }
-
-    /* Research groups */
-    .research-groups {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    .research-group {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .research-group-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .research-group-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent-soft);
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .research-group-icon svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .research-group-title {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
-    }
-
-    .research-group-papers {
-      display: grid;
-      gap: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
+    <title>Forth AI - When AI becomes the foundation</title>
+    <meta name="description" content="Research at the intersection of workforce transformation, AI safety, and what becomes possible when AI is the foundation." />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        /* Fonts Configuration */
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Semibold.ttf') format('truetype');
+            font-weight: 600;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+            font-weight: 700;
+        }
+
+        /* Global Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            max-width: 1920px;
+            margin: 0 auto;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'MiSans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+
+        /* Utilities */
+        .container {
+            width: 100%;
+            max-width: 1520px;
+            margin: 0 auto;
+            padding: 0 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 0;
+            z-index: 50;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 900px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle at 80% 30%, #111111 0%, #050505 60%);
+        }
+
+        .hero-content {
+            width: 55%;
+            padding-top: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(48px, 5vw, 88px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2.5px;
+            margin-bottom: 32px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 1.5vw, 22px);
+            font-weight: 400;
+            color: #9CA3AF;
+            max-width: 580px;
+            margin-bottom: 56px;
+            line-height: 1.6;
+        }
+
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .tag {
+            padding: 10px 24px;
+            font-size: 15px;
+            color: #D1D5DB;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tag:hover {
+            border-color: #FCD34D;
+            color: #FCD34D;
+            background: rgba(252, 211, 77, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Abstract Graphic - Simulated with Canvas */
+        #hero-graphic {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 900px;
+            height: 900px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 140px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .section-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 60px;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FCD34D;
+            margin-bottom: 16px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        .focus-item {
+            group: 1;
+        }
+
+        .focus-item h3 {
+            font-size: 36px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            transition: color 0.3s;
+        }
+
+        .focus-item:hover h3 {
+            color: #FCD34D;
+        }
+
+        .focus-item p {
+            font-size: 20px;
+            color: #888888;
+            max-width: 720px;
+            line-height: 1.7;
+        }
+
+        /* Publications List */
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .pub-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            transition: all 0.4s ease;
+        }
+
+        .pub-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+        }
+
+        .pub-content h4 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #F3F4F6;
+        }
+
+        .pub-content p {
+            font-size: 16px;
+            color: #6B7280;
+        }
+
+        .pub-icon {
+            font-size: 24px;
+            color: #FCD34D;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .pub-card:hover .pub-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, #111111 0%, #000000 70%);
+            border-top: none;
+        }
+
+        .contact-wrapper h2 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #6B7280;
+            margin-bottom: 32px;
+        }
+
+        .email-link {
+            font-size: clamp(36px, 6vw, 96px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -3px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .email-link::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 3px;
+            bottom: 10px;
+            left: 0;
+            background-color: #FCD34D;
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .email-link:hover::after {
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #4B5563;
+            font-size: 14px;
+        }
+
+        .footer-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-fade-up {
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 40px;
+            }
+
+            .section-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-header {
+                position: static;
+            }
+
+            #hero-graphic {
+                width: 600px;
+                height: 600px;
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 120px 0 80px;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            h1 {
+                letter-spacing: -1px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .focus-item h3 {
+                font-size: 28px;
+            }
+
+            .focus-item p {
+                font-size: 18px;
+            }
+
+            .pub-card {
+                padding: 24px;
+            }
+
+            .pub-content h4 {
+                font-size: 20px;
+            }
+
+            .footer-flex {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 24px;
+            }
+
+            #hero-graphic {
+                width: 400px;
+                height: 400px;
+                right: -100px;
+                opacity: 0.3;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="backdrop" aria-hidden="true"></div>
-    <div class="mobile-accent" aria-hidden="true"></div>
 
-    <header class="hero" role="banner">
-      <div class="brand">
-        <span class="dot" aria-hidden="true"></span>
-        FORTH AI
-      </div>
-
-      <h1>When AI becomes <span class="accent-word">the foundation</span></h1>
-
-      <p class="lead">
-        How work transforms. How systems stay accountable. What becomes possible.
-      </p>
-
-      <div class="focus-pills">
-        <span class="pill">Workforce reskilling</span>
-        <span class="pill-divider">•</span>
-        <span class="pill">AI safety</span>
-        <span class="pill-divider">•</span>
-        <span class="pill">AI-native enterprise</span>
-      </div>
-
+    <header>
+        <div class="container">
+            <div class="brand">Forth AI</div>
+        </div>
     </header>
 
-    <!-- Three Pillars Hero Graphic (positioned relative to .wrap) -->
-    <div class="hero-graphic" aria-hidden="true">
-      <svg viewBox="0 0 400 400">
-        <!-- Orbital rings -->
-        <circle class="orbit orbit-1" cx="200" cy="200" r="160" transform-origin="200 200"/>
-        <circle class="orbit orbit-2" cx="200" cy="200" r="120" transform-origin="200 200"/>
-
-        <!-- Base platform -->
-        <path class="platform" d="M60 280 L200 340 L340 280"/>
-
-        <!-- Three pillars -->
-        <rect class="pillar pillar-1" x="80" y="180" width="60" height="100" rx="6"/>
-        <rect class="pillar pillar-2" x="170" y="140" width="60" height="140" rx="6"/>
-        <rect class="pillar pillar-3" x="260" y="160" width="60" height="120" rx="6"/>
-
-        <!-- Pillar icons -->
-        <!-- Workforce (people) -->
-        <g class="pillar-icon icon-1" transform="translate(95, 200)">
-          <circle cx="15" cy="8" r="6"/>
-          <path d="M5 28 Q15 20 25 28"/>
-        </g>
-
-        <!-- Safety (shield) -->
-        <g class="pillar-icon icon-2" transform="translate(185, 160)">
-          <path d="M15 5 L25 10 L25 22 Q25 28 15 32 Q5 28 5 22 L5 10 Z"/>
-          <polyline points="10,18 14,22 22,14"/>
-        </g>
-
-        <!-- Enterprise (monitor) -->
-        <g class="pillar-icon icon-3" transform="translate(275, 180)">
-          <rect x="3" y="5" width="24" height="16" rx="2"/>
-          <line x1="15" y1="21" x2="15" y2="26"/>
-          <line x1="8" y1="26" x2="22" y2="26"/>
-        </g>
-
-        <!-- Connection arcs -->
-        <path class="connection-arc arc-1" d="M110 180 Q140 120 200 140"/>
-        <path class="connection-arc arc-2" d="M200 140 Q260 120 290 160"/>
-        <path class="connection-arc arc-3" d="M290 160 Q320 200 290 240 Q200 280 110 240 Q80 200 110 180"/>
-
-        <!-- Central node -->
-        <circle class="central-node" cx="200" cy="200" r="8" transform-origin="200 200"/>
-
-        <!-- Floating particles -->
-        <circle class="particle particle-1" cx="130" cy="120" r="3"/>
-        <circle class="particle particle-2" cx="270" cy="100" r="2"/>
-        <circle class="particle particle-3" cx="320" cy="180" r="3"/>
-        <circle class="particle particle-4" cx="80" cy="220" r="2"/>
-        <circle class="particle particle-5" cx="200" cy="80" r="2"/>
-      </svg>
-    </div>
-
-    <section class="section" id="focus">
-      <div class="section-header">
-        <h2 class="section-title">Focus</h2>
-        <p class="section-subtitle">
-          Three directions — how people adapt, how systems behave, what becomes possible.
-        </p>
-      </div>
-
-      <div class="areas">
-        <div class="area">
-          <div class="area-graphic workforce-graphic" aria-hidden="true">
-            <svg viewBox="0 0 140 140">
-              <!-- Network of people transforming -->
-              <circle class="node" cx="40" cy="50" r="4"/>
-              <circle class="node" cx="100" cy="40" r="4"/>
-              <circle class="node" cx="70" cy="90" r="4"/>
-              <line class="connection" x1="40" y1="50" x2="100" y2="40"/>
-              <line class="connection" x1="100" y1="40" x2="70" y2="90"/>
-              <line class="connection" x1="70" y1="90" x2="40" y2="50"/>
-              <!-- Person silhouettes -->
-              <g class="person" transform="translate(30, 60)">
-                <circle cx="10" cy="8" r="6"/>
-                <path d="M2 28 Q10 22 18 28"/>
-              </g>
-              <g class="person" transform="translate(90, 50)">
-                <circle cx="10" cy="8" r="6"/>
-                <path d="M2 28 Q10 22 18 28"/>
-              </g>
-              <g class="person" transform="translate(60, 100)">
-                <circle cx="10" cy="8" r="6"/>
-                <path d="M2 28 Q10 22 18 28"/>
-              </g>
-            </svg>
-          </div>
-          <div class="area-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Workforce reskilling</h3>
-          <p>Not training on tools. Redesigning work around new capabilities.</p>
-        </div>
-
-        <div class="area">
-          <div class="area-graphic safety-graphic" aria-hidden="true">
-            <svg viewBox="0 0 140 140">
-              <!-- Expanding rings -->
-              <circle class="ring" cx="70" cy="70" r="50"/>
-              <circle class="ring" cx="70" cy="70" r="50"/>
-              <circle class="ring" cx="70" cy="70" r="50"/>
-              <!-- Shield - same shape as icon, scaled up -->
-              <path class="shield" d="M70 110 s32-16 32-40 V30 l-32-12 -32 12 v40 c0 24 32 40 32 40 z"/>
-              <!-- Checkmark - centered in shield -->
-              <polyline class="check" points="55,60 65,72 85,48" fill="none"/>
-            </svg>
-          </div>
-          <div class="area-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-          </div>
-          <h3>AI safety in production</h3>
-          <p>Accountable systems at scale. Safety isn't theoretical — it's how we build.</p>
-        </div>
-
-        <div class="area">
-          <div class="area-graphic enterprise-graphic" aria-hidden="true">
-            <svg viewBox="0 0 140 140">
-              <!-- Stacked blocks representing system layers -->
-              <rect class="block" x="30" y="90" width="80" height="20" rx="3"/>
-              <rect class="block-outline" x="30" y="90" width="80" height="20" rx="3"/>
-              <rect class="block" x="40" y="65" width="60" height="20" rx="3"/>
-              <rect class="block-outline" x="40" y="65" width="60" height="20" rx="3"/>
-              <rect class="block" x="50" y="40" width="40" height="20" rx="3"/>
-              <rect class="block-outline" x="50" y="40" width="40" height="20" rx="3"/>
-              <!-- Data flow lines -->
-              <line class="data-line" x1="70" y1="40" x2="70" y2="20"/>
-              <line class="data-line" x1="30" y1="100" x2="10" y2="100"/>
-              <line class="data-line" x1="110" y1="100" x2="130" y2="100"/>
-              <!-- Pulse dots -->
-              <circle class="pulse-dot" cx="70" cy="20" r="3" transform-origin="70 20"/>
-              <circle class="pulse-dot" cx="10" cy="100" r="3" transform-origin="10 100"/>
-              <circle class="pulse-dot" cx="130" cy="100" r="3" transform-origin="130 100"/>
-            </svg>
-          </div>
-          <div class="area-icon">
-            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01M6 12h.01M10 8h8M10 12h8"/></svg>
-          </div>
-          <h3>AI-native enterprise</h3>
-          <p>Closing the gap between demos and deployment.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="research">
-      <div class="section-header">
-        <h2 class="section-title">Publications</h2>
-        <p class="section-subtitle">
-          Research across our three focus areas.
-        </p>
-      </div>
-
-      <div class="research-groups">
-        <!-- Workforce reskilling -->
-        <div class="research-group">
-          <div class="research-group-header">
-            <div class="research-group-icon">
-              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="border:none;">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="anim-fade-up">When AI becomes<br>the foundation</h1>
+                    <p class="hero-subtitle anim-fade-up delay-1">
+                        How work transforms. How systems stay accountable. What becomes possible when intelligence is woven into the fabric of enterprise.
+                    </p>
+                    <div class="tags-wrapper anim-fade-up delay-2">
+                        <div class="tag">Workforce reskilling</div>
+                        <div class="tag">AI safety</div>
+                        <div class="tag">AI-native enterprise</div>
+                    </div>
+                </div>
             </div>
-            <h3 class="research-group-title">Workforce reskilling</h3>
-          </div>
-          <div class="research-group-papers">
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">Title2Vec: A Contextual Job Title Embedding for Occupational Named Entity Recognition and Other Applications</h4>
-                <span class="paper-venue">J. Big Data 2022</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Yung Chuen Ng, Zitong Gui, Trisha Singhal, Lucienne T M Blessing, Kristin L Wood, Kwan Hui Lim</p>
-              <p class="paper-summary">Contextual embeddings for job titles enabling occupational named entity recognition. Addresses the challenge of understanding workforce skills and career transitions at scale.</p>
-            </article>
+            <!-- Canvas for generative graphic -->
+            <canvas id="hero-graphic"></canvas>
+        </section>
 
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">IPOD: A Large-scale Industrial and Professional Occupation Dataset</h4>
-                <span class="paper-venue">CSCW 2020</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Yung Chuen Ng, Kristin L Wood, Kwan Hui Lim</p>
-              <p class="paper-summary">A comprehensive dataset of industrial and professional occupations supporting research in workforce analytics, skills mapping, and career pathway prediction.</p>
-            </article>
-          </div>
-        </div>
-
-        <!-- AI-native enterprise -->
-        <div class="research-group">
-          <div class="research-group-header">
-            <div class="research-group-icon">
-              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <!-- Focus Section -->
+        <section id="focus">
+            <div class="container">
+                <div class="section-layout">
+                    <div class="section-header">
+                        <span class="section-label">01 — Focus</span>
+                        <h2 class="section-title">Areas of<br>Impact</h2>
+                    </div>
+                    <div class="content-block">
+                        <div class="focus-item">
+                            <h3>Workforce Reskilling</h3>
+                            <p>We believe in augmenting human potential, not replacing it. Our adaptive learning models identify skill gaps in real-time and provide personalized pathways for employees to evolve alongside AI systems.</p>
+                        </div>
+                        <div class="focus-item">
+                            <h3>AI Safety in Production</h3>
+                            <p>Moving from sandbox to scale requires rigorous safety protocols. We architect deterministic guardrails that ensure AI behaviors remain aligned with corporate ethics and compliance standards.</p>
+                        </div>
+                        <div class="focus-item">
+                            <h3>AI-Native Enterprise</h3>
+                            <p>True transformation happens when AI is not just a tool, but a structural component. We help organizations reimagine their workflows, data pipelines, and decision hierarchies for the cognitive age.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3 class="research-group-title">AI-native enterprise</h3>
-          </div>
-          <div class="research-group-papers">
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">Balancing Accuracy and Efficiency in Multi-Turn Intent Classification for LLM-Powered Dialog Systems in Production</h4>
-                <span class="paper-venue">IAAI 2026</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-              <p class="paper-summary">Production dialogue systems face a critical challenge: achieving high accuracy while maintaining low latency at scale. This work introduces Symbol Tuning and C-LARA — two complementary approaches that enable enterprise deployment of LLM-powered intent classification at a fraction of the computational cost.</p>
-            </article>
+        </section>
 
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">From Intents to Conversations: Generating Intent-Driven Dialogues with Contrastive Learning</h4>
-                <span class="paper-venue">CIKM 2025</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-              <p class="paper-summary">Chain-of-Intent combines Hidden Markov Models with LLMs to generate context-aware dialogues through self-play, addressing the fundamental data scarcity problem in conversational AI.</p>
-            </article>
-
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">LARA: Linguistic-Adaptive Retrieval-Augmentation for Multi-Turn Intent Classification</h4>
-                <span class="paper-venue">EMNLP 2024</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Yong Keat Tan, Bin Fu, Kwan Hui Lim</p>
-              <p class="paper-summary">Combines a fine-tuned compact model with retrieval-augmented LLM architecture for cross-lingual intent classification. Achieves 3.67% accuracy improvement across six languages.</p>
-            </article>
-          </div>
-        </div>
-
-        <!-- AI safety -->
-        <div class="research-group">
-          <div class="research-group-header">
-            <div class="research-group-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <!-- Publications Section -->
+        <section id="publications">
+            <div class="container">
+                <div class="section-layout">
+                    <div class="section-header">
+                        <span class="section-label">02 — Insights</span>
+                        <h2 class="section-title">Latest<br>Thinking</h2>
+                    </div>
+                    <div class="pub-list">
+                        <a href="#" class="pub-card">
+                            <div class="pub-content">
+                                <h4>The Architecture of Trust</h4>
+                                <p>Building explainable AI systems for financial sectors</p>
+                            </div>
+                            <i class="ri-arrow-right-up-line pub-icon"></i>
+                        </a>
+                        <a href="#" class="pub-card">
+                            <div class="pub-content">
+                                <h4>Reskilling at Scale</h4>
+                                <p>A framework for human-AI collaboration in manufacturing</p>
+                            </div>
+                            <i class="ri-arrow-right-up-line pub-icon"></i>
+                        </a>
+                        <a href="#" class="pub-card">
+                            <div class="pub-content">
+                                <h4>Beyond Automation</h4>
+                                <p>Why cognitive computing defines the next decade of growth</p>
+                            </div>
+                            <i class="ri-arrow-right-up-line pub-icon"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h3 class="research-group-title">AI safety</h3>
-          </div>
-          <div class="research-group-papers">
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">Understanding Fairness-Accuracy Trade-offs in Machine Learning Models</h4>
-                <span class="paper-venue">ASONAM 2025</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
-              <p class="paper-summary">Using real university admissions data, we challenge the assumption that fairness and accuracy exist in tension. Our findings reveal that ML models exceed human fairness consistency by 14-18% while maintaining comparable accuracy.</p>
-            </article>
+        </section>
 
-            <article class="paper">
-              <div class="paper-header">
-                <h4 class="paper-title">BGM-HAN: Hierarchical Attention for Fair Decision Assessment on Semi-Structured Profiles</h4>
-                <span class="paper-venue">ASONAM 2025</span>
-              </div>
-              <p class="paper-authors">Junhua Liu, Roy Ka-Wei Lee, Kwan Hui Lim</p>
-              <p class="paper-summary">Combining Byte-Pair Encoding with gated multi-head hierarchical attention for nuanced assessment of semi-structured data. Achieves F1-score of 0.8453 while offering interpretability for high-stakes decisions.</p>
-            </article>
-          </div>
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <h2>Get in touch</h2>
+                    <a href="mailto:hello@forth.ai" class="email-link">hello@forth.ai</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-flex">
+                <div>&copy; 2025 Forth AI. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="https://www.linkedin.com/company/forthai" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://twitter.com/forth_ai" target="_blank" rel="noopener">Twitter</a>
+                </div>
+            </div>
         </div>
-      </div>
+    </footer>
 
-      <div style="margin-top: 40px;">
-        <a class="cta" href="https://scholar.google.com/citations?user=WV190vsAAAAJ" target="_blank" rel="noopener">All publications</a>
-      </div>
-    </section>
+    <!-- Script for Hero Graphic Animation -->
+    <script>
+        const canvas = document.getElementById('hero-graphic');
+        const ctx = canvas.getContext('2d');
 
-    <section class="section">
-      <div class="contact-section">
-        <div class="contact-glow" aria-hidden="true"></div>
-        <h3>Let's talk</h3>
-        <p>Collaboration, training, or just curious.</p>
-        <a class="cta cta-primary" href="mailto:hello@forth.ai">hello@forth.ai</a>
-      </div>
-    </section>
-  </div>
+        let width, height;
+        let particles = [];
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="dot" aria-hidden="true"></span>
-        Forth AI
-      </div>
-      <p class="footer-tagline">Research · Systems · What comes next</p>
-      <div class="footer-links">
-        <a class="footer-link" href="https://scholar.google.com/citations?user=WV190vsAAAAJ" target="_blank" rel="noopener">Publications</a>
-        <a class="footer-link" href="mailto:hello@forth.ai">Contact</a>
-      </div>
-      <div class="copyright">© 2025 Forth AI</div>
-    </div>
-  </footer>
+        // Configuration for the "abstract circular graphic"
+        const config = {
+            particleCount: 180,
+            radius: 350,
+            baseColor: 'rgba(50, 50, 50, 0.4)',
+            highlightColor: 'rgba(252, 211, 77, 0.8)',
+            rotationSpeed: 0.001
+        };
 
-  <script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+        function init() {
+            width = canvas.width = 900;
+            height = canvas.height = 900;
+            createParticles();
+            animate();
         }
-      });
-    });
-  </script>
+
+        function createParticles() {
+            particles = [];
+            for(let i = 0; i < config.particleCount; i++) {
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+
+                const x = config.radius * Math.sin(phi) * Math.cos(theta);
+                const y = config.radius * Math.sin(phi) * Math.sin(theta);
+                const z = config.radius * Math.cos(phi);
+
+                particles.push({
+                    x, y, z,
+                    size: Math.random() * 3 + 1,
+                    isHighlight: Math.random() > 0.85
+                });
+            }
+        }
+
+        let angle = 0;
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            angle += config.rotationSpeed;
+
+            const cx = width / 2;
+            const cy = height / 2;
+
+            particles.forEach(p => {
+                const cos = Math.cos(angle);
+                const sin = Math.sin(angle);
+
+                let x1 = p.x * cos - p.z * sin;
+                let z1 = p.z * cos + p.x * sin;
+
+                let y1 = p.y;
+                let tilt = 0.2;
+                let y2 = y1 * Math.cos(tilt) - z1 * Math.sin(tilt);
+                let z2 = z1 * Math.cos(tilt) + y1 * Math.sin(tilt);
+
+                const fov = 600;
+                const scale = fov / (fov + z2);
+                const x2d = x1 * scale + cx;
+                const y2d = y2 * scale + cy;
+
+                const alpha = (z2 + config.radius) / (config.radius * 2);
+
+                ctx.beginPath();
+                ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
+
+                if (p.isHighlight) {
+                    ctx.fillStyle = config.highlightColor;
+                    ctx.shadowBlur = 10 * scale;
+                    ctx.shadowColor = config.highlightColor;
+                } else {
+                    ctx.fillStyle = `rgba(255, 255, 255, ${0.1 + alpha * 0.2})`;
+                    ctx.shadowBlur = 0;
+                }
+
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+
+        let mouseX = 0;
+        let targetSpeed = 0.001;
+
+        document.addEventListener('mousemove', (e) => {
+            const center = window.innerWidth / 2;
+            mouseX = (e.clientX - center) / center;
+            config.rotationSpeed = 0.001 + (mouseX * 0.005);
+        });
+    </script>
 </body>
 </html>
