@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
+    <title>Reskilling at Scale - Forth AI</title>
+    <meta name="description" content="A framework for human-AI collaboration in manufacturing. How organizations can transform their workforce to thrive alongside intelligent automation." />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Semibold.ttf') format('truetype');
+            font-weight: 600;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+            font-weight: 700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            max-width: 1920px;
+            margin: 0 auto;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'MiSans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FCD34D;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        header {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-container {
+            max-width: 1520px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            color: #FCD34D;
+        }
+
+        main {
+            padding: 80px 0 120px;
+        }
+
+        .article-meta {
+            margin-bottom: 32px;
+        }
+
+        .article-category {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FCD34D;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: clamp(36px, 4vw, 56px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin: 24px 0;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .article-subtitle {
+            font-size: 20px;
+            color: #9CA3AF;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .article-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #6B7280;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 48px;
+        }
+
+        .article-content h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 36px;
+            margin-bottom: 16px;
+        }
+
+        .article-content p {
+            font-size: 18px;
+            color: #D1D5DB;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .article-content li {
+            font-size: 18px;
+            color: #D1D5DB;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid #FCD34D;
+            padding-left: 24px;
+            margin: 32px 0;
+            font-size: 20px;
+            color: #9CA3AF;
+            font-style: italic;
+        }
+
+        .article-content .highlight {
+            background: rgba(252, 211, 77, 0.1);
+            border: 1px solid rgba(252, 211, 77, 0.2);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .article-content .highlight p {
+            margin-bottom: 0;
+            color: #FCD34D;
+        }
+
+        .framework-step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+
+        .framework-step h4 {
+            font-size: 18px;
+            color: #FCD34D;
+            margin-bottom: 12px;
+        }
+
+        .framework-step p {
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #4B5563;
+            font-size: 14px;
+        }
+
+        .footer-container {
+            max-width: 1520px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .footer-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: #4B5563;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .header-container,
+            .footer-container {
+                padding: 0 24px;
+            }
+
+            .article-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .footer-flex {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="/" class="brand">Forth AI</a>
+            <a href="/#publications" class="back-link">
+                <i class="ri-arrow-left-line"></i>
+                Back to Insights
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article class="container">
+            <div class="article-meta">
+                <span class="article-category">Workforce Transformation</span>
+            </div>
+
+            <h1>Reskilling at Scale</h1>
+            <p class="article-subtitle">A framework for human-AI collaboration in manufacturing</p>
+
+            <div class="article-info">
+                <span>January 2026</span>
+                <span>15 min read</span>
+            </div>
+
+            <div class="article-content">
+                <p>The manufacturing sector stands at an inflection point. Intelligent automation isn't coming—it's here. Robots guided by computer vision, predictive maintenance systems, and AI-optimized supply chains are transforming factory floors worldwide. The question facing every manufacturing leader is no longer whether to adopt these technologies, but how to bring their workforce along.</p>
+
+                <h2>The Reskilling Imperative</h2>
+                <p>Traditional approaches to workforce training—periodic seminars, one-size-fits-all curricula, and disconnected learning management systems—are fundamentally inadequate for the pace of change ahead. When job requirements can shift in months rather than years, organizations need continuous, adaptive reskilling capabilities.</p>
+
+                <p>Yet the challenge isn't purely logistical. It's deeply human. Workers who've spent decades mastering their craft face the prospect of becoming students again. Managers must balance production demands against training time. And leadership must commit resources to transformation without clear short-term ROI.</p>
+
+                <blockquote>"The goal isn't to replace human workers with AI—it's to create human-AI teams that outperform either alone."</blockquote>
+
+                <h2>The ADAPT Framework</h2>
+                <p>Based on our work with manufacturing organizations across Asia and Europe, we've developed a five-phase framework for workforce reskilling that we call ADAPT: Assess, Design, Align, Pilot, and Transform.</p>
+
+                <div class="framework-step">
+                    <h4>Phase 1: Assess</h4>
+                    <p>Map current workforce capabilities against future requirements. Identify which roles will be augmented by AI, which will be transformed, and which new roles will emerge. This isn't about counting heads—it's about understanding skills at a granular level.</p>
+                </div>
+
+                <div class="framework-step">
+                    <h4>Phase 2: Design</h4>
+                    <p>Create personalized learning pathways for each role transition. Modern AI tutoring systems can adapt to individual learning styles, identify knowledge gaps in real-time, and provide just-in-time training that integrates with daily work.</p>
+                </div>
+
+                <div class="framework-step">
+                    <h4>Phase 3: Align</h4>
+                    <p>Build organizational alignment from shop floor to C-suite. This means creating incentive structures that reward learning, protecting training time from production pressures, and cultivating psychological safety for experimentation.</p>
+                </div>
+
+                <div class="framework-step">
+                    <h4>Phase 4: Pilot</h4>
+                    <p>Deploy reskilling programs in contained environments where outcomes can be measured. Start with early adopters who can become internal champions. Document what works and what doesn't before scaling.</p>
+                </div>
+
+                <div class="framework-step">
+                    <h4>Phase 5: Transform</h4>
+                    <p>Scale successful pilots across the organization while continuously adapting based on feedback. Transformation is never complete—build the organizational muscle for ongoing evolution.</p>
+                </div>
+
+                <h2>Key Success Factors</h2>
+
+                <h3>Executive Sponsorship</h3>
+                <p>Reskilling programs that lack visible executive commitment inevitably stall. Leaders must do more than allocate budget—they must personally champion the transformation, celebrate learning achievements, and model continuous learning themselves.</p>
+
+                <h3>Manager Enablement</h3>
+                <p>Frontline managers are the bridge between strategy and execution. They need tools to identify skill gaps in their teams, time allocation frameworks that protect learning hours, and coaching skills to support workers through transition anxiety.</p>
+
+                <h3>Worker Agency</h3>
+                <p>The most successful reskilling programs give workers genuine agency over their development paths. This means offering multiple routes to new roles, respecting accumulated expertise, and creating advancement opportunities that don't require abandoning craft identity.</p>
+
+                <div class="highlight">
+                    <p>Key insight: Workers who feel ownership over their reskilling journey show 3x higher completion rates and 2x faster skill acquisition.</p>
+                </div>
+
+                <h3>Technology Integration</h3>
+                <p>Learning should happen in the flow of work, not separate from it. AR-guided training, AI coaching systems, and simulation environments allow workers to practice new skills in context. The factory floor becomes the classroom.</p>
+
+                <h2>The Human-AI Partnership</h2>
+                <p>The end goal of reskilling isn't to create human workers who can compete with AI—that's a losing proposition. The goal is to create human workers who can collaborate with AI, bringing judgment, creativity, and adaptability that machines lack.</p>
+
+                <p>In practice, this means training workers to:</p>
+                <ul>
+                    <li><strong>Supervise AI systems</strong>—understanding their capabilities and limitations, recognizing when they're failing, and knowing when to intervene</li>
+                    <li><strong>Train AI systems</strong>—providing the feedback and edge-case handling that improves model performance over time</li>
+                    <li><strong>Extend AI systems</strong>—identifying new applications and optimizations that weren't part of the original design</li>
+                    <li><strong>Complement AI systems</strong>—handling tasks that require human touch, from complex problem-solving to customer relationships</li>
+                </ul>
+
+                <h2>Measuring Success</h2>
+                <p>Traditional training metrics—completion rates, test scores, hours logged—tell only part of the story. Meaningful reskilling measurement should include:</p>
+                <ul>
+                    <li>Time to proficiency in new roles</li>
+                    <li>Quality and productivity metrics in human-AI teams</li>
+                    <li>Internal mobility and retention rates</li>
+                    <li>Worker confidence and engagement scores</li>
+                    <li>Innovation and improvement suggestions from reskilled workers</li>
+                </ul>
+
+                <h2>The Path Forward</h2>
+                <p>Manufacturing organizations that invest in workforce reskilling today will have a decisive advantage in the AI era. Not because their technology will be better—technology commoditizes quickly—but because their human capital will be uniquely prepared to leverage that technology.</p>
+
+                <p>The factories of the future won't be lights-out operations run entirely by machines. They'll be collaborative environments where human expertise and AI capability combine to achieve what neither could accomplish alone. Getting there requires treating workforce transformation not as a one-time project, but as an ongoing organizational capability.</p>
+
+                <p>The time to start building that capability is now.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-flex">
+                <div>&copy; 2026 Forth AI. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                    <a href="https://www.linkedin.com/company/forth-ai/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://twitter.com/forth_ai" target="_blank" rel="noopener">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -87,7 +87,8 @@
             display: flex;
             align-items: center;
             position: relative;
-            background: radial-gradient(circle at 80% 30%, #111111 0%, #050505 60%);
+            background: #050505;
+            overflow: hidden;
         }
 
         .hero-content {
@@ -502,21 +503,21 @@
                         <h2 class="section-title">Latest<br>Thinking</h2>
                     </div>
                     <div class="pub-list">
-                        <a href="#" class="pub-card">
+                        <a href="/blog/architecture-of-trust.html" class="pub-card">
                             <div class="pub-content">
                                 <h4>The Architecture of Trust</h4>
                                 <p>Building explainable AI systems for financial sectors</p>
                             </div>
                             <i class="ri-arrow-right-up-line pub-icon"></i>
                         </a>
-                        <a href="#" class="pub-card">
+                        <a href="/blog/reskilling-at-scale.html" class="pub-card">
                             <div class="pub-content">
                                 <h4>Reskilling at Scale</h4>
                                 <p>A framework for human-AI collaboration in manufacturing</p>
                             </div>
                             <i class="ri-arrow-right-up-line pub-icon"></i>
                         </a>
-                        <a href="#" class="pub-card">
+                        <a href="/blog/beyond-automation.html" class="pub-card">
                             <div class="pub-content">
                                 <h4>Beyond Automation</h4>
                                 <p>Why cognitive computing defines the next decade of growth</p>
@@ -623,17 +624,22 @@
                 const x2d = x1 * scale + cx;
                 const y2d = y2 * scale + cy;
 
+                // Calculate distance from center for edge fade
+                const distFromCenter = Math.sqrt(Math.pow(x2d - cx, 2) + Math.pow(y2d - cy, 2));
+                const maxDist = 420;
+                const edgeFade = Math.max(0, 1 - (distFromCenter / maxDist));
+
                 const alpha = (z2 + config.radius) / (config.radius * 2);
 
                 ctx.beginPath();
                 ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
 
                 if (p.isHighlight) {
-                    ctx.fillStyle = config.highlightColor;
-                    ctx.shadowBlur = 10 * scale;
+                    ctx.fillStyle = `rgba(252, 211, 77, ${0.8 * edgeFade})`;
+                    ctx.shadowBlur = 10 * scale * edgeFade;
                     ctx.shadowColor = config.highlightColor;
                 } else {
-                    ctx.fillStyle = `rgba(255, 255, 255, ${0.1 + alpha * 0.2})`;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${(0.1 + alpha * 0.2) * edgeFade})`;
                     ctx.shadowBlur = 0;
                 }
 

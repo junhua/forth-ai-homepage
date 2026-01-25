@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" type="image/svg+xml">
+    <title>The Architecture of Trust - Forth AI</title>
+    <meta name="description" content="Building explainable AI systems for financial sectors. How transparency and interpretability create the foundation for AI adoption in high-stakes environments." />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Semibold.ttf') format('truetype');
+            font-weight: 600;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+            font-weight: 700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            max-width: 1920px;
+            margin: 0 auto;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'MiSans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FCD34D;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        header {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-container {
+            max-width: 1520px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        .back-link {
+            font-size: 14px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            color: #FCD34D;
+        }
+
+        main {
+            padding: 80px 0 120px;
+        }
+
+        .article-meta {
+            margin-bottom: 32px;
+        }
+
+        .article-category {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FCD34D;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: clamp(36px, 4vw, 56px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin: 24px 0;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .article-subtitle {
+            font-size: 20px;
+            color: #9CA3AF;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .article-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #6B7280;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 48px;
+        }
+
+        .article-content h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 36px;
+            margin-bottom: 16px;
+        }
+
+        .article-content p {
+            font-size: 18px;
+            color: #D1D5DB;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .article-content li {
+            font-size: 18px;
+            color: #D1D5DB;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid #FCD34D;
+            padding-left: 24px;
+            margin: 32px 0;
+            font-size: 20px;
+            color: #9CA3AF;
+            font-style: italic;
+        }
+
+        .article-content .highlight {
+            background: rgba(252, 211, 77, 0.1);
+            border: 1px solid rgba(252, 211, 77, 0.2);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .article-content .highlight p {
+            margin-bottom: 0;
+            color: #FCD34D;
+        }
+
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #4B5563;
+            font-size: 14px;
+        }
+
+        .footer-container {
+            max-width: 1520px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .footer-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: #4B5563;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .header-container,
+            .footer-container {
+                padding: 0 24px;
+            }
+
+            .article-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .footer-flex {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="/" class="brand">Forth AI</a>
+            <a href="/#publications" class="back-link">
+                <i class="ri-arrow-left-line"></i>
+                Back to Insights
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article class="container">
+            <div class="article-meta">
+                <span class="article-category">AI Safety</span>
+            </div>
+
+            <h1>The Architecture of Trust</h1>
+            <p class="article-subtitle">Building explainable AI systems for financial sectors</p>
+
+            <div class="article-info">
+                <span>January 2026</span>
+                <span>12 min read</span>
+            </div>
+
+            <div class="article-content">
+                <p>In financial services, trust isn't optional—it's the foundation upon which every transaction, every recommendation, and every automated decision must rest. As AI systems become increasingly central to financial operations, the question of explainability has moved from academic curiosity to regulatory imperative.</p>
+
+                <h2>The Explainability Imperative</h2>
+                <p>When an AI system denies a loan application, recommends a portfolio allocation, or flags a transaction as fraudulent, stakeholders at every level need to understand why. This isn't merely about satisfying regulators—though that matters. It's about building systems that humans can meaningfully oversee, correct, and improve.</p>
+
+                <p>The challenge is that the most powerful AI models often operate as black boxes. Neural networks with millions of parameters can identify patterns invisible to human analysts, but explaining those patterns in human-interpretable terms requires deliberate architectural choices.</p>
+
+                <blockquote>"The goal isn't to make AI think like humans, but to make AI decisions legible to humans."</blockquote>
+
+                <h2>Three Pillars of Explainable Financial AI</h2>
+
+                <h3>1. Transparent Model Architecture</h3>
+                <p>The first pillar begins at model selection. While deep learning models offer superior performance on many tasks, simpler models—decision trees, linear models with feature engineering, or ensemble methods—often provide comparable accuracy with inherent interpretability.</p>
+
+                <p>For high-stakes decisions, we advocate for a tiered approach:</p>
+                <ul>
+                    <li><strong>Primary models</strong> that prioritize interpretability, used for final decisions</li>
+                    <li><strong>Secondary models</strong> that can be more complex, used for pattern discovery and hypothesis generation</li>
+                    <li><strong>Validation models</strong> that cross-check decisions against multiple methodologies</li>
+                </ul>
+
+                <h3>2. Decision Audit Trails</h3>
+                <p>Every AI decision should generate a complete audit trail that captures not just the outcome, but the reasoning pathway. This includes:</p>
+                <ul>
+                    <li>Input features and their relative weights in the decision</li>
+                    <li>Confidence levels and uncertainty quantification</li>
+                    <li>Similar historical cases and their outcomes</li>
+                    <li>Factors that would have changed the decision</li>
+                </ul>
+
+                <p>These audit trails serve multiple purposes: regulatory compliance, model debugging, and—crucially—human learning. When analysts can see why the AI made a decision, they can apply that reasoning to novel situations the AI hasn't encountered.</p>
+
+                <h3>3. Human-AI Collaboration Frameworks</h3>
+                <p>The most robust financial AI systems aren't fully automated—they're collaborative. Human experts remain in the loop, not as rubber stamps, but as genuine partners in decision-making.</p>
+
+                <div class="highlight">
+                    <p>Key insight: The goal is "human-in-the-loop" design that amplifies human judgment rather than replacing it.</p>
+                </div>
+
+                <p>This means designing interfaces that present AI recommendations alongside the evidence supporting them, highlight cases where the AI is uncertain, and make it easy for humans to override decisions with documented reasoning.</p>
+
+                <h2>Regulatory Alignment</h2>
+                <p>Regulators worldwide are converging on similar requirements for AI in financial services. The EU's AI Act, Singapore's FEAT principles, and emerging US guidelines all emphasize:</p>
+                <ul>
+                    <li>Explainability of automated decisions affecting consumers</li>
+                    <li>Human oversight of high-risk AI applications</li>
+                    <li>Documentation of model development and validation</li>
+                    <li>Ongoing monitoring for bias and drift</li>
+                </ul>
+
+                <p>Organizations that build explainability into their AI systems from the start will find regulatory compliance far less burdensome than those who try to retrofit transparency onto black-box systems.</p>
+
+                <h2>The Path Forward</h2>
+                <p>Building trustworthy AI for financial services requires commitment at every level—from data scientists selecting model architectures to executives allocating resources for interpretability research. It requires accepting that some accuracy gains from black-box models may not be worth the loss in transparency.</p>
+
+                <p>But the payoff is substantial: AI systems that stakeholders can trust, regulators can approve, and organizations can confidently deploy at scale. In an industry built on trust, that's the only sustainable path forward.</p>
+
+                <p>The architecture of trust isn't just about technology—it's about designing systems that keep humans genuinely in control, even as AI capabilities continue to advance.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-flex">
+                <div>&copy; 2026 Forth AI. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                    <a href="https://www.linkedin.com/company/forth-ai/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://twitter.com/forth_ai" target="_blank" rel="noopener">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
