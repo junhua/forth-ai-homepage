@@ -489,6 +489,17 @@
             letter-spacing: 1px;
             color: #6B7280;
         }
+
+        .trusted-logo-inline.panasonic-logo img {
+            height: 20px;
+            width: auto;
+            filter: grayscale(100%) brightness(0.6);
+            transition: filter 0.3s ease;
+        }
+
+        .trusted-logo-inline.panasonic-logo:hover img {
+            filter: grayscale(100%) brightness(0.8);
+        }
     </style>
 </head>
 <body>
@@ -527,15 +538,9 @@
                                 </svg>
                                 <span class="logo-text">SHOPEE</span>
                             </div>
-                            <!-- Panasonic Logo - Vertical -->
-                            <div class="trusted-logo-inline">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="2" y="8" width="20" height="8" rx="1" fill="#6B7280"/>
-                                    <circle cx="7" cy="12" r="2" fill="#050505"/>
-                                    <circle cx="17" cy="12" r="2" fill="#050505"/>
-                                    <rect x="10" y="10" width="4" height="4" fill="#050505"/>
-                                </svg>
-                                <span class="logo-text">PANASONIC</span>
+                            <!-- Panasonic Logo -->
+                            <div class="trusted-logo-inline panasonic-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Panasonic_logo_%28Blue%29.svg" alt="Panasonic" />
                             </div>
                         </div>
                     </div>
