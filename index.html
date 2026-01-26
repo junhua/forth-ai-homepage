@@ -443,60 +443,51 @@
             }
         }
 
-        /* Trusted By Section */
-        .trusted-section {
-            padding: 80px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: #050505;
-        }
-
-        .trusted-content {
+        /* Trusted By - In Hero */
+        .trusted-inline {
+            margin-top: 56px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
+            gap: 16px;
         }
 
-        .trusted-label {
-            font-size: 14px;
+        .trusted-label-inline {
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #6B7280;
-            margin-bottom: 40px;
             font-weight: 500;
         }
 
-        .trusted-logos {
+        .trusted-logos-inline {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 80px;
-            flex-wrap: wrap;
+            gap: 32px;
         }
 
-        .trusted-logo {
+        .trusted-logo-inline {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            opacity: 0.6;
+            gap: 6px;
+            opacity: 0.5;
             transition: opacity 0.3s ease;
         }
 
-        .trusted-logo:hover {
-            opacity: 1;
+        .trusted-logo-inline:hover {
+            opacity: 0.8;
         }
 
-        .trusted-logo svg {
-            height: 48px;
+        .trusted-logo-inline svg {
+            height: 32px;
             width: auto;
         }
 
-        .trusted-logo .logo-text {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            color: #9CA3AF;
+        .trusted-logo-inline .logo-text {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #6B7280;
         }
     </style>
 </head>
@@ -522,36 +513,36 @@
                         <div class="tag">AI safety</div>
                         <div class="tag">AI-native enterprise</div>
                     </div>
-                </div>
-            </div>
-            <!-- Canvas for generative graphic -->
-            <canvas id="hero-graphic"></canvas>
-        </section>
 
-        <!-- Trusted By Section -->
-        <section class="trusted-section">
-            <div class="container">
-                <div class="trusted-content">
-                    <span class="trusted-label">Trusted by industry leaders</span>
-                    <div class="trusted-logos">
-                        <!-- Shopee Logo - Simplified shopping bag icon -->
-                        <div class="trusted-logo">
-                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 56px;">
-                                <path d="M40 8C28.954 8 20 16.954 20 28V32H60V28C60 16.954 51.046 8 40 8Z" stroke="#9CA3AF" stroke-width="3" fill="none"/>
-                                <rect x="12" y="32" width="56" height="44" rx="4" fill="#9CA3AF"/>
-                                <path d="M32 52C32 52 36 62 40 62C44 62 48 52 48 52" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
-                            </svg>
-                            <span class="logo-text">SHOPEE</span>
-                        </div>
-                        <!-- Panasonic Logo - Wordmark style -->
-                        <div class="trusted-logo">
-                            <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 40px;">
-                                <text x="0" y="30" fill="#9CA3AF" font-family="Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="3">PANASONIC</text>
-                            </svg>
+                    <!-- Trusted By -->
+                    <div class="trusted-inline anim-fade-up delay-3">
+                        <span class="trusted-label-inline">Trusted by</span>
+                        <div class="trusted-logos-inline">
+                            <!-- Shopee Logo - Vertical -->
+                            <div class="trusted-logo-inline">
+                                <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M30 6C21.716 6 15 12.716 15 21V24H45V21C45 12.716 38.284 6 30 6Z" stroke="#6B7280" stroke-width="2.5" fill="none"/>
+                                    <rect x="9" y="24" width="42" height="33" rx="3" fill="#6B7280"/>
+                                    <path d="M24 39C24 39 27 47 30 47C33 47 36 39 36 39" stroke="#050505" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                                <span class="logo-text">SHOPEE</span>
+                            </div>
+                            <!-- Panasonic Logo - Vertical -->
+                            <div class="trusted-logo-inline">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="8" width="20" height="8" rx="1" fill="#6B7280"/>
+                                    <circle cx="7" cy="12" r="2" fill="#050505"/>
+                                    <circle cx="17" cy="12" r="2" fill="#050505"/>
+                                    <rect x="10" y="10" width="4" height="4" fill="#050505"/>
+                                </svg>
+                                <span class="logo-text">PANASONIC</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Canvas for generative graphic -->
+            <canvas id="hero-graphic"></canvas>
         </section>
 
         <!-- Focus Section -->
