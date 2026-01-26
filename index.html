@@ -437,6 +437,66 @@
                 right: -100px;
                 opacity: 0.3;
             }
+
+            .trusted-logos {
+                gap: 40px;
+            }
+        }
+
+        /* Trusted By Section */
+        .trusted-section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: #050505;
+        }
+
+        .trusted-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .trusted-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #6B7280;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .trusted-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .trusted-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .trusted-logo:hover {
+            opacity: 1;
+        }
+
+        .trusted-logo svg {
+            height: 48px;
+            width: auto;
+        }
+
+        .trusted-logo .logo-text {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #9CA3AF;
         }
     </style>
 </head>
@@ -466,6 +526,32 @@
             </div>
             <!-- Canvas for generative graphic -->
             <canvas id="hero-graphic"></canvas>
+        </section>
+
+        <!-- Trusted By Section -->
+        <section class="trusted-section">
+            <div class="container">
+                <div class="trusted-content">
+                    <span class="trusted-label">Trusted by industry leaders</span>
+                    <div class="trusted-logos">
+                        <!-- Shopee Logo - Simplified shopping bag icon -->
+                        <div class="trusted-logo">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 56px;">
+                                <path d="M40 8C28.954 8 20 16.954 20 28V32H60V28C60 16.954 51.046 8 40 8Z" stroke="#9CA3AF" stroke-width="3" fill="none"/>
+                                <rect x="12" y="32" width="56" height="44" rx="4" fill="#9CA3AF"/>
+                                <path d="M32 52C32 52 36 62 40 62C44 62 48 52 48 52" stroke="#050505" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                            <span class="logo-text">SHOPEE</span>
+                        </div>
+                        <!-- Panasonic Logo - Wordmark style -->
+                        <div class="trusted-logo">
+                            <svg viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 40px;">
+                                <text x="0" y="30" fill="#9CA3AF" font-family="Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="3">PANASONIC</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Focus Section -->
