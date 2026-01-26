@@ -116,33 +116,31 @@
             line-height: 1.6;
         }
 
-        .trusted-by {
+        .tags-wrapper {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
-        .trusted-by-label {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #6B7280;
-            font-weight: 500;
+        .tag {
+            padding: 10px 24px;
+            font-size: 15px;
+            color: #D1D5DB;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .trusted-logos {
-            display: flex;
-            align-items: center;
-            gap: 48px;
-        }
-
-        .trusted-logos svg {
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .trusted-logos svg:hover {
-            opacity: 0.7;
+        .tag:hover {
+            border-color: #FCD34D;
+            color: #FCD34D;
+            background: rgba(252, 211, 77, 0.05);
+            transform: translateY(-2px);
         }
 
         /* Hero Abstract Graphic - Simulated with Canvas */
@@ -459,20 +457,10 @@
                     <p class="hero-subtitle anim-fade-up delay-1">
                         How work transforms. How systems stay accountable. What becomes possible when intelligence is woven into the fabric of enterprise.
                     </p>
-                    <div class="trusted-by anim-fade-up delay-2">
-                        <span class="trusted-by-label">Trusted by</span>
-                        <div class="trusted-logos">
-                            <!-- Shopee Logo -->
-                            <svg height="56" viewBox="0 0 100 120" fill="white">
-                                <path d="M50 8C35.5 8 24 19.5 24 34v4H16c-2.2 0-4 1.8-4 4v64c0 2.2 1.8 4 4 4h68c2.2 0 4-1.8 4-4V42c0-2.2-1.8-4-4-4h-8v-4C76 19.5 64.5 8 50 8zm0 8c11.6 0 21 9.4 21 18v4H29v-4c0-8.6 9.4-18 21-18zm0 38c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z"/>
-                                <text x="50" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="600">Shopee</text>
-                            </svg>
-                            <!-- Panasonic Logo -->
-                            <svg height="56" viewBox="0 0 120 80" fill="white">
-                                <path d="M0 20 L20 0 L20 40 L0 20z"/>
-                                <text x="60" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="500" letter-spacing="1">Panasonic</text>
-                            </svg>
-                        </div>
+                    <div class="tags-wrapper anim-fade-up delay-2">
+                        <div class="tag">Workforce reskilling</div>
+                        <div class="tag">AI safety</div>
+                        <div class="tag">AI-native enterprise</div>
                     </div>
                 </div>
             </div>
