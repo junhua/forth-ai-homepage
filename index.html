@@ -467,9 +467,9 @@
 
         .trusted-logo-inline {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             opacity: 0.5;
             transition: opacity 0.3s ease;
         }
@@ -479,26 +479,15 @@
         }
 
         .trusted-logo-inline svg {
-            height: 32px;
+            height: 18px;
             width: auto;
         }
 
         .trusted-logo-inline .logo-text {
-            font-size: 10px;
+            font-size: 14px;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #6B7280;
-        }
-
-        .trusted-logo-inline.panasonic-logo img {
-            height: 20px;
-            width: auto;
-            filter: grayscale(100%) brightness(0.6);
-            transition: filter 0.3s ease;
-        }
-
-        .trusted-logo-inline.panasonic-logo:hover img {
-            filter: grayscale(100%) brightness(0.8);
         }
     </style>
 </head>
@@ -529,19 +518,19 @@
                     <div class="trusted-inline anim-fade-up delay-3">
                         <span class="trusted-label-inline">Trusted by</span>
                         <div class="trusted-logos-inline">
-                            <!-- Shopee Logo - Vertical -->
+                            <!-- Shopee Logo - Horizontal -->
                             <div class="trusted-logo-inline">
-                                <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M30 6C21.716 6 15 12.716 15 21V24H45V21C45 12.716 38.284 6 30 6Z" stroke="#6B7280" stroke-width="2.5" fill="none"/>
-                                    <rect x="9" y="24" width="42" height="33" rx="3" fill="#6B7280"/>
-                                    <path d="M24 39C24 39 27 47 30 47C33 47 36 39 36 39" stroke="#050505" stroke-width="2.5" stroke-linecap="round"/>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C9.239 2 7 4.239 7 7V8H17V7C17 4.239 14.761 2 12 2Z" stroke="#6B7280" stroke-width="1.5" fill="none"/>
+                                    <rect x="4" y="8" width="16" height="13" rx="2" fill="#6B7280"/>
+                                    <path d="M9 14C9 14 10.5 18 12 18C13.5 18 15 14 15 14" stroke="#050505" stroke-width="1.5" stroke-linecap="round"/>
                                 </svg>
                                 <span class="logo-text">SHOPEE</span>
                             </div>
                             <!-- Panasonic Logo -->
                             <div class="trusted-logo-inline panasonic-logo">
-                                <svg viewBox="0 0 140 24" xmlns="http://www.w3.org/2000/svg" style="height: 16px; width: auto;">
-                                    <text x="0" y="19" fill="#6B7280" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" letter-spacing="0.5">Panasonic</text>
+                                <svg viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg">
+                                    <text x="0" y="16" fill="#6B7280" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="bold" letter-spacing="0.3">Panasonic</text>
                                 </svg>
                             </div>
                         </div>
